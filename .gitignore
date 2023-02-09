@@ -1,0 +1,10 @@
+.venv/
+_rels/
+docProps/
+xl/
+build/
+dist/
+orderinfo.yaml
+\[Content_Types\].xml
+*.pyc
+flagged/
