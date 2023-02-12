@@ -8,13 +8,17 @@ import base64
 def main(page: ft.Page):
     page.title = "Inzisoft Form Ocr Demo"
     page.scroll = "adaptive"
-    page.theme = ft.theme.Theme(color_scheme_seed="green")
+    page.expand = True
+    page.window_maximized = True
+    page.padding = 20
+    # page.theme = ft.theme.Theme(color_scheme_seed="green")
 
     def page_resize(e):
-        img.height = page.window_height - 200
-        # print("New page size:", page.window_width, page.window_height)
+        c_img.height = page.window_height - 200
+        c_result.height = page.window_height - 200
         result.height = page.window_height - 300
-        img.update()
+        page.update()
+
     page.on_resize = page_resize
 
     title = ft.Text("Inzisoft Form Ocr Demo", size=30, italic=True, weight=ft.FontWeight.BOLD)
@@ -25,6 +29,10 @@ def main(page: ft.Page):
 
         if selected_file.value != "":
             img.src = selected_file.value
+            img.visible = True
+
+            pr.visible = True
+            update()
 
             image = Image.open(img.src)
             elepsed, strResult, strResultJson = formOcr.processFormOcr(
@@ -32,6 +40,7 @@ def main(page: ft.Page):
             json_result = json.loads(strResultJson, )
             result_text.value = strResult
             result_json.value = json.dumps(json_result, indent=4, ensure_ascii=False)
+            pr.visible = False
             update()
 
         page.update()
@@ -43,16 +52,17 @@ def main(page: ft.Page):
     bt_file = ft.ElevatedButton(
         "파일선택",
         icon=ft.icons.UPLOAD_FILE,
-
         on_click=lambda _: pick_file_dialog.pick_files())
 
-    img = ft.Image(src = None,
-        fit=ft.ImageFit.CONTAIN, height=page.window_height - 200)
+    img = ft.Image(src = None, visible = False,
+        fit=ft.ImageFit.CONTAIN,)#, height=page.window_height - 200)
 
-    result = ft.Text(selectable = True, height=page.window_height - 300)
-    result_text = ft.Text(selectable = True)
-    result_json = ft.Text(selectable=True)
+    result = ft.Text(selectable = True, width = 500)#, height=page.window_height - 300
+    result_text = ft.Text()
+    result_json = ft.Text()
 
+
+    pr = ft.ProgressRing(disabled=True, visible=False)
 
     def tabs_changed(e):
         update()
@@ -71,32 +81,27 @@ def main(page: ft.Page):
         tabs=[
             ft.Tab(
                 text="text",
-                # content=result_text
             ),
             ft.Tab(
                 text="json",
-                # content=result_json
             )
         ],
         on_change = tabs_changed
     )
 
+    c_img = ft.Container(img, expand=True, bgcolor=ft.colors.BLUE_GREY_900, border_radius=10, padding=20)
+    c_result = ft.Container(ft.Column(controls=[t, result]), bgcolor=ft.colors.BLUE_GREY_900, border_radius = 10, padding=20)
+
     page.add(
         title,
         ft.Row(
-            controls = [bt_file, selected_file]),
+            controls = [bt_file, selected_file, pr]
+        ),
         ft.Row(
-            controls=[img,
-                      ft.Column(
-                          controls=[t, result]
-                          )
-                ],
-
+            controls=[c_img, c_result],
             auto_scroll = True,
             vertical_alignment=ft.CrossAxisAlignment.START
-            )
-
-
+        )
     )
 
 ft.app(target=main)
