@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,19 +11,46 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   DateTime firstDay = DateTime.now();
 
+  void onPressed() {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            child: CupertinoDatePicker(
+              onDateTimeChanged: (DateTime date) {
+                setState(() {
+                  firstDay = date;
+                });
+              },
+              mode: CupertinoDatePickerMode.date,
+            ),
+            height: 300,
+            color: Colors.white,
+          ),
+        );
+      },
+      barrierDismissible: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.pink[100],
-      body: const SafeArea(
+      body: SafeArea(
         top: true,
         bottom: false,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _DDay(),
-              _CoupleImage(),
+              _DDay(
+                firstDay: firstDay,
+                onPressed: onPressed,
+              ),
+              const _CoupleImage(),
             ],
           ),
         ),
@@ -32,11 +60,19 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _DDay extends StatelessWidget {
-  const _DDay({Key? key}) : super(key: key);
+  final DateTime firstDay;
+  final GestureTapCallback onPressed;
+
+  const _DDay({
+    Key? key,
+    required this.firstDay,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final DateTime now = DateTime.now();
 
     return Column(
       children: [
@@ -49,11 +85,13 @@ class _DDay extends StatelessWidget {
           style: textTheme.bodyLarge,
         ),
         Text(
-          "2022.11.28",
+          "${firstDay.year}.${firstDay.month}.${firstDay.day}",
           style: textTheme.bodyMedium,
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            onPressed();
+          },
           icon: const Icon(
             Icons.favorite,
             color: Colors.red,
@@ -61,7 +99,7 @@ class _DDay extends StatelessWidget {
           ),
         ),
         Text(
-          "D+365",
+          "D+${DateTime(now.year, now.month, now.day).difference(firstDay).inDays + 1}",
           style: textTheme.displayMedium,
         ),
       ],
