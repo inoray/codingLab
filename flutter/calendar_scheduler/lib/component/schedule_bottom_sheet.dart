@@ -5,8 +5,10 @@ import 'package:drift/drift.dart' hide Column;
 import 'package:get_it/get_it.dart';
 import 'package:calendar_scheduler/database/drift_database.dart';
 import 'package:calendar_scheduler/model/schedule_model.dart';
-import 'package:provider/provider.dart';
-import 'package:calendar_scheduler/provider/schedule_provider.dart';
+// import 'package:provider/provider.dart';
+// import 'package:calendar_scheduler/provider/schedule_provider.dart';
+import 'package:uuid/uuid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ScheduleBottomSheet extends StatefulWidget {
   final DateTime selectedDate;
@@ -104,6 +106,21 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
+      final schedule = ScheduleModel(
+        id: Uuid().v4(),
+        content: content!,
+        date: widget.selectedDate,
+        startTime: startTime!,
+        endTime: endTime!,
+      );
+
+      await FirebaseFirestore.instance
+          .collection(
+            'schedule',
+          )
+          .doc(schedule.id)
+          .set(schedule.toJson());
+
       // await GetIt.I<LocalDatabase>().createSchedule(
       //   SchedulesCompanion(
       //     startTime: Value(startTime!),
@@ -112,15 +129,16 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
       //     date: Value(widget.selectedDate),
       //   )
       // );
-      context.read<ScheduleProvider>().createSchedule(
-            schedule: ScheduleModel(
-              id: 'new_model',
-              content: content!,
-              date: widget.selectedDate,
-              startTime: startTime!,
-              endTime: endTime!,
-            ),
-          );
+
+      // context.read<ScheduleProvider>().createSchedule(
+      //       schedule: ScheduleModel(
+      //         id: 'new_model',
+      //         content: content!,
+      //         date: widget.selectedDate,
+      //         startTime: startTime!,
+      //         endTime: endTime!,
+      //       ),
+      //     );
 
       Navigator.of(context).pop();
     }
