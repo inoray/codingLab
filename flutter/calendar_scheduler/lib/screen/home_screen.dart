@@ -4,6 +4,8 @@ import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:calendar_scheduler/component/schedule_bottom_sheet.dart';
 import 'package:calendar_scheduler/const/colors.dart';
+import 'package:get_it/get_it.dart';
+import 'package:calendar_scheduler/database/drift_database.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,7 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (_) => ScheduleBottomSheet(),
+            builder: (_) => ScheduleBottomSheet(
+              selectedDate: selectedDate,
+            ),
             isDismissible: true,
             isScrollControlled: true,
           );
@@ -43,16 +47,50 @@ class _HomeScreenState extends State<HomeScreen> {
               selectedDate: selectedDate,
               onDaySelected: onDateSelected,
             ),
-            SizedBox(height: 8.0),
-            TodayBanner(
-              selectedDate: selectedDate,
-              count: 0,
+            const SizedBox(height: 8.0),
+            StreamBuilder(
+              stream: GetIt.I<LocalDatabase>().watchSchedule(selectedDate),
+              builder: (context, snapshot) {
+                return TodayBanner(
+                  selectedDate: selectedDate,
+                  count: snapshot.data!.length ?? 0,
+                );
+              },
             ),
-            SizedBox(height: 8.0),
-            ScheduleCard(
-              startTime: 12,
-              endTime: 14,
-              content: "프로그래밍 공부",
+            const SizedBox(height: 8.0),
+            Expanded(
+              child: StreamBuilder<List<Schedule>>(
+                stream: GetIt.I<LocalDatabase>().watchSchedule(selectedDate),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Container();
+                  }
+
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      final schedule = snapshot.data![index];
+
+                      return Dismissible(
+                        key: ObjectKey(schedule.id),
+                        direction: DismissDirection.startToEnd,
+                        onDismissed: (DismissDirection direction) {
+                          GetIt.I<LocalDatabase>().removeSchedule(schedule.id);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 8.0, left: 8.0, right: 8.0),
+                          child: ScheduleCard(
+                            startTime: schedule.startTime,
+                            endTime: schedule.endTime,
+                            content: schedule.content,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

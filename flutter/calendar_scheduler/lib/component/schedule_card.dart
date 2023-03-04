@@ -74,7 +74,7 @@ class _Time extends StatelessWidget {
           style: textStyle,
         ),
         Text(
-          '${endTime.toString().padLeft(2, '0')};00',
+          '${endTime.toString().padLeft(2, '0')}:00',
           style: textStyle.copyWith(
             fontSize: 10.0,
           ),
