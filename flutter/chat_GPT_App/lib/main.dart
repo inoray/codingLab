@@ -31,6 +31,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String txt = "";
+  late TextEditingController _controller;
+
+  late List<dynamic> _messages;
+  late FocusNode myFocusNode;
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = TextEditingController();
+
+    _messages = [
+      {"role": "system", "content": "You are a helpful assistant."},
+    ];
+    myFocusNode = FocusNode();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  _scrollListener() async {
+    if (_scrollController.offset == _scrollController.position.maxScrollExtent && !_scrollController.position.outOfRange){
+      //top
+    } else if (_scrollController.offset <= _scrollController.position.maxScrollExtent && !_scrollController.position.outOfRange){
+      //bottom
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,16 +83,25 @@ class _HomePageState extends State<HomePage> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                ListView(
-                  padding: EdgeInsets.zero,
+                Column(
                   children: [
-                    ChatBox(
-                      content: "안녕하세요.",
-                      isChatGpt: false,
-                    ),
-                    ChatBox(
-                      content: "반갑습니다.\n어디세요?",
-                      isChatGpt: true,
+                    ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      controller: _scrollController,
+                      padding: EdgeInsets.zero,
+                      itemCount: _messages.length,
+                      itemBuilder: (
+                        BuildContext context,
+                        int index,
+                      ) {
+                        if (index == 0) return SizedBox();
+                        return ChatBox(
+                          content: _messages[index]['content'],
+                          isChatGpt:
+                              _messages[index]['role'] == 'user' ? false : true,
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -113,6 +150,13 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
+                        autofocus: true,
+                        focusNode: myFocusNode,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (value) async {
+                          request();
+                        },
+                        controller: _controller,
                         decoration: InputDecoration(
                           // labelText: 'Input',
                           fillColor: Colors.white,
@@ -122,15 +166,7 @@ class _HomePageState extends State<HomePage> {
                               alignment: Alignment.centerRight,
                               icon: Icon(Icons.send_outlined),
                               onPressed: () async {
-                                Session sess = Session();
-                                final resp = await sess.post(
-                                    "https://api.openai.com/v1/chat/completions");
-                                print(resp);
-
-                                setState(() {
-                                  this.txt =
-                                      resp['choices'][0]['message']['content'];
-                                });
+                                request();
                               },
                             ),
                           ),
@@ -146,21 +182,56 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  void request() async {
+    this.txt = _controller.text;
+    // print(this._messages);
+
+    this._messages.add(
+      {'role': "user", 'content': _controller.text},
+    );
+    // print(this._messages);
+
+    Session sess = Session();
+    final resp = await sess.post(
+        "https://api.openai.com/v1/chat/completions", this._messages);
+    // print(resp);
+
+    this._messages.add(
+      {
+        'role': "assistant",
+        'content': resp['choices'][0]['message']['content']
+      },
+    );
+
+    // print(this._messages);
+
+    setState(() {
+      // this.txt =
+      //     resp['choices'][0]['message']['content'];
+    });
+    _controller.clear();
+    FocusScope.of(context).requestFocus(myFocusNode);
+  }
 }
 
 class Session {
-  Map<String, String> headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer $openaiKey',
-  };
-  Map<String, dynamic> body = {
-    'model': 'gpt-3.5-turbo',
-    'messages': [
-      {"role": "user", "content": "Flutter Markdown example"}
-    ],
-  };
+  Future<dynamic> post(String strUrl, List<dynamic> messages) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $openaiKey',
+    };
 
-  Future<dynamic> post(String strUrl) async {
+    // List<dynamic> messages = [
+    //   {"role": "system", "content": "You are a helpful assistant."},
+    //   {"role": "user", "content": "안녕"},
+    // ];
+
+    Map<String, dynamic> body = {
+      'model': 'gpt-3.5-turbo',
+      'messages': messages,
+    };
+
     print('get() url: $strUrl');
 
     var url = Uri.https(
@@ -215,9 +286,7 @@ class SideBar extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  SideBarCard(),
-                  SideBarCard(),
-                  SideBarCard(),
+                  SideBarAddButton(),
                 ],
               ),
             ),
@@ -246,6 +315,38 @@ class SideBar extends StatelessWidget {
             label: "Log out",
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SideBarAddButton extends StatelessWidget {
+  const SideBarAddButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
+      color: SIDEBAR_BACKGROUND_COLOR,
+      child: SizedBox(
+        height: 50,
+        child: ListTile(
+          // visualDensity: VisualDensity(vertical: -4),
+          hoverColor: Color(0xFF2b2c2f),
+
+          leading: Icon(
+            Icons.add,
+            size: 20,
+          ),
+          title: Text(
+            "New chat",
+            style: TextStyle(fontSize: 14),
+            // textAlign: TextAlign.center,
+          ),
+          onTap: () {
+            // TODO: Handle item 2 press
+          },
+        ),
       ),
     );
   }
@@ -337,7 +438,7 @@ class ChatBox extends StatelessWidget {
         top: 30,
         bottom: 30,
       ),
-      child: Text(
+      child: SelectableText(
         content,
         style: TextStyle(
           color: Colors.white,
