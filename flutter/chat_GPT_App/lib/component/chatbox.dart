@@ -36,6 +36,21 @@ class ChatBox extends StatelessWidget {
                 color: MAIN_TEXT_COLOR,
                 fontSize: 17.0,
               ),
+
+              // child: Markdown(
+              //   data: this.txt,
+              // ),
+              //AnimatedTextKit(
+              //               isRepeatingAnimation: false,
+              //               repeatForever: false,
+              //               displayFullTextOnTap: true,
+              //               totalRepeatCount: 1,
+              //               animatedTexts: [
+              //                 TyperAnimatedText(
+              //                   this.txt.trim(),
+              //                 ),
+              //               ],
+              //             ),
             ),
           ),
         ],

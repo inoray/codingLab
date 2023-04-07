@@ -6,6 +6,7 @@ import 'package:chat_gpt_app/const/color.dart';
 import 'package:chat_gpt_app/component/chatbox.dart';
 import 'package:chat_gpt_app/component/sidebar.dart';
 import 'package:chat_gpt_app/model/session.dart';
+import 'package:chat_gpt_app/component/prompt.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,36 +16,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late TextEditingController _controller;
-
   late List<dynamic> _messages;
-  late FocusNode myFocusNode;
+  late FocusNode _focusNode;
   late ScrollController _scrollController;
   bool _isLoading = false;
+  final _modelList = ['gpt-3.5-turbo'];
+  String _selectedModel = 'gpt-3.5-turbo';
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = TextEditingController();
-
     _messages = [
       {"role": "system", "content": "You are a helpful assistant."},
     ];
-    myFocusNode = FocusNode();
+    _focusNode = FocusNode();
     _scrollController = ScrollController();
-    // _scrollController.addListener(_scrollListener);
+    //getModel();
   }
 
   @override
   Widget build(BuildContext context) {
     // ListView 빌드가 완료된 후 자동으로 스크롤을 제일 아래로 이동 시킨다.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.fastOutSlowIn,
-      );
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.fastOutSlowIn,
+        );
+      }
     });
 
     return Scaffold(
@@ -72,125 +73,70 @@ class _HomeScreenState extends State<HomeScreen> {
                 ];
               });
 
-              FocusScope.of(context).requestFocus(myFocusNode);
+              FocusScope.of(context).requestFocus(_focusNode);
             },
           ),
           Expanded(
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Positioned.fill(
-                  bottom: 100,
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    controller: _scrollController,
-                    padding: EdgeInsets.zero,
-                    itemCount: _messages.length,
-                    itemBuilder: (
-                        BuildContext context,
-                        int index,
-                        ) {
-                      if (index == 0) return SizedBox();
-                      return ChatBox(
-                        content: _messages[index]['content'],
-                        isChatGpt:
-                        _messages[index]['role'] == 'user' ? false : true,
-                      );
-                    },
-                  ),
-                ),
-                // Column(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     // ElevatedButton(
-                //     //   onPressed: () async {
-                //     //   },
-                //     //   child: Text("chatgpt"),
-                //     // ),
-                //     Row(
-                //       children: [
-                //         Expanded(
-                //           // child: Markdown(
-                //           //   data: this.txt,
-                //           // ),
-                //           child: DefaultTextStyle(
-                //             style: const TextStyle(
-                //               color: Colors.blue,
-                //               fontWeight: FontWeight.w700,
-                //               fontSize: 16,
-                //             ),
-                //             child: AnimatedTextKit(
-                //               isRepeatingAnimation: false,
-                //               repeatForever: false,
-                //               displayFullTextOnTap: true,
-                //               totalRepeatCount: 1,
-                //               animatedTexts: [
-                //                 TyperAnimatedText(
-                //                   this.txt.trim(),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //     // Text(this.txt),
-                //   ],
-                // ),
+                _messages.length > 1
+                    ? Positioned.fill(
+                        bottom: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          controller: _scrollController,
+                          padding: EdgeInsets.zero,
+                          itemCount: _messages.length,
+                          itemBuilder: (
+                            BuildContext context,
+                            int index,
+                          ) {
+                            if (index == 0) return SizedBox();
+                            return ChatBox(
+                              content: _messages[index]['content'],
+                              isChatGpt: _messages[index]['role'] == 'user'
+                                  ? false
+                                  : true,
+                            );
+                          },
+                        ))
+                    : Positioned(
+                        top: 50,
+                        left: MediaQuery.of(context).size.width / 2 - 300,
+                        right: MediaQuery.of(context).size.width / 2 - 300,
+                        bottom: MediaQuery.of(context).size.height - 100,
+                        child: DropdownButton(
+                          padding: EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                          ),
+                          value: _selectedModel,
+                          items: _modelList
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedModel = value!;
+                            });
+                          },
+                        ),
+                      ),
                 Positioned.fill(
                   bottom: 20,
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: TextField(
-                        // enabled: _isLoading ? false : true,
-                        readOnly: _isLoading ? true : false,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        autofocus: true,
-                        focusNode: myFocusNode,
-                        textInputAction: TextInputAction.done,
-                        onSubmitted: (value) async {
-                          request();
-                        },
-                        style: TextStyle(color: MAIN_TEXT_COLOR),
-                        cursorColor: Colors.white,
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          // labelText: 'Input',
-                          filled: true,
-                          fillColor: TEXTFILED_BACKGROUND_COLOR,
-                          // border: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 1, color: Color(0xff40414f)),
-                          // ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 0, color: TEXTFILED_BACKGROUND_COLOR),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 0, color: TEXTFILED_BACKGROUND_COLOR),
-                          ),
-                          suffixIcon: SizedBox(
-                            width: 10,
-                            height: 10,
-                            child: _isLoading
-                                ? SpinKitThreeBounce(
-                              color: MAIN_TEXT_COLOR,
-                              size: 15.0,
-                            )
-                                : IconButton(
-                              alignment: Alignment.centerRight,
-                              icon: const Icon(Icons.send_outlined),
-                              color: MAIN_TEXT_COLOR,
-                              onPressed: () async {
-                                request();
-                              },
-                            ),
-                          ),
-                        ),
+                      child: Prompt(
+                        focusNode: _focusNode,
+                        isLoading: _isLoading,
+                        onSubmitted: requestChat,
                       ),
                     ),
                   ),
@@ -203,21 +149,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void request() async {
-    if (_controller.text.isNotEmpty) {
+  void requestChat(String newPrompt) async {
+    if (newPrompt.isNotEmpty) {
       setState(() {
         _isLoading = true;
         _messages.add(
-          {'role': "user", 'content': _controller.text},
+          {'role': "user", 'content': newPrompt},
         );
       });
 
-      _controller.clear();
       Session sess = Session();
-      final resp = await sess.post(
-          "https://api.openai.com/v1/chat/completions", _messages);
-
-      // print(resp);
+      final resp = await sess.postChat(
+        _selectedModel,
+        _messages,
+      );
 
       setState(() {
         _isLoading = false;
@@ -229,7 +174,17 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       });
     }
-    // ignore: use_build_context_synchronously
-    FocusScope.of(context).requestFocus(myFocusNode);
+  }
+
+  void getModel() async {
+    Session sess = Session();
+    final resp = await sess.getModel();
+    print(resp);
+
+    setState(() {
+      for (int i = 0; i < resp['data'].length; ++i) {
+        _modelList.add(resp['data'][i]['id']);
+      }
+    });
   }
 }
