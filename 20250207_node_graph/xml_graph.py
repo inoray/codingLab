@@ -31,7 +31,7 @@ for elem in elements.values():
             G.add_edge(elem.get('id'), base_id)
 
 # PyVis Network 객체 생성 (directed=True로 화살표 표시)
-net = Network(height="800px", width="100%", directed=True)
+net = Network(height="800px", width="100%", directed=True, bgcolor="#222222", font_color="white")
 
 # 물리 시뮬레이션 옵션 설정: force-directed layout을 사용하여 연결된 노드는 가깝게, 비연결 노드는 멀리 배치
 net.barnes_hut(gravity=-2500, central_gravity=0.7, spring_length=95, spring_strength=0.04, damping=0.09)
@@ -40,15 +40,17 @@ net.barnes_hut(gravity=-2500, central_gravity=0.7, spring_length=95, spring_stre
 for node in G.nodes():
     # 해당 노드의 XML 코드를 pretty print
     raw_xml = ET.tostring(elements[node], encoding='unicode')
-    try:
-        pretty_xml = minidom.parseString(raw_xml).toprettyxml(indent="    ")
-    except Exception:
-        pretty_xml = raw_xml
+    # try:
+    #     pretty_xml = minidom.parseString(raw_xml).toprettyxml(indent="    ")
+    # except Exception:
+    pretty_xml = raw_xml
     net.add_node(n_id=node, label=node, title=pretty_xml, color="cornflowerblue")
 
 # PyVis에 edge 추가 (화살표는 'to' 옵션 사용)
 for source, target in G.edges():
     net.add_edge(source, target, arrows="to")
+
+net.show_buttons(filter_=['physics'])  # 물리 시뮬레이션 버튼만 표시
 
 # 커스텀 HTML 템플릿 설정:
 # - 그래프 영역(div id="mynetwork")와 정보 영역(div id="info")를 별도로 생성하여,
