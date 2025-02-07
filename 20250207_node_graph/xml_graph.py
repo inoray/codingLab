@@ -34,7 +34,7 @@ for elem in elements.values():
 net = Network(height="800px", width="100%", directed=True)
 
 # 물리 시뮬레이션 옵션 설정: force-directed layout을 사용하여 연결된 노드는 가깝게, 비연결 노드는 멀리 배치
-net.barnes_hut(gravity=-20000, central_gravity=0.3, spring_length=95, spring_strength=0.04, damping=0.09)
+net.barnes_hut(gravity=-2500, central_gravity=0.7, spring_length=95, spring_strength=0.04, damping=0.09)
 
 # NetworkX 그래프(G)를 PyVis에 추가하면서, 각 노드의 title 속성에 들여쓰기 적용된 XML 코드를 저장
 for node in G.nodes():
