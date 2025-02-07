@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>PyVis Network Graph</title>
+  <style type="text/css">
+    body { font-family: sans-serif; }
+    #mynetwork { width: 100%; height: 600px; border: 1px solid lightgray; }
+    #info { width: 100%; height: 200px; border: 1px solid lightgray; white-space: pre-wrap; margin-top: 10px; }
+  </style>
+  <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+  <link href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="mynetwork"></div>
+<div id="info">노드를 클릭하면 XML 코드가 표시됩니다.</div>
+<script type="text/javascript">
+  var nodes = new vis.DataSet({{ nodes }});
+  var edges = new vis.DataSet({{ edges }});
+  var container = document.getElementById("mynetwork");
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {{ options }};
+  var network = new vis.Network(container, data, options);
+  network.on("click", function(params) {
+    if (params.nodes.length > 0) {
+      var nodeId = params.nodes[0];
+      var nodeData = nodes.get(nodeId);
+      document.getElementById("info").innerText = nodeData.title;
+    }
+  });
+</script>
+</body>
+</html>

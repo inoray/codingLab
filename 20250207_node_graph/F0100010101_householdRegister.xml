@@ -1,0 +1,2444 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<IzFormOcrXml version="0.5.0">
+	<FormConfiguration>
+
+		<ExtractTable disabled="false" tableModel="table_20250206"/>
+
+		<ExtractTextRegion disabled="false" documentType="document" textEngine="craft_c"/>
+
+		<RecogString disabled="false" ocrEngine="trba_word"/>
+
+		<!-- <MlTask>false</MlTask> -->
+	</FormConfiguration>
+
+	<!-- 서식내용 시작 태그. FormSet태그는 파일내에서 한번만 사용 -->
+	<FormSet>
+
+		<!-- Form 태그는 한 종류의 서식을 정의할 때 사용.
+		여러종류의 서식을 정의할 경우에는 각 서식마다 별도의 Form 태그를 선언하고 내용을 기술.
+		FormSet 태그 하위에는 1개 이상의 Form 태그 사용가능
+		-->
+		<Form id="F0100010101" revision="1" disabled="false">
+			<!--
+				하위태그
+				FormName : 서식이름
+				FormConfig :
+				FormPage :
+				FormClassification:
+			-->
+			<FormName>주민등록등본</FormName> <!-- 서식 이름 -->
+
+			<FormConfig>
+				<Disabled>
+					<FormPage id="page1" disabled="false">
+						<FormIdentification disabled="false"/>
+						<FormData id="1" disabled="false"/>
+					</FormPage>
+				</Disabled>
+			</FormConfig>
+
+			<FormPage id="page1" header="true" footer="true">
+				<!--
+					하위태그
+					FormIdentification 태그 : 서식 식별 정보 기술. 서식처리 대상 문서인가를 판단하는 정보를 기술.
+														대상문서이면 서식처리를 수행한다.
+					FormData태그 : 한종류의 서식을 처리하기위한 하나의 탐색 방법을 기술.
+									한종의 서식에 대해서 여러 방식의 탐색 방법을 지정할 수 있으며
+									각 탐색방법은 FormData태그 별로 기술.
+									엔진에서는 모든 FormData 의 내용을 바탕으로 탐색을 수행하고 score를 계산 한 후 가장 높은 score를 갖는 form의 결과를 출력.
+				-->
+				<!--===================================================================================
+						서식식별 정보 : 문서내에 특정 문구가 존재하는지 검사
+				===================================================================================-->
+				<FormIdentification>
+					<!--===================================================================================
+					서식판별 조건1: "주민등록표" 키워드 + "등본" 키워드
+					===================================================================================-->
+					<TextIdentificationComplex>
+						<Element id="title" type="StaticText">
+							<Name>주민등록표키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="imageOrigin"/>
+											<Left unit="ImageSizeRatio">5</Left>
+											<Top unit="ImageSizeRatio">5</Top>
+											<Right unit="ImageSizeRatio">50</Right>
+											<Bottom unit="ImageSizeRatio">35</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">둥</SearchText>
+											<NewText type="text">등</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">등[욕봄]</SearchText>
+											<NewText type="text">등록</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">주등표</SearchText>
+											<NewText type="text">주민등록표</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">주등록표</SearchText>
+											<NewText type="text">주민등록표</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">주민등표</SearchText>
+											<NewText type="text">주민등록표</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="85">주민등록</SearchText>
+									<SearchText type="text" similarity="85">주민등록표</SearchText>
+								</SearchTextSet>
+								<!-- 글자크기 제한 -->
+								<!--
+								<CharSize>
+									<Height unit="imageHeightRatio" from="1.22" to="2.14"/>
+								</CharSize>
+								-->
+								<!-- 임시 -->
+								<CharSize>
+									<Height unit="imageHeightRatio" from="0.75" to="2.34"/>
+								</CharSize>
+							</SearchFieldInfo>
+						</Element>
+
+						<Element id="subtitle" type="StaticText">
+							<Name>등본키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="inElement" baseElementId="title" x="0" y="100"/>
+											<Left unit="elementAvgCharHeightRatio">0</Left>
+											<Top unit="elementAvgCharHeightRatio">-50</Top>
+											<Right unit="elementAvgCharHeightRatio">1300</Right>
+											<Bottom unit="elementAvgCharHeightRatio">250</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="85">등본</SearchText>
+								</SearchTextSet>
+								<!-- 글자크기 제한 -->
+								<!--
+								<CharSize>
+									<Height unit="imageHeightRatio" from="1.22" to="2.14"/>
+								</CharSize>
+								-->
+								<!-- 임시 -->
+								<CharSize>
+									<Height unit="imageHeightRatio" from="0.75" to="2.34"/>
+								</CharSize>
+							</SearchFieldInfo>
+						</Element>
+					</TextIdentificationComplex>
+
+					<!--===================================================================================
+					서식판별 조건2: "주민등록표등본" 키워드 + "발급확인번호" 키워드
+					===================================================================================-->
+					<TextIdentificationComplex>
+						<Element id="title" type="StaticText">
+							<Name>주민등록표등본키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="imageOrigin"/>
+											<Left unit="ImageSizeRatio">5</Left>
+											<Top unit="ImageSizeRatio">5</Top>
+											<Right unit="ImageSizeRatio">50</Right>
+											<Bottom unit="ImageSizeRatio">35</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">동</SearchText>
+											<NewText type="text">등</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">주빈</SearchText>
+											<NewText type="text">주민</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">주.민등등</SearchText>
+											<NewText type="text">주민등등</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="100">주민등등</SearchText>
+								</SearchTextSet>
+								<!-- 글자크기 제한 -->
+								<!--
+								<CharSize>
+									<Height unit="imageHeightRatio" from="1.22" to="2.14"/>
+								</CharSize>
+								-->
+								<!-- 임시 -->
+								<CharSize>
+									<Height unit="imageHeightRatio" from="0.75" to="2.34"/>
+								</CharSize>
+							</SearchFieldInfo>
+						</Element>
+
+						<Element id="verifyText3" type="StaticText">
+							<Name>발급확인번호키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="inElement" baseElementId="title" x="0" y="0"/>
+											<Left unit="elementAvgCharHeightRatio">-800</Left>
+											<Top unit="elementAvgCharHeightRatio">-500</Top>
+											<Right unit="elementAvgCharHeightRatio">500</Right>
+											<Bottom unit="elementAvgCharHeightRatio">0</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[금규]</SearchText>
+											<NewText type="text">급</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">와</SearchText>
+											<NewText type="text">확</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">안</SearchText>
+											<NewText type="text">인</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[벋빈낸]</SearchText>
+											<NewText type="text">번</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">인.호:</SearchText>
+											<NewText type="text">인번호:</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">급.인번</SearchText>
+											<NewText type="text">급확인번</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^.급..인번</SearchText>
+											<NewText type="text">발급확인번</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">급.인.호:</SearchText>
+											<NewText type="text">급확인번호:</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^.급.인..:</SearchText>
+											<NewText type="text">발급확인번호:</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^.급.인..호:</SearchText>
+											<NewText type="text">발급확인번호:</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="85">발급확인</SearchText>
+									<SearchText type="text" similarity="85">급확인번</SearchText>
+									<SearchText type="text" similarity="85">확인번호</SearchText>
+									<SearchText type="text" similarity="85">인번호:</SearchText>
+								</SearchTextSet>
+							</SearchFieldInfo>
+						</Element>
+					</TextIdentificationComplex>
+
+					<!--===================================================================================
+					서식판별 조건3: "주민등록표" 키워드 + "등본" 키워드 + + "발급확인번호" 키워드
+					===================================================================================-->
+					<TextIdentificationComplex>
+						<Element id="title" type="StaticText">
+							<Name>주민등록표키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="imageOrigin"/>
+											<Left unit="ImageSizeRatio">5</Left>
+											<Top unit="ImageSizeRatio">5</Top>
+											<Right unit="ImageSizeRatio">50</Right>
+											<Bottom unit="ImageSizeRatio">35</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="single_column" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">주빈</SearchText>
+											<NewText type="text">주민</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="100">주민</SearchText>
+								</SearchTextSet>
+								<!-- 글자크기 제한 -->
+								<!--
+								<CharSize>
+									<Height unit="imageHeightRatio" from="1.22" to="2.14"/>
+								</CharSize>
+								-->
+								<!-- 임시 -->
+								<CharSize>
+									<Height unit="imageHeightRatio" from="0.75" to="2.34"/>
+								</CharSize>
+							</SearchFieldInfo>
+						</Element>
+
+						<Element id="subtitle" type="StaticText">
+							<Name>등본키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="inElement" baseElementId="title" x="0" y="100"/>
+											<Left unit="elementAvgCharHeightRatio">200</Left>
+											<Top unit="elementAvgCharHeightRatio">-50</Top>
+											<Right unit="elementAvgCharHeightRatio">700</Right>
+											<Bottom unit="elementAvgCharHeightRatio">300</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="false" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">둥</SearchText>
+											<NewText type="text">등</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="100">등</SearchText>
+								</SearchTextSet>
+								<!-- 글자크기 제한 -->
+								<!--
+								<CharSize>
+									<Height unit="imageHeightRatio" from="1.22" to="2.14"/>
+								</CharSize>
+								-->
+								<!-- 임시 -->
+								<CharSize>
+									<Height unit="imageHeightRatio" from="0.75" to="2.34"/>
+								</CharSize>
+							</SearchFieldInfo>
+						</Element>
+
+						<Element id="verifyText3" type="StaticText">
+							<Name>발급확인번호키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="inElement" baseElementId="title" x="0" y="0"/>
+											<Left unit="elementAvgCharHeightRatio">-800</Left>
+											<Top unit="elementAvgCharHeightRatio">-500</Top>
+											<Right unit="elementAvgCharHeightRatio">500</Right>
+											<Bottom unit="elementAvgCharHeightRatio">0</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[금규]</SearchText>
+											<NewText type="text">급</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">와</SearchText>
+											<NewText type="text">확</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">안</SearchText>
+											<NewText type="text">인</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[벋빈낸]</SearchText>
+											<NewText type="text">번</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">인.호:</SearchText>
+											<NewText type="text">인번호:</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">급.인번</SearchText>
+											<NewText type="text">급확인번</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^.급..인번</SearchText>
+											<NewText type="text">발급확인번</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">급.인.호:</SearchText>
+											<NewText type="text">급확인번호:</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^.급.인..:</SearchText>
+											<NewText type="text">발급확인번호:</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^.급.인..호:</SearchText>
+											<NewText type="text">발급확인번호:</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="85">발급확인</SearchText>
+									<SearchText type="text" similarity="85">급확인번</SearchText>
+									<SearchText type="text" similarity="85">확인번호</SearchText>
+									<SearchText type="text" similarity="85">인번호:</SearchText>
+								</SearchTextSet>
+							</SearchFieldInfo>
+						</Element>
+					</TextIdentificationComplex>
+
+					<!--===================================================================================
+					서식판별 조건4: "세대주" 키워드 + "주민등록표등본" 키워드
+					===================================================================================-->
+					<TextIdentificationComplex>
+						<Element id="verifyText1" type="StaticText">
+							<Name>세대주</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="imageOrigin"/>
+											<Left unit="ImageSizeRatio">5</Left>
+											<Top unit="ImageSizeRatio">5</Top>
+											<Right unit="ImageSizeRatio">50</Right>
+											<Bottom unit="ImageSizeRatio">35</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">세[네내]</SearchText>
+											<NewText type="text">세대</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">시매주</SearchText>
+											<NewText type="text">세대주</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">세대추</SearchText>
+											<NewText type="text">세대주</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="85">세대주</SearchText>
+								</SearchTextSet>
+							</SearchFieldInfo>
+						</Element>
+
+						<Element id="title" type="StaticText">
+							<Name>주민등록표등본키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="inElement" baseElementId="verifyText1" x="0" y="0"/>
+											<Left unit="elementAvgCharHeightRatio">-100</Left>
+											<Top unit="elementAvgCharHeightRatio">-1200</Top>
+											<Right unit="elementAvgCharHeightRatio">2800</Right>
+											<Bottom unit="elementAvgCharHeightRatio">-300</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">동</SearchText>
+											<NewText type="text">등</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">주미등</SearchText>
+											<NewText type="text">주민등</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">등.표</SearchText>
+											<NewText type="text">등록표</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="85">주민</SearchText>
+									<SearchText type="text" similarity="85">등록</SearchText>
+									<SearchText type="text" similarity="85">등본</SearchText>
+								</SearchTextSet>
+								<!-- 글자크기 제한 -->
+								<!--
+								<CharSize>
+									<Height unit="imageHeightRatio" from="1.22" to="2.14"/>
+								</CharSize>
+								-->
+								<!-- 임시 -->
+								<CharSize>
+									<Height unit="imageHeightRatio" from="0.75" to="2.34"/>
+								</CharSize>
+							</SearchFieldInfo>
+						</Element>
+					</TextIdentificationComplex>
+
+					<!--===================================================================================
+					서식판별 조건5: "세대주" 키워드 + "이용지는" 키워드 + "발급확인번호" 키워드
+					===================================================================================-->
+					<TextIdentificationComplex>
+						<Element id="verifyText1" type="StaticText">
+							<Name>세대주</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="imageOrigin"/>
+											<Left unit="ImageSizeRatio">5</Left>
+											<Top unit="ImageSizeRatio">5</Top>
+											<Right unit="ImageSizeRatio">50</Right>
+											<Bottom unit="ImageSizeRatio">35</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">세[네내]</SearchText>
+											<NewText type="text">세대</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">시매주</SearchText>
+											<NewText type="text">세대주</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">세대추</SearchText>
+											<NewText type="text">세대주</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="85">세대주</SearchText>
+								</SearchTextSet>
+							</SearchFieldInfo>
+						</Element>
+
+						<Element id="verifyText2" type="StaticText">
+							<Name>이용지는키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="inElement" baseElementId="verifyText1" x="0" y="0"/>
+											<Left unit="elementAvgCharHeightRatio">0</Left>
+											<Top unit="elementAvgCharHeightRatio">-500</Top>
+											<Right unit="elementAvgCharHeightRatio">1200</Right>
+											<Bottom unit="elementAvgCharHeightRatio">0</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="70">이용지는</SearchText>
+								</SearchTextSet>
+							</SearchFieldInfo>
+						</Element>
+
+						<Element id="verifyText3" type="StaticText">
+							<Name>발급확인번호키워드</Name>
+
+							<!-- 탐색 영역 -->
+							<SearchRegionInfo>
+								<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+									<SearchRegionSet>
+										<SearchRegion>
+											<BasePosition type="inElement" baseElementId="verifyText1" x="0" y="0"/>
+											<Left unit="elementAvgCharHeightRatio">-500</Left>
+											<Top unit="elementAvgCharHeightRatio">-1600</Top>
+											<Right unit="elementAvgCharHeightRatio">1000</Right>
+											<Bottom unit="elementAvgCharHeightRatio">-1100</Bottom>
+										</SearchRegion>
+									</SearchRegionSet>
+								</SearchRegionComplex>
+							</SearchRegionInfo>
+
+							<!-- 전처리 -->
+							<PreprocessInfo>
+								<ImagePreprocessInfo/>
+								<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+								<RecogString disabled="true" language="korean" charSet=""/>
+								<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">(.)( )(.)</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<!--
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										-->
+										<CorrectionData>
+											<SearchText type="regex">반급</SearchText>
+											<NewText type="text">발급</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PreprocessInfo>
+
+							<!-- 탐색 키워드 -->
+							<SearchFieldInfo>
+								<SearchTextSet>
+									<SearchText type="text" similarity="70">발급확인번호</SearchText>
+								</SearchTextSet>
+							</SearchFieldInfo>
+						</Element>
+					</TextIdentificationComplex>
+				</FormIdentification>
+
+				<!--===================================================================================
+						서식처리정보
+				===================================================================================-->
+				<FormData id="1">
+					<!-- FormData태그 하위에는 아래의 태그로 구성
+						- Element 태그 : 문서에서 탐색해야 하는 정보를 기술. 필요한 만큼 반복해서 기술 가능
+						- OutBlock 태그 : 최종 결과 출력내용을 기술. 필요한 만큼 반복해서 기술 가능
+					-->
+
+					<!--===================================================================================
+						element 리스트
+					===================================================================================-->
+					<!-- 문서확인번호 필드 추출 서식 정보 -->
+					<Element id="1" type="StaticText">
+						<Name>문서확인번호키워드</Name>
+						<SearchRegionInfo>
+							<!-- 탐색 영역 정보
+								SearchRegionComplex 여러개 정의 가능
+								SearchRegionComplex 간 관계는 OR 개념. 즉 여러 SearchRegionComplex 를 정의 했다면 하나 이상만 만족해도 관계가 있다고 간주함.
+							-->
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">20</Right>
+										<Bottom unit="ImageSizeRatio">40</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">문서확인번호</SearchText>
+								<SearchText type="text" similarity="100">문서확인빈호</SearchText>
+								<SearchText type="text" similarity="100">문시확인번호</SearchText>
+								<SearchText type="text" similarity="70">발급확인번호</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="2" type="CharacterString">
+						<Name>문서확인번호</Name>
+
+						<!-- Content태그: 문자열의 내용을 정의
+								- type
+									- Normal : 일반문자열. StringPattern, language, CharacterSet 정보를 바탕으로 탐색한다.
+
+									<공통>
+									- Date : 날짜
+									- Currency : 통화
+
+									<한국전용>
+									- Korean.Name : 한국 이름
+									- Korean.Address : 한국 주소
+									- Korean.ResidentRegistrationNumber : 한국 주민등록번호
+
+								- Normal인 경우에만 StringPattern, language, CharacterSet 정보지정
+								- 나머지 전용 타입은 자동으로 필요데이터를 설정해서 처리함
+						-->
+						<Content type="Normal">
+							<!-- SubContent : 부가내용을 정의. 복수개 지정가능
+								type별 부가내용
+								- Date : 날짜 스타일을 지정하지 않으면 아래 스타일 중 가장 적합한 형태로 처리함
+									- YYYY년 MM월 DD일
+									- YYYY-MM-DD
+									- YYYY/MM/DD
+									- YYYY.MM.DD
+									- YYYYMMDD
+								- Korean.Name : 이름 스타일을 지정하지 않으면 아래 스타일 중 가장 적합한 형태로 처리함
+									- Hangul
+									- Hanja
+									- English
+								- Korean.Address : 탐색에 사용할 정보를 지정가능
+									- SearchByCharSet : 문자셋 구성으로만 탐색 (default)
+									- SearchByLexicon : 주소단어사전의 단어로 탐색
+								- Korean.ResidentRegistrationNumber : 출력방식 지정가능(보안처리 등)
+									- DontHide : 보안처리 안함 (default)
+									- HideAllDigit : 전체 숫자를 보안문자로 교체
+									- HideLast6Digit : 뒷자리 6숫자만 보안문자로 교체
+									- HideLast7Digit : 뒷자리 7숫자만 보안문자로 교체
+									- DateOfBirth : 생년월일만 출력
+							-->
+							<SubContent>
+							</SubContent>
+							<SubContent>
+							</SubContent>
+						</Content>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<!-- 거리 범위 시작 기준 위치. To로 지정된 엘리먼트 영역 left top 기준 x, y 위치.  값은 element 영역 크기 대비 위치 비율(0 ~ 100)-->
+										<BasePosition type="inElement" baseElementId="1" x="100" y="0"/>
+										<!-- 거리 범위
+											- unit : 거리 단위
+												- pixel : 픽셀
+												- elementAvgCharHeightRatio : 별도 지정한 엘리먼트의 평균 문자 높이 비율
+												- elementRegionHeightRatio : 별도 지정한 엘리먼트의 높이 비율
+												- elementRegionWidthRatio : 별도 지정한 엘리먼트의 폭 비율
+												- imageSizeRatio : 전체 이미지 크기 비율
+										-->
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">2800</Right>
+										<Bottom unit="elementRegionHeightRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<LanguageInfo>
+							<Language>Korean</Language>
+							<!-- 미리정의된 문자 세트
+								 - Symbol: Ascii 범위내 기호
+								 - Digit: 숫자
+								 - Alphabet: 영어알파벳 대소문자
+								 - Alphabet-lower: 영어알파벳 소문자
+								 - Alphabet-upper: 영어알파벳 대문자
+								 - Hangul: 한글
+								 - Hanja: 한자
+								 - AllChar: 모든 문자
+							-->
+							<!-- ;(세미콜론)으로 group 구분. 특정구간은 -(하이픈)으로 표기. -(하이픈)을 문자세트로 지정하려면 - -(두개연속)으로 표기 -->
+							<CharacterSet>Symbol;Digit;Alphabet-lower;Alphabet-upper;Hangul;Hanja;0-9;a-z;A-Z;!@#$%--</CharacterSet>
+						</LanguageInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- 노이즈 문자 제거 -->
+									<CorrectionData>
+										<SearchText type="regex">[_:.'\"·]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[oO]</SearchText>
+										<NewText type="text">0</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[Ili]</SearchText>
+										<NewText type="text">1</NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+							<!-- SearchText: 문자패턴
+								- type
+									- pattern : 자리수 고정된 간단한 형태의 패턴
+
+								- pattern Meta 문자
+									- \d: 숫자
+									- \h: 한글
+									- \j: 한자
+									- \a: 알파벳 대소문자
+									- \l: 알파벳 소문자
+									- \u: 알파벳 대문자
+									- \w: 모든문자 (숫자, 한글, 한자, 알파벳대소문자)
+									- []: []안의 문자중 하나
+
+								- Simple 패턴 예시
+									- 주민번호 : \d\d[01]\d[0-3]\d-[1-4]\d\d\d\d\d\d
+									- 자동차번호 : \d\d\h\d\d\d\d
+									- 날짜 : \d\d\d\d년 \d\d월 \d\d일, \d\d\d\d-\d\d-\d\d
+								-->
+								<SearchText type="pattern" similarity="70">\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- 노이즈 문자 제거 -->
+									<CorrectionData>
+										<SearchText type="regex">[_:.'\"·]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[oO]</SearchText>
+										<NewText type="text">0</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[Ili]</SearchText>
+										<NewText type="text">1</NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="3001" type="StaticText">
+						<Name>발급날짜키워드</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">40</Top>
+										<Right unit="ImageSizeRatio">20</Right>
+										<Bottom unit="ImageSizeRatio">80</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="50">용도및목적</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+					</Element>
+
+					<!-- 발급날짜 필드 추출 서식 -->
+					<Element id="3" type="CharacterString">
+						<Name>발급날짜</Name>
+						<Content type="Date" similarity="60">
+							<SubContent>YYYY년MM월DD일</SubContent>
+						</Content>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">20</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="3001" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">50</Top>
+										<Right unit="elementAvgCharHeightRatio">1000</Right>
+										<Bottom unit="elementRegionHeightRatio">200</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+					</Element>
+
+					<!-- 세대주 성명 -->
+					<Element id="4" type="StaticText">
+						<Name>세대주성명키워드</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">30</Right>
+										<Bottom unit="ImageSizeRatio">30</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="50">세대주 성명(한자)</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="5" type="FormUnit">
+						<Name>세대주 성명</Name>
+
+						<UnitRegionSet>
+							<UnitRegion>
+								<BasePosition type="inElement" baseElementId="4" x="100" y="0"/>
+								<Left unit="elementAvgCharHeightRatio">0</Left>
+								<Top unit="elementAvgCharHeightRatio">-100</Top>
+								<Right unit="elementAvgCharHeightRatio">2000</Right>
+								<Bottom unit="elementRegionHeightRatio">200</Bottom>
+							</UnitRegion>
+						</UnitRegionSet>
+
+						<!-- cell 지정 예시
+							<UnitRegion type="cell" />
+						-->
+
+						<FormUnit>
+							<Element id="501" type="CharacterString">
+								<Name>세대주 성명(한글)</Name>
+								<Content type="Korean.Name" similarity="50">
+									<SubContent>Hangul</SubContent><!-- 한글 이름 -->
+								</Content>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="formUnitRegionOrigin"/>
+												<Left unit="unitSizeRatio">0</Left>
+												<Top unit="unitSizeRatio">0</Top>
+												<Right unit="unitSizeRatio">30</Right>
+												<Bottom unit="unitSizeRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo/>
+								</PreprocessInfo>
+							</Element>
+
+							<Element id="502" type="CharacterString">
+								<Name>세대주 성명(한자)</Name>
+								<Content type="Korean.Name" similarity="50">
+									<SubContent>Hanja</SubContent><!-- 한자 이름 -->
+								</Content>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="inElement" baseElementId="501" x="100" y="0"/>
+												<Left unit="elementAvgCharHeightRatio">0</Left>
+												<Top unit="elementRegionHeightRatio">0</Top>
+												<Right unit="elementAvgCharHeightRatio">1000</Right>
+												<Bottom unit="elementRegionHeightRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo/>
+								</PreprocessInfo>
+							</Element>
+
+							<OutBlock id="501">
+								<Field idNumber="3" name="세대주 성명(한글)">
+									<ElementId>501</ElementId>
+								</Field>
+							</OutBlock>
+
+							<OutBlock id="502">
+								<Field idNumber="4" name="세대주 성명(한자)">
+									<ElementId>502</ElementId>
+								</Field>
+							</OutBlock>
+						</FormUnit>
+					</Element>
+
+					<!-- 세대구성 사유 및 일자 -->
+					<Element id="6" type="CharacterString">
+						<Name>세대구성 일자</Name>
+						<Content type="Date" similarity="70">
+							<SubContent>YYYY-MM-DD</SubContent>
+						</Content>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="5" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">1600</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">3000</Right>
+										<Bottom unit="elementRegionHeightRatio">200</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+					</Element>
+
+					<Element id="7" type="CharacterString">
+						<Name>세대구성 사유</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="6" x="0" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">-200</Top>
+										<Right unit="elementAvgCharHeightRatio">700</Right>
+										<Bottom unit="elementRegionHeightRatio">0</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<LanguageInfo>
+							<Language>Korean</Language>
+							<CharacterSet>Hangul</CharacterSet>
+						</LanguageInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="charSet" similarity="70">Hangul</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="8" type="StaticText">
+						<Name>세대구성 사유 및 일자 키워드_1</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="3" x="0" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">100</Right>
+										<Bottom unit="elementRegionHeightRatio">400</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="5" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">100</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">2000</Right>
+										<Bottom unit="elementRegionHeightRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">세대구성</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="9" type="StaticText">
+						<Name>세대구성 사유 및 일자 키워드_2</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="3" x="0" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">100</Right>
+										<Bottom unit="elementRegionHeightRatio">400</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="5" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">100</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">2000</Right>
+										<Bottom unit="elementRegionHeightRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">사유 및 일자</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="10" type="FormUnit">
+						<Name>세대구성 사유 및 일자</Name>
+
+						<UnitRegionSet>
+							<UnitRegion>
+								<BasePosition type="inElement" baseElementId="5" x="100" y="0"/>
+								<Left unit="elementAvgCharHeightRatio">1500</Left>
+								<Top unit="elementAvgCharHeightRatio">-200</Top>
+								<Right unit="elementAvgCharHeightRatio">3200</Right>
+								<Bottom unit="elementRegionHeightRatio">150</Bottom>
+							</UnitRegion>
+
+							<UnitRegion>
+								<BasePosition type="inElement" baseElementId="8" x="100" y="0"/>
+								<Left unit="elementAvgCharHeightRatio">200</Left>
+								<Top unit="elementAvgCharHeightRatio">-100</Top>
+								<Right unit="elementAvgCharHeightRatio">2000</Right>
+								<Bottom unit="elementRegionHeightRatio">150</Bottom>
+							</UnitRegion>
+
+							<UnitRegion>
+								<BasePosition type="inElement" baseElementId="9" x="100" y="0"/>
+								<Left unit="elementAvgCharHeightRatio">200</Left>
+								<Top unit="elementAvgCharHeightRatio">-200</Top>
+								<Right unit="elementAvgCharHeightRatio">2000</Right>
+								<Bottom unit="elementRegionHeightRatio">150</Bottom>
+							</UnitRegion>
+						</UnitRegionSet>
+
+						<FormUnit>
+							<Element id="1001" type="CharacterString">
+								<Name>세대구성 일자</Name>
+								<Content type="Date" similarity="70">
+									<SubContent>YYYY-MM-DD</SubContent>
+								</Content>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="formUnitRegionOrigin"/>
+												<Left unit="unitSizeRatio">0</Left>
+												<Top unit="unitSizeRatio">0</Top>
+												<Right unit="unitSizeRatio">100</Right>
+												<Bottom unit="unitSizeRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo/>
+								</PreprocessInfo>
+							</Element>
+
+							<Element id="1002" type="CharacterString">
+								<Name>세대구성 사유</Name>
+								<Content type="Normal"/>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="inElement" baseElementId="1001" x="0" y="0"/>
+												<Left unit="elementAvgCharHeightRatio">0</Left>
+												<Top unit="elementRegionHeightRatio">0</Top>
+												<Right unit="elementAvgCharHeightRatio">700</Right>
+												<Bottom unit="elementRegionHeightRatio">-200</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<LanguageInfo>
+									<Language>Korean</Language>
+									<CharacterSet>Hangul</CharacterSet>
+								</LanguageInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo/>
+								</PreprocessInfo>
+								<SearchFieldInfo>
+									<SearchTextSet>
+										<SearchText type="charSet" similarity="70">Hangul</SearchText>
+									</SearchTextSet>
+									<StringLengthRange/>
+									<RowCountRange/>
+								</SearchFieldInfo>
+							</Element>
+
+							<OutBlock id="1001">
+								<Field idNumber="5" name="세대구성 사유">
+									<ElementId>1002</ElementId>
+								</Field>
+							</OutBlock>
+
+							<OutBlock id="1002">
+								<Field idNumber="6" name="세대구성 일자">
+									<ElementId>1001</ElementId>
+								</Field>
+							</OutBlock>
+						</FormUnit>
+					</Element>
+
+					<!-- 현주소 -->
+					<Element id="13" type="StaticText">
+						<Name>현주소 키워드</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">25</Right>
+										<Bottom unit="ImageSizeRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[,.\-;:_'·=一 ]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="55">현주소</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="14" type="CharacterString">
+						<Name>현주소</Name>
+						<Content type="Korean.Address" similarity="70"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="13" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">-150</Top>
+										<Right unit="elementAvgCharHeightRatio">2000</Right>
+										<Bottom unit="elementRegionHeightRatio">300</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+					</Element>
+
+					<!-- 현주소 전입일 -->
+					<Element id="15" type="StaticText">
+						<Name>현주소 전입일 키워드</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">60</Left>
+										<Top unit="ImageSizeRatio">10</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">30</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">전입일</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="16" type="CharacterString">
+						<Name>현주소 전입일</Name>
+						<Content type="Date"  similarity="70">
+							<SubContent>YYYY-MM-DD</SubContent>
+						</Content>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="15" x="0" y="100"/>
+										<Left unit="elementRegionWidthRatio">-100</Left>
+										<Top unit="elementAvgCharHeightRatio">100</Top>
+										<Right unit="elementRegionWidthRatio">500</Right>
+										<Bottom unit="elementAvgCharHeightRatio">400</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+					</Element>
+
+					<!-- 현주소 변동일 -->
+					<Element id="17" type="StaticText">
+						<Name>현주소 변동일 키워드</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">10</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">30</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">변동일</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="18" type="CharacterString">
+						<Name>현주소 변동일</Name>
+						<Content type="Date" similarity="70">
+							<SubContent>YYYY-MM-DD</SubContent>
+						</Content>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="16" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">-100</Top>
+										<Right unit="elementAvgCharHeightRatio">1000</Right>
+										<Bottom unit="elementRegionHeightRatio">150</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="17" x="0" y="100"/>
+										<Left unit="elementRegionWidthRatio">-200</Left>
+										<Top unit="elementAvgCharHeightRatio">100</Top>
+										<Right unit="elementRegionWidthRatio">500</Right>
+										<Bottom unit="elementAvgCharHeightRatio">400</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+					</Element>
+
+					<Element id="19" type="CharacterString">
+						<Name>현주소 변동사유</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="18" x="0" y="100"/>
+										<Left unit="elementRegionWidthRatio">0</Left>
+										<Top unit="elementAvgCharHeightRatio">100</Top>
+										<Right unit="elementRegionWidthRatio">100</Right>
+										<Bottom unit="elementAvgCharHeightRatio">400</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<LanguageInfo>
+							<Language>Korean</Language>
+							<CharacterSet>Hangul</CharacterSet>
+						</LanguageInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo/>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="charSet" similarity="70">Hangul</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[\-;:_'·=]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="text" similarity="50">전입</SearchText>
+										<NewText type="text">전입</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="text" similarity="50">도로명주소</SearchText>
+										<NewText type="text">도로명주소</NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<!-- 세대원 정보 리스트 필드
+						- 세대주와의 관계
+						- 성명(한글)
+						- 성명(한자)
+						- 주민등록번호
+						- 전입일
+						- 등록일
+						- 등록상태
+						- 변동사유
+					-->
+
+					<Element id="20" type="StaticText">
+						<Name>세대원정보 리스트 번호 컬럼 타이틀</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="13" x="0" y="100"/>
+										<Left unit="elementRegionWidthRatio">0</Left>
+										<Top unit="elementAvgCharHeightRatio">400</Top>
+										<Right unit="elementRegionWidthRatio">100</Right>
+										<Bottom unit="elementAvgCharHeightRatio">1200</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">20</Top>
+										<Right unit="ImageSizeRatio">25</Right>
+										<Bottom unit="ImageSizeRatio">60</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="50">번호</SearchText>
+							</SearchTextSet>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="21" type="StaticText">
+						<Name>세대원정보 리스트 주민등록번호 컬럼 타이틀</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="20" x="100" y="50"/>
+										<Left unit="elementAvgCharHeightRatio">600</Left>
+										<Top unit="elementRegionHeightRatio">-100</Top>
+										<Right unit="elementAvgCharHeightRatio">900</Right>
+										<Bottom unit="elementRegionHeightRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">20</Left>
+										<Top unit="ImageSizeRatio">5</Top>
+										<Right unit="ImageSizeRatio">50</Right>
+										<Bottom unit="ImageSizeRatio">40</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">주민등록번호</SearchText>
+							</SearchTextSet>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="21-1" type="StaticText">
+						<Name>세대원정보 리스트 세대주와의관계 컬럼 타이틀</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">20</Top>
+										<Right unit="ImageSizeRatio">30</Right>
+										<Bottom unit="ImageSizeRatio">40</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[,.\-;:_'·=一 ]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[a-z]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[123456789]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="50">관계</SearchText>
+							</SearchTextSet>
+						</SearchFieldInfo>
+					</Element>
+
+					<Element id="22" type="FormUnit">
+						<Name>성명(한자) 주민등록번호</Name>
+
+						<FormUnit>
+							<Element id="2201" type="CharacterString">
+								<Name>주민등록번호</Name>
+								<Content type="Korean.ResidentRegistrationNumber" similarity="70"/>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="formUnitRegionOrigin"/>
+												<Left unit="unitSizeRatio">0</Left>
+												<Top unit="unitSizeRatio">30</Top>
+												<Right unit="unitSizeRatio">100</Right>
+												<Bottom unit="unitSizeRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo/>
+								</PreprocessInfo>
+								<!--
+								<PostprocessInfo>
+									<Security char="*"/>
+								</PostprocessInfo>
+								-->
+							</Element>
+
+							<Element id="2202" type="CharacterString">
+								<Name>이름(한글)</Name>
+								<Content type="Korean.Name" similarity="50">
+									<SubContent>Hangul</SubContent>
+								</Content>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="inElement" baseElementId="2201" x="0" y="0"/>
+												<Left unit="elementRegionWidthRatio">0</Left>
+												<Top unit="elementAvgCharHeightRatio">-300</Top>
+												<Right unit="elementRegionWidthRatio">100</Right>
+												<Bottom unit="elementAvgCharHeightRatio">0</Bottom>
+											</SearchRegion>
+											<SearchRegion>
+												<BasePosition type="formUnitRegionOrigin"/>
+												<Left unit="unitSizeRatio">0</Left>
+												<Top unit="unitSizeRatio">0</Top>
+												<Right unit="unitSizeRatio">30</Right>
+												<Bottom unit="unitSizeRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo/>
+								</PreprocessInfo>
+							</Element>
+
+							<Element id="2203" type="CharacterString">
+								<Name>이름(한자)</Name>
+								<Content type="Korean.Name" similarity="50">
+									<SubContent>Hanja</SubContent>
+								</Content>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="inElement" baseElementId="2202" x="100" y="0"/>
+												<Left unit="elementAvgCharHeightRatio">0</Left>
+												<Top unit="elementRegionHeightRatio">0</Top>
+												<Right unit="elementAvgCharHeightRatio">1000</Right>
+												<Bottom unit="elementRegionHeightRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="inElement" baseElementId="2201" x="0" y="0"/>
+												<Left unit="elementRegionWidthRatio">50</Left>
+												<Top unit="elementAvgCharHeightRatio">-300</Top>
+												<Right unit="elementRegionWidthRatio">150</Right>
+												<Bottom unit="elementAvgCharHeightRatio">0</Bottom>
+											</SearchRegion>
+											<SearchRegion>
+												<BasePosition type="formUnitRegionOrigin"/>
+												<Left unit="unitSizeRatio">50</Left>
+												<Top unit="unitSizeRatio">0</Top>
+												<Right unit="unitSizeRatio">100</Right>
+												<Bottom unit="unitSizeRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo/>
+								</PreprocessInfo>
+								<PostprocessInfo>
+									<RemoveSpace>true</RemoveSpace>
+								</PostprocessInfo>
+							</Element>
+
+							<OutBlock id="2201">
+								<Field idNumber="12" name="성명(한글)">
+									<ElementId>2202</ElementId>
+								</Field>
+							</OutBlock>
+
+							<OutBlock id="2202">
+								<Field idNumber="13" name="성명(한자)">
+									<ElementId>2203</ElementId>
+								</Field>
+							</OutBlock>
+
+							<OutBlock id="2203">
+								<Field idNumber="14" name="주민등록번호">
+									<ElementId>2201</ElementId>
+								</Field>
+							</OutBlock>
+						</FormUnit>
+					</Element>
+
+					<Element id="25" type="Column">
+						<Name>세대원정보 리스트 이름, 주민등록번호 컬럼</Name>
+
+						<!-- 첫줄의 cell 영역을 지정한다. 이 cell기준 아래쪽으로 필드를 탐색한다. -->
+						<FirstCellRegionSet>
+							<FirstCellRegion>
+								<BasePosition type="inElement" baseElementId="21" x="0" y="100"/>
+								<Left unit="elementAvgCharHeightRatio">-100</Left>
+								<Top unit="elementAvgCharHeightRatio">-100</Top>
+								<Right unit="elementAvgCharHeightRatio">2000</Right>
+								<Bottom unit="elementRegionHeightRatio">400</Bottom>
+							</FirstCellRegion>
+							<FirstCellRegion>
+								<BasePosition type="inElement" baseElementId="20" x="0" y="100"/>
+								<Left unit="elementAvgCharHeightRatio">600</Left>
+								<Top unit="elementAvgCharHeightRatio">0</Top>
+								<Right unit="elementAvgCharHeightRatio">3300</Right>
+								<Bottom unit="elementRegionHeightRatio">400</Bottom>
+							</FirstCellRegion>
+							<FirstCellRegion>
+								<BasePosition type="inElement" baseElementId="21-1" x="100" y="100"/>
+								<Left unit="elementAvgCharHeightRatio">-100</Left>
+								<Top unit="elementAvgCharHeightRatio">0</Top>
+								<Right unit="elementAvgCharHeightRatio">2000</Right>
+								<Bottom unit="elementRegionHeightRatio">400</Bottom>
+							</FirstCellRegion>
+						</FirstCellRegionSet>
+
+						<!-- column의 각 row의 내용을 기술
+							type : 기술된 내용 위치
+							  - element: 내용이 기술된 element 지정
+							  - included: 기술된 내용을 포함
+							allownull: 빈 row 허용 유무. (true: 내용없는 row 가능, false:  모든 row는 내용이 반드시 존재)
+						-->
+						<ColumnContent type="element" allownull="false">
+							<ElementId>22</ElementId>
+						</ColumnContent>
+
+						<!-- 기준 column id: row위치를 참고하기 위한 기준 column 을 지정하면
+							기준 column에 맞춰서 row를 추출 함
+						-->
+						<BaseColumnId></BaseColumnId>
+
+						<!-- row의 개수 범위 -->
+						<RowCountRange from="1" to=""/>
+
+						<!-- 셀, 괘선 정보 사용 유무. 지정하지 않으면 default는 false.
+							true인 경우에는 해당정보를 사용해서 추출정확도를 높인다. -->
+						<UseLayoutComponent cell="false" rulingline="false"/>
+					</Element>
+
+					<Element id="26" type="Column">
+						<Name>세대원정보 리스트 세대주와의관계 컬럼</Name>
+
+						<!-- 첫줄의 cell 영역을 지정한다. 이 cell기준 아래쪽으로 필드를 탐색한다. -->
+						<FirstCellRegionSet>
+							<FirstCellRegion>
+								<BasePosition type="inElement" baseElementId="25" x="0" y="0"/>
+								<Left unit="elementAvgCharHeightRatio">-600</Left>
+								<Top unit="elementAvgCharHeightRatio">0</Top>
+								<Right unit="elementAvgCharHeightRatio">-100</Right>
+								<Bottom unit="elementAvgCharHeightRatio">250</Bottom>
+							</FirstCellRegion>
+						</FirstCellRegionSet>
+
+						<ColumnContent type="included"  allownull="false">
+							<Element id="26-1" type="CharacterString">
+								<Content type="Normal"/>
+								<PreprocessInfo>
+									<CorrectionInfo>
+										<CorrectionDataSet>
+											<CorrectionData>
+												<SearchText type="regex">[,.\-;:_'·=一 ]</SearchText>
+												<NewText type="text"></NewText>
+											</CorrectionData>
+											<CorrectionData>
+												<SearchText type="regex">[a-z]</SearchText>
+												<NewText type="text"></NewText>
+											</CorrectionData>
+											<CorrectionData>
+												<SearchText type="regex">[123456789]</SearchText>
+												<NewText type="text"></NewText>
+											</CorrectionData>
+										</CorrectionDataSet>
+									</CorrectionInfo>
+								</PreprocessInfo>
+								<SearchFieldInfo>
+									<SearchTextSet>
+										<SearchText type="charSet" similarity="50">Hangul</SearchText>
+									</SearchTextSet>
+									<StringLengthRange/>
+									<RowCountRange/>
+								</SearchFieldInfo>
+								<LanguageInfo>
+									<Language>Korean</Language>
+									<CharacterSet>Hangul</CharacterSet>
+								</LanguageInfo>
+								<PostprocessInfo>
+									<RemoveSpace>true</RemoveSpace>
+									<CorrectionInfo>
+										<CorrectionDataSet>
+											<CorrectionData>
+												<SearchText type="regex">[\-;:_'·=一 ]</SearchText>
+												<NewText type="text"></NewText>
+											</CorrectionData>
+											<CorrectionData>
+												<SearchText type="text" similarity="50">본인</SearchText>
+												<NewText type="text">본인</NewText>
+											</CorrectionData>
+											<CorrectionData>
+												<SearchText type="text" similarity="50">자녀</SearchText>
+												<SearchText type="regex">[자작삭][녀넉]</SearchText>
+												<NewText type="text">자녀</NewText>
+											</CorrectionData>
+											<CorrectionData>
+												<SearchText type="text" similarity="50">배우자</SearchText>
+												<NewText type="text">배우자</NewText>
+											</CorrectionData>
+										</CorrectionDataSet>
+									</CorrectionInfo>
+								</PostprocessInfo>
+							</Element>
+						</ColumnContent>
+
+						<!-- 기준 column id: row위치를 참고하기 위한 기준 column 을 지정하면
+							기준 column에 맞춰서 row를 추출 함
+						-->
+						<BaseColumnId>25</BaseColumnId>
+
+						<!-- row의 개수 범위 -->
+						<RowCountRange from="1" to=""/>
+
+						<!-- 셀, 괘선 정보 사용 유무. 지정하지 않으면 default는 false.
+							true인 경우에는 해당정보를 사용해서 추출정확도를 높인다. -->
+						<UseLayoutComponent cell="false" rulingline="false"/>
+					</Element>
+
+					<Element id="27" type="FormUnit">
+						<Name>전입일, 등록일, 등록상태</Name>
+
+						<FormUnit>
+							<Element id="2701" type="CharacterString">
+								<Name>등록상태</Name>
+								<Content type="Normal"/>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="formUnitRegionOrigin"/>
+												<Left unit="unitSizeRatio">0</Left>
+												<Top unit="unitSizeRatio">30</Top>
+												<Right unit="unitSizeRatio">100</Right>
+												<Bottom unit="unitSizeRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<LanguageInfo>
+									<Language>Korean</Language>
+									<CharacterSet>Hangul</CharacterSet>
+								</LanguageInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo>
+										<CorrectionDataSet>
+											<CorrectionData>
+												<SearchText type="text" similarity="60">이하여백</SearchText>
+												<NewText type="text"></NewText>
+											</CorrectionData>
+										</CorrectionDataSet>
+									</CorrectionInfo>
+								</PreprocessInfo>
+								<SearchFieldInfo>
+									<SearchTextSet>
+										<SearchText type="charSet" similarity="50">Hangul</SearchText>
+									</SearchTextSet>
+									<StringLengthRange/>
+									<RowCountRange/>
+								</SearchFieldInfo>
+								<PostprocessInfo>
+									<RemoveSpace>true</RemoveSpace>
+									<CorrectionInfo>
+										<CorrectionDataSet>
+											<CorrectionData>
+												<SearchText type="regex">[\-;:_'·=]</SearchText>
+												<NewText type="text"></NewText>
+											</CorrectionData>
+											<CorrectionData>
+												<SearchText type="text" similarity="50">거주자</SearchText>
+												<NewText type="text">거주자</NewText>
+											</CorrectionData>
+										</CorrectionDataSet>
+									</CorrectionInfo>
+								</PostprocessInfo>
+							</Element>
+
+							<Element id="2702" type="CharacterString">
+								<Name>전입일</Name>
+								<Content type="Date" similarity="70">
+									<SubContent>YYYY-MM-DD</SubContent>
+								</Content>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="inElement" baseElementId="2701" x="0" y="0"/>
+												<Left unit="elementAvgCharHeightRatio">-700</Left>
+												<Top unit="elementAvgCharHeightRatio">-300</Top>
+												<Right unit="elementAvgCharHeightRatio">0</Right>
+												<Bottom unit="elementAvgCharHeightRatio">0</Bottom>
+											</SearchRegion>
+											<SearchRegion>
+												<BasePosition type="formUnitRegionOrigin"/>
+												<Left unit="unitSizeRatio">0</Left>
+												<Top unit="unitSizeRatio">0</Top>
+												<Right unit="unitSizeRatio">50</Right>
+												<Bottom unit="unitSizeRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo/>
+								</PreprocessInfo>
+							</Element>
+
+							<Element id="2703" type="CharacterString">
+								<Name>등록일</Name>
+								<Content type="Date" similarity="70">
+									<SubContent>YYYY-MM-DD</SubContent>
+								</Content>
+								<SearchRegionInfo>
+									<SearchRegionComplex>
+										<SearchRegionSet>
+											<SearchRegion>
+												<BasePosition type="inElement" baseElementId="2701" x="100" y="0"/>
+												<Left unit="elementAvgCharHeightRatio">-100</Left>
+												<Top unit="elementAvgCharHeightRatio">-300</Top>
+												<Right unit="elementAvgCharHeightRatio">700</Right>
+												<Bottom unit="elementAvgCharHeightRatio">0</Bottom>
+											</SearchRegion>
+											<SearchRegion>
+												<BasePosition type="formUnitRegionOrigin"/>
+												<Left unit="unitSizeRatio">50</Left>
+												<Top unit="unitSizeRatio">0</Top>
+												<Right unit="unitSizeRatio">100</Right>
+												<Bottom unit="unitSizeRatio">100</Bottom>
+											</SearchRegion>
+										</SearchRegionSet>
+									</SearchRegionComplex>
+								</SearchRegionInfo>
+								<PreprocessInfo>
+									<ImagePreprocessInfo/>
+									<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+									<RecogString disabled="true" language="korean" charSet=""/>
+									<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+									<CorrectionInfo/>
+								</PreprocessInfo>
+							</Element>
+
+							<OutBlock id="2701">
+								<Field idNumber="15" name="전입일">
+									<ElementId>2702</ElementId>
+								</Field>
+							</OutBlock>
+
+							<OutBlock id="2702">
+								<Field idNumber="16" name="등록일">
+									<ElementId>2703</ElementId>
+								</Field>
+							</OutBlock>
+
+							<OutBlock id="2703">
+								<Field idNumber="17" name="등록상태">
+									<ElementId>2701</ElementId>
+								</Field>
+							</OutBlock>
+						</FormUnit>
+					</Element>
+
+					<Element id="31" type="Column">
+						<Name>전입일, 등록일, 등록상태 컬럼</Name>
+						<FirstCellRegionSet>
+							<!-- 첫줄의 cell 영역을 지정한다. 이 cell기준 아래쪽으로 필드를 탐색한다. -->
+							<FirstCellRegion>
+								<BasePosition type="inElement" baseElementId="25" x="0" y="0"/>
+								<Left unit="elementAvgCharHeightRatio">1900</Left>
+								<Top unit="elementAvgCharHeightRatio">0</Top>
+								<Right unit="elementAvgCharHeightRatio">4100</Right>
+								<Bottom unit="elementAvgCharHeightRatio">300</Bottom>
+							</FirstCellRegion>
+						</FirstCellRegionSet>
+
+						<ColumnContent type="element" allownull="true">
+							<ElementId>27</ElementId>
+						</ColumnContent>
+
+						<!-- 기준 column id: row위치를 참고하기 위한 기준 column 을 지정하면
+							기준 column에 맞춰서 row를 추출 함
+						-->
+						<BaseColumnId>25</BaseColumnId>
+
+						<!-- row의 개수 범위 -->
+						<RowCountRange from="1" to=""/>
+
+						<!-- 셀, 괘선 정보 사용 유무. 지정하지 않으면 default는 false.
+							true인 경우에는 해당정보를 사용해서 추출정확도를 높인다. -->
+						<UseLayoutComponent cell="false" rulingline="false"/>
+					</Element>
+
+					<Element id="32" type="Column">
+						<Name>변동사유 컬럼</Name>
+						<FirstCellRegionSet>
+							<!-- 첫줄의 cell 영역을 지정한다. 이 cell기준 아래쪽으로 필드를 탐색한다. -->
+							<FirstCellRegion>
+								<BasePosition type="inElement" baseElementId="25" x="0" y="0"/>
+								<Left unit="elementAvgCharHeightRatio">3900</Left>
+								<Top unit="elementAvgCharHeightRatio">0</Top>
+								<Right unit="elementAvgCharHeightRatio">7200</Right>
+								<Bottom unit="elementAvgCharHeightRatio">300</Bottom>
+							</FirstCellRegion>
+						</FirstCellRegionSet>
+
+						<ColumnContent type="included" allownull="true">
+							<Element id="26-1" type="CharacterString">
+								<Content type="Normal"/>
+								<LanguageInfo>
+									<Language>Korean</Language>
+									<CharacterSet>Hangul</CharacterSet>
+								</LanguageInfo>
+								<PreprocessInfo>
+									<CorrectionInfo>
+										<CorrectionDataSet>
+											<CorrectionData>
+												<SearchText type="regex">[,.\-;:_'·=一 ]</SearchText>
+												<NewText type="text"></NewText>
+											</CorrectionData>
+										</CorrectionDataSet>
+									</CorrectionInfo>
+								</PreprocessInfo>
+								<SearchFieldInfo>
+									<SearchTextSet>
+										<SearchText type="charSet" similarity="50">Hangul</SearchText>
+									</SearchTextSet>
+									<AdjustFieldRegion/>
+									<StringLengthRange/>
+									<RowCountRange/>
+								</SearchFieldInfo>
+								<PostprocessInfo>
+									<RemoveSpace>true</RemoveSpace>
+									<CorrectionInfo>
+										<CorrectionDataSet>
+											<CorrectionData>
+												<SearchText type="regex">[,.\-;:_'·=一 ]</SearchText>
+												<NewText type="text"></NewText>
+											</CorrectionData>
+											<CorrectionData>
+												<SearchText type="text" similarity="50">전입</SearchText>
+												<NewText type="text">전입</NewText>
+											</CorrectionData>
+											<CorrectionData>
+												<SearchText type="text" similarity="50">출생등록</SearchText>
+												<NewText type="text">출생등록</NewText>
+											</CorrectionData>
+										</CorrectionDataSet>
+									</CorrectionInfo>
+								</PostprocessInfo>
+							</Element>
+						</ColumnContent>
+
+						<!-- 기준 column id: row위치를 참고하기 위한 기준 column 을 지정하면
+							기준 column에 맞춰서 row를 추출 함
+						-->
+						<BaseColumnId>25</BaseColumnId>
+
+						<!-- row의 개수 범위 -->
+						<RowCountRange from="1" to=""/>
+
+						<!-- 셀, 괘선 정보 사용 유무. 지정하지 않으면 default는 false.
+							true인 경우에는 해당정보를 사용해서 추출정확도를 높인다. -->
+						<UseLayoutComponent cell="false" rulingline="false"/>
+					</Element>
+
+
+					<!--===================================================================================
+						outBlock 리스트
+					===================================================================================-->
+
+					<OutBlock id="11">
+						<Field idNumber="11" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+							<ElementId>26</ElementId>
+						</Field>
+						<Field idNumber="12" name="성명(한글)" disabled="false" security="false" category="Korean.Name.Hangul" isMain="true" mapId="">
+							<ElementId>25</ElementId>
+						</Field>
+						<Field idNumber="13" name="성명(한자)" disabled="false" security="false" category="Korean.Name.Hanja" isMain="true" mapId="">
+							<ElementId>25</ElementId>
+						</Field>
+						<Field idNumber="14" name="주민등록번호" disabled="false" security="true" category="Korean.ResidentRegistrationNumber" isMain="true" mapId="">
+							<ElementId>25</ElementId>
+						</Field>
+						<Field idNumber="15" name="전입일" disabled="false" security="false" category="Date.YYYY-MM-DD" isMain="false" mapId="">
+							<ElementId>31</ElementId>
+						</Field>
+						<Field idNumber="16" name="등록일" disabled="false" security="false" category="Date.YYYY-MM-DD" isMain="false" mapId="">
+							<ElementId>31</ElementId>
+						</Field>
+						<Field idNumber="17" name="등록상태" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+							<ElementId>31</ElementId>
+						</Field>
+						<Field idNumber="18" name="변동사유" disabled="false" security="false" category="NormalText.Hangul" isMain="false" mapId="">
+							<ElementId>32</ElementId>
+						</Field>
+					</OutBlock>
+				</FormData>
+			</FormPage>
+		</Form>
+	</FormSet>
+</IzFormOcrXml>

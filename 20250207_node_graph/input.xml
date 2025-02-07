@@ -1,0 +1,86 @@
+<IzFormOcrXml version="0.5.0">
+	<FormSet>
+		<Form id="F0100010101" revision="1" disabled="false">
+			<FormPage id="page1" header="true" footer="true">
+				<FormData id="1">
+					<Element id="1" type="StaticText">
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">20</Right>
+										<Bottom unit="ImageSizeRatio">40</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+					</Element>
+					<Element id="2" type="CharacterString">
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="1" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">2800</Right>
+										<Bottom unit="elementRegionHeightRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+					</Element>
+					<Element id="3" type="CharacterString">
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="1" x="200" y="110"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">2800</Right>
+										<Bottom unit="elementRegionHeightRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+					</Element>
+					<Element id="4" type="CharacterString">
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="3" x="200" y="110"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">2800</Right>
+										<Bottom unit="elementRegionHeightRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+					</Element>
+
+					<OutBlock id="11">
+						<Field idNumber="11" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+							<ElementId>2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="11">
+						<Field idNumber="12" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+							<ElementId>3</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="12">
+						<Field idNumber="13" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+							<ElementId>4</ElementId>
+						</Field>
+					</OutBlock>
+				</FormData>
+			</FormPage>
+		</Form>
+	</FormSet>
+</IzFormOcrXml>
