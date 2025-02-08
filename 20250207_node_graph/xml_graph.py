@@ -23,6 +23,24 @@ node_size = {
 }
 
 
+def get_out_field_id(form_data, form_data_id):
+    out_field_id = []
+    if form_data is not None:
+        for block in form_data:
+            if block.tag != "OutBlock":
+                continue
+
+            for field in block:
+                field_idnumber = field.get("idNumber")
+                if field_idnumber is None:
+                    continue
+
+                out_id = f"{form_data_id}_out_{field_idnumber}"
+                out_field_id.append(out_id)
+
+    return out_field_id
+
+
 def add_edge_element(net, form_data, form_data_id):
 
     region_tag_list = ["SearchRegionInfo", "UnitRegionSet", "FirstCellRegionSet"]
@@ -39,6 +57,13 @@ def add_edge_element(net, form_data, form_data_id):
             continue
 
         net_elem_id = f"{form_data_id}_elem_{elem_id}"
+
+        # fromUnit의 OutBlock을 찾아서 OutField로 연결
+        form_unit = elem.find("FormUnit")
+        if form_unit is not None:
+            out_field_id = get_out_field_id(form_unit, net_elem_id)
+            for field_id in out_field_id:
+                net.add_edge(net_elem_id, field_id, arrows="to")
 
         if edge_inout.get(net_elem_id) is None:
             edge_inout[net_elem_id] = [0, 0]
