@@ -1,36 +1,169 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <title>PyVis Network Graph</title>
-  <style type="text/css">
-    body { font-family: sans-serif; }
-    #mynetwork { width: 100%; height: 600px; border: 1px solid lightgray; }
-    #info { width: 100%; height: 200px; border: 1px solid lightgray; white-space: pre-wrap; margin-top: 10px; }
-  </style>
-  <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
-  <link href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<div id="mynetwork"></div>
-<div id="info">노드를 클릭하면 XML 코드가 표시됩니다.</div>
-<script type="text/javascript">
-  var nodes = new vis.DataSet({{ nodes }});
-  var edges = new vis.DataSet({{ edges }});
-  var container = document.getElementById("mynetwork");
-  var data = {
-    nodes: nodes,
-    edges: edges
-  };
-  var options = {{ options }};
-  var network = new vis.Network(container, data, options);
-  network.on("click", function(params) {
-    if (params.nodes.length > 0) {
-      var nodeId = params.nodes[0];
-      var nodeData = nodes.get(nodeId);
-      document.getElementById("info").innerText = nodeData.title;
-    }
-  });
-</script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>PyVis Network with XML Viewer</title>
+    <style type="text/css">
+      body { margin:0; padding:0; overflow: hidden;}
+
+      /* 전체 컨테이너를 flex layout으로 구성 */
+      #container {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+      }
+
+      /* 좌측 그래프 영역: 최소 100px 이상 */
+      #graphContainer {
+        width: 70%;
+        min-width: 100px;
+        height: 100%;
+        background: #222222;
+      }
+
+      /* 드래그하여 사이즈 조절할 수 있는 divider */
+      #dragbar {
+        width: 5px;
+        background-color: #aaa;
+        cursor: ew-resize;
+      }
+
+      /* 우측 XML 코드 뷰어 영역 */
+      #details {
+        width: 30%;
+        min-width: 100px;
+        height: 100%;
+        overflow-y: auto;
+        background: #f0f0f0;
+        padding: 10px;
+        box-sizing: border-box;
+        color: #000;
+      }
+      pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+    <link href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+
+    <div id="container">
+      <div id="graphContainer"></div>
+      <div id="dragbar"></div>
+      <div id="details">
+        <h3>Node XML Code</h3>
+        <pre id="xmlCode">노드를 클릭하면 XML 코드가 이곳에 표시됩니다.</pre>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      // pyvis에서 전달받은 노드 및 엣지 데이터를 이용하여 vis.Network 객체 생성
+      var nodes = new vis.DataSet({{ nodes | safe }});
+      var edges = new vis.DataSet({{ edges | safe }});
+      var container = document.getElementById("graphContainer");
+      var data = { nodes: nodes, edges: edges };
+      var options = {{ options | safe }};
+      var network = new vis.Network(container, data, options);
+
+      // 노드 선택 시 밝은 색으로 변경하기 위한 매핑
+      var brightMapping = {
+          "cornflowerblue": "#b9c8f7",
+          "#d2cb7f": "#eae5be",
+          "#e76a83": "#f9b6bf",
+          "#6e3741": "#f9b6bf"
+      };
+
+      // 이전에 선택된 노드 id (없으면 null)
+      var lastSelectedNodeId = null;
+
+      // 공통 함수: 이전 노드 복원 및 현재 선택 노드의 색상 업데이트
+      function selectNode(nodeId) {
+        // 이전에 선택된 노드 복원
+        if (lastSelectedNodeId !== null && lastSelectedNodeId !== nodeId) {
+            var prevNode = nodes.get(lastSelectedNodeId);
+            if (prevNode && prevNode.origColor) {
+                nodes.update({id: lastSelectedNodeId, color: prevNode.origColor});
+            }
+        }
+        var node = nodes.get(nodeId);
+        if (node && node.origColor && brightMapping[node.origColor]) {
+            nodes.update({id: nodeId, color: brightMapping[node.origColor]});
+        }
+        lastSelectedNodeId = nodeId;
+        document.getElementById("xmlCode").innerText = node.title;
+      }
+
+      // 노드 클릭 이벤트: 클릭된 노드의 title(XML 코드)을 우측 영역에 표시
+      network.on("click", function(params) {
+        if (params.nodes.length > 0) {
+            selectNode(params.nodes[0]);
+        } else {
+            // 아무 노드도 선택되지 않은 경우, 이전 노드 복원
+            if (lastSelectedNodeId !== null) {
+                var prevNode = nodes.get(lastSelectedNodeId);
+                if (prevNode && prevNode.origColor) {
+                    nodes.update({id: lastSelectedNodeId, color: prevNode.origColor});
+                }
+            }
+            lastSelectedNodeId = null;
+            document.getElementById("xmlCode").innerText = "노드를 클릭하면 XML 코드가 이곳에 표시됩니다.";
+        }
+      });
+
+      // 노드 드래그 시작 이벤트 처리: 마우스 다운해서 드래그할 때도 선택 효과 적용
+      network.on("dragStart", function(params) {
+          if (params.nodes.length > 0) {
+              selectNode(params.nodes[0]);
+          }
+      });
+
+      // 드래그로 좌측/우측 영역의 사이즈 조절 기능 구현
+      var dragbar = document.getElementById("dragbar");
+      var containerEl = document.getElementById("container");
+      var leftSide = document.getElementById("graphContainer");
+      var rightSide = document.getElementById("details");
+      var dragging = false;
+
+      dragbar.addEventListener("mousedown", function(e) {
+          e.preventDefault();
+          dragging = true;
+      });
+
+      document.addEventListener("mousemove", function(e) {
+          if (!dragging) return;
+          var containerWidth = containerEl.offsetWidth;
+          var pointerRelativeX = e.clientX - containerEl.offsetLeft;
+          // 최소, 최대 폭: 각각 100px 이상 유지
+          var minLeft = 100;
+          var maxLeft = containerWidth - 100 - dragbar.offsetWidth;
+          if (pointerRelativeX < minLeft) pointerRelativeX = minLeft;
+          if (pointerRelativeX > maxLeft) pointerRelativeX = maxLeft;
+          // 백분율로 변환
+          var leftPercent = (pointerRelativeX / containerWidth) * 100;
+          var rightPercent = 100 - leftPercent - (dragbar.offsetWidth / containerWidth) * 100;
+          leftSide.style.width = leftPercent + "%";
+          rightSide.style.width = rightPercent + "%";
+      });
+
+      document.addEventListener("mouseup", function(e) {
+        dragging = false;
+      });
+
+      // 창 크기 변경 시 현재 픽셀 값을 백분율로 재계산하여 적용
+      window.addEventListener("resize", function() {
+          var containerWidth = containerEl.offsetWidth;
+          var leftWidth = leftSide.offsetWidth;
+          var rightWidth = rightSide.offsetWidth;
+          // 최소폭을 강제 (이미 CSS로 지정되어 있으므로, 여기서는 백분율 변환만 수행)
+          var leftPercent = (leftWidth / containerWidth) * 100;
+          var rightPercent = (rightWidth / containerWidth) * 100;
+          leftSide.style.width = leftPercent + "%";
+          rightSide.style.width = rightPercent + "%";
+      });
+    </script>
+
+  </body>
 </html>
