@@ -4,6 +4,7 @@
 			<FormPage id="page1" header="true" footer="true">
 				<FormData id="1">
 					<Element id="1" type="StaticText">
+						<Name>주민등록표키워드</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
 								<SearchRegionSet>
@@ -19,6 +20,7 @@
 						</SearchRegionInfo>
 					</Element>
 					<Element id="2" type="CharacterString">
+						<Name>주민등록표키워드</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
 								<SearchRegionSet>
@@ -34,6 +36,7 @@
 						</SearchRegionInfo>
 					</Element>
 					<Element id="3" type="CharacterString">
+						<Name>주민등록표키워드</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
 								<SearchRegionSet>
@@ -49,6 +52,7 @@
 						</SearchRegionInfo>
 					</Element>
 					<Element id="4" type="CharacterString">
+						<Name>주민등록표키워드</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
 								<SearchRegionSet>

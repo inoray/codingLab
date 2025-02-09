@@ -2424,16 +2424,16 @@
 						<Field idNumber="14" name="주민등록번호" disabled="false" security="true" category="Korean.ResidentRegistrationNumber" isMain="true" mapId="">
 							<ElementId>25</ElementId>
 						</Field>
-						<Field idNumber="15" name="전입일" disabled="false" security="false" category="Date.YYYY-MM-DD" isMain="false" mapId="">
+						<Field idNumber="15" name="전입일" disabled="true" security="false" category="Date.YYYY-MM-DD" isMain="false" mapId="">
 							<ElementId>31</ElementId>
 						</Field>
-						<Field idNumber="16" name="등록일" disabled="false" security="false" category="Date.YYYY-MM-DD" isMain="false" mapId="">
+						<Field idNumber="16" name="등록일" disabled="true" security="false" category="Date.YYYY-MM-DD" isMain="false" mapId="">
 							<ElementId>31</ElementId>
 						</Field>
-						<Field idNumber="17" name="등록상태" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+						<Field idNumber="17" name="등록상태" disabled="true" security="false" category="NormalText.Hangul" isMain="true" mapId="">
 							<ElementId>31</ElementId>
 						</Field>
-						<Field idNumber="18" name="변동사유" disabled="false" security="false" category="NormalText.Hangul" isMain="false" mapId="">
+						<Field idNumber="18" name="변동사유" disabled="true" security="false" category="NormalText.Hangul" isMain="false" mapId="">
 							<ElementId>32</ElementId>
 						</Field>
 					</OutBlock>

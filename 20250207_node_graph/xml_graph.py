@@ -254,7 +254,7 @@ def gen_graph_from_xml(xml_file):
     return net
 
 
-def gen_pyvis_html(net, template_path):
+def gen_pyvis_html(xml_file):
     """
     PyVis Network 객체를 HTML로 변환
 
@@ -265,22 +265,21 @@ def gen_pyvis_html(net, template_path):
     Returns:
         str: HTML 코드
     """
-
-    net.set_template(template_path)
+    net = gen_graph_from_xml(xml_file)
+    net.set_template(args.template_path)
     # net.show_buttons(filter_=['physics'])  # 물리 시뮬레이션 버튼만 표시
     html = net.generate_html()
 
-    return html
+    return html, net
 
 
-def show_in_browser(net):
+def show_in_browser(html, net):
     """
     브라우저에서 PyVis Network 객체를 시각화
 
     Args:
         net (Network): Network 객체
     """
-    html = gen_pyvis_html(net, args.template_path)
 
     # 그래프를 HTML 파일로 생성하고 브라우저에서 열기
     with open("pyvis_graph.html", mode='w', encoding='utf-8') as fp:
@@ -289,26 +288,25 @@ def show_in_browser(net):
     net.show("pyvis_graph.html", notebook=False)
 
 
-def show_in_webview(net):
+def show_in_webview(html):
     """
     웹뷰를 사용하여 PyVis Network 객체를 시각화
 
     Args:
         net (Network): Network 객체
     """
-    html = gen_pyvis_html(net, args.template_path)
     webview.create_window("PyVis Network with XML Viewer", html=html, maximized=True)
     webview.start()
 
 
 def main():
 
-    net = gen_graph_from_xml(args.xml_path)
+    html, net = gen_pyvis_html(args.xml_path)
 
     if args.view_browser:
-        show_in_browser(net)
+        show_in_browser(html, net)
     else:
-        show_in_webview(net)
+        show_in_webview(html)
 
 
 if __name__ == "__main__":
