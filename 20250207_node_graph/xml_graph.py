@@ -124,6 +124,9 @@ def prettyxml(raw_xml):
     except Exception:
         pretty_xml = raw_xml
 
+    pretty_xml = pretty_xml.replace('<?xml version="1.0" encoding="utf-8"?>\r', "")
+    pretty_xml = pretty_xml.replace("\r", "\r\r")
+
     return pretty_xml
 
 

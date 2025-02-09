@@ -14,16 +14,19 @@ if pyside:
                                QHBoxLayout, QPushButton, QLabel, QFileDialog, QFrame)
     from PySide6.QtWebEngineWidgets import QWebEngineView
     from PySide6.QtCore import QUrl
+    from PySide6.QtGui import QIcon
 else:
     from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                             QHBoxLayout, QPushButton, QLabel, QFileDialog, QFrame)
     from PyQt5.QtWebEngineWidgets import QWebEngineView
     from PyQt5.QtCore import QUrl
+    from PyQt5.QtGui import QIcon
 
 class HTMLViewerApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Form Xml Relation Viewer")
+        self.setWindowIcon(QIcon('./icon/title_icon.svg'))
         self.setGeometry(100, 100, 1200, 800)
 
         # 메인 위젯 설정
@@ -133,7 +136,7 @@ def main():
 
     # 메인 윈도우 생성 및 표시
     viewer = HTMLViewerApp()
-    viewer.show()
+    viewer.showMaximized()
 
     # 애플리케이션 실행
     sys.exit(app.exec())
