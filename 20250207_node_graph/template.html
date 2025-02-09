@@ -75,8 +75,15 @@
         padding: 20px;
         box-sizing: border-box;
         border-top: 1px solid #ccc;
+        background-color: #282c34;
+        color: #abb2bf; /* 텍스트 색상도 테마에 맞게 조정 */
       }
       #physicsContainer h3 { margin-top: 0; }
+
+      #physicsControlPanel {
+        background-color: #282c34;
+        color: #abb2bf; /* 텍스트 색상도 테마에 맞게 조정 */
+      }
 
       /* 슬라이더 그룹: 모던한 디자인 적용 */
       .sliderGroup {
@@ -172,9 +179,32 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
+
+        background-color: #3e4451;
+        color: #abb2bf;
+        border: none;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 5px;
       }
     </style>
     <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+    <link href="https://unpkg.com/vis-network@9.1.2/dist/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- highlight.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <style type="text/css">
+      body { margin: 0; padding: 0; }
+      pre { white-space: pre-wrap; word-wrap: break-word; }
+      /* 코드 내 줄바꿈 보존 */
+      pre code {
+        white-space: pre-wrap;
+      }
+    </style>
+    <!-- highlight.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
   </head>
   <body>
     <div id="container">
@@ -182,21 +212,22 @@
       <div id="dragbar"></div>
       <div id="details">
         <!-- XML 코드 출력 영역 -->
-        <div id="xmlContainer">
-          <h3>Node XML Code</h3>
-          <pre id="xmlCode">노드를 클릭하면 XML 코드가 이곳에 표시됩니다.</pre>
+        <div id="xmlContainer" class="hljs">
+          <h3 class="hljs">Node XML Code</h3>
+          <!-- 코드 블록 사용 -->
+          <pre><code class="xml" id="xmlCode">노드를 클릭하면 XML 코드가 이곳에 표시됩니다.</code></pre>
         </div>
         <!-- 수평 드래그바 -->
         <div id="horizontalDragbar"></div>
         <!-- 물리 제어 패널 -->
-        <div id="physicsContainer">
-          <h3>Physics Controls</h3>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <div style="display: flex; align-items: center;">
+        <div id="physicsContainer" class="hljs">
+          <h3 class="hljs">Physics Controls</h3>
+          <div class="hljs" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div class="hljs" style="display: flex; align-items: center;">
               <!-- 선택형 스위치 (왼쪽 정렬) -->
-              <label class="switch">
+              <label class="switch hljs">
                 <input type="checkbox" id="physicsCheckbox" onchange="togglePhysics()" checked>
-                <span class="slider"></span>
+                <span class="slider hljs"></span>
               </label>
               <span style="vertical-align: middle; font-size: 16px; margin-left: 10px;">Physics Enabled</span>
             </div>
@@ -205,24 +236,24 @@
               <button id="resetPhysicsButton" onclick="resetPhysicsParameters()">Reset</button>
             </div>
           </div>
-          <div class="sliderGroup">
-            <label for="gravity">Gravity: <span id="gravityValue"></span></label>
+          <div class="sliderGroup hljs">
+            <label for="gravity" class="hljs"><span class="hljs">Gravity: </span><span id="gravityValue" class="hljs"></span></label>
             <input type="range" id="gravity" min="-200" max="0" step="1">
           </div>
-          <div class="sliderGroup">
-            <label for="central_gravity">Central Gravity: <span id="centralGravityValue"></span></label>
+          <div class="sliderGroup hljs">
+            <label for="central_gravity"><span class="hljs">Central Gravity: </span><span id="centralGravityValue" class="hljs"></span></label>
             <input type="range" id="central_gravity" min="0" max="0.1" step="0.001">
           </div>
-          <div class="sliderGroup">
-            <label for="spring_length">Spring Length: <span id="springLengthValue"></span></label>
+          <div class="sliderGroup hljs">
+            <label for="spring_length" class="hljs"><span class="hljs">Spring Length: </span><span id="springLengthValue" class="hljs"></span></label>
             <input type="range" id="spring_length" min="0" max="300" step="1">
           </div>
-          <div class="sliderGroup">
-            <label for="spring_strength">Spring Strength: <span id="springStrengthValue"></span></label>
+          <div class="sliderGroup hljs">
+            <label for="spring_strength" class="hljs"><span class="hljs">Spring Strength: </span><span id="springStrengthValue" class="hljs"></span></label>
             <input type="range" id="spring_strength" min="0" max="1" step="0.01">
           </div>
-          <div class="sliderGroup">
-            <label for="damping">Damping: <span id="dampingValue"></span></label>
+          <div class="sliderGroup hljs">
+            <label for="damping" class="hljs"><span class="hljs">Damping: </span><span id="dampingValue" class="hljs"></span></label>
             <input type="range" id="damping" min="0" max="1" step="0.01">
           </div>
         </div>
@@ -258,7 +289,10 @@
           nodes.update({ id: nodeId, color: brightMapping[node.origColor] });
         }
         lastSelectedNodeId = nodeId;
-        document.getElementById("xmlCode").innerText = node.title;
+        document.getElementById("xmlCode").textContent  = node.xml_code;
+
+        // highlight.js를 이용해 XML 하이라이트 적용
+        hljs.highlightElement(document.getElementById("xmlCode"));
       }
       network.on("click", function(params) {
         if (params.nodes.length > 0) {

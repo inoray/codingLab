@@ -169,7 +169,7 @@ def add_node_as_element(net, form_data, form_data_id):
         raw_xml = ET.tostring(elem, encoding='utf-8').decode('utf-8')
         pretty_xml = prettyxml(raw_xml)
 
-        net.add_node(n_id=net_elem_id, label=node_label, title=pretty_xml)
+        net.add_node(n_id=net_elem_id, label=node_label, title=name_elem.text.strip(), xml_code=pretty_xml)
 
     edge_inout_cur = add_edge_element(net, form_data, form_data_id)
     edge_inout.update(edge_inout_cur)
@@ -196,10 +196,10 @@ def add_node_as_outfield(net, form_data, form_data_id):
             size = node_size["field"]  # 기본 OutField 크기
 
             # Field 노드의 XML 내용을 title로 사용 (pretty print)
-            raw_field_xml = ET.tostring(field, encoding='utf-8').decode('utf-8')
-            pretty_field_xml = prettyxml(raw_field_xml)
+            raw_xml = ET.tostring(field, encoding='utf-8').decode('utf-8')
+            pretty_xml = prettyxml(raw_xml)
 
-            net.add_node(n_id=out_id, label=label, title=pretty_field_xml,
+            net.add_node(n_id=out_id, label=label, title=field_name, xml_code=pretty_xml,
                         color=color, size=size, origColor=color)
 
             # OutField 내의 모든 <ElementId>에 대해 엣지 추가 (OutField → 해당 Element)

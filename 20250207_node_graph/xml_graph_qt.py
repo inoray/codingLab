@@ -14,13 +14,13 @@ if pyside:
                                QHBoxLayout, QPushButton, QLabel, QFileDialog, QFrame)
     from PySide6.QtWebEngineWidgets import QWebEngineView
     from PySide6.QtCore import QUrl
-    from PySide6.QtGui import QIcon
+    from PySide6.QtGui import QIcon, QColor
 else:
     from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                             QHBoxLayout, QPushButton, QLabel, QFileDialog, QFrame)
     from PyQt5.QtWebEngineWidgets import QWebEngineView
     from PyQt5.QtCore import QUrl
-    from PyQt5.QtGui import QIcon
+    from PyQt5.QtGui import QIcon, QColor
 
 class HTMLViewerApp(QMainWindow):
     def __init__(self):
@@ -78,6 +78,7 @@ class HTMLViewerApp(QMainWindow):
         self.web_view = QWebEngineView()
         self.web_view.setMinimumWidth(400)
         self.layout.addWidget(self.web_view)
+        self.web_view.page().setBackgroundColor(QColor("#282c34"))
 
     def select_html_file(self):
         file_path, _ = QFileDialog.getOpenFileName(
@@ -110,10 +111,13 @@ class HTMLViewerApp(QMainWindow):
                 background-color: #2b2b2b;
             }
             QFrame {
-                background-color: #333333;
+                background-color: #282c34;
                 border-radius: 5px;
                 padding: 10px;
                 margin: 5px;
+            }
+            QWebEngineView {
+                background-color: #282c34;
             }
             QPushButton {
                 background-color: #0d6efd;
@@ -126,6 +130,7 @@ class HTMLViewerApp(QMainWindow):
                 background-color: #0b5ed7;
             }
             QLabel {
+                color: #abb2bf;
                 padding: 5px;
             }
         """)
