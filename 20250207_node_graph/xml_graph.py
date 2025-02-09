@@ -116,6 +116,17 @@ def set_node_attribute(net, edge_inout):
         # print(f'node_id: {node_id}, in: {inout[0]}, out: {inout[1]}, color: {color}, size: {size}')
 
 
+def prettyxml(raw_xml):
+    raw_xml = raw_xml.replace("\t", "").replace("\n", "").replace("\r", "")
+
+    try:
+        pretty_xml = minidom.parseString(raw_xml).toprettyxml(indent="  ", newl="\r", encoding="utf-8").decode('utf-8')
+    except Exception:
+        pretty_xml = raw_xml
+
+    return pretty_xml
+
+
 def add_node_as_element(net, form_data, form_data_id):
     """
     PyVis Network 객체에 Element 노드 추가
@@ -153,10 +164,7 @@ def add_node_as_element(net, form_data, form_data_id):
 
         # 해당 노드의 XML 코드를 pretty print
         raw_xml = ET.tostring(elem, encoding='utf-8').decode('utf-8')
-        try:
-            pretty_xml = minidom.parseString(raw_xml).toprettyxml(indent="  ", newl="\r", encoding="utf-8").decode('utf-8')
-        except Exception:
-            pretty_xml = raw_xml
+        pretty_xml = prettyxml(raw_xml)
 
         net.add_node(n_id=net_elem_id, label=node_label, title=pretty_xml)
 
@@ -186,10 +194,7 @@ def add_node_as_outfield(net, form_data, form_data_id):
 
             # Field 노드의 XML 내용을 title로 사용 (pretty print)
             raw_field_xml = ET.tostring(field, encoding='utf-8').decode('utf-8')
-            try:
-                pretty_field_xml = minidom.parseString(raw_field_xml).toprettyxml(indent="    ")
-            except Exception:
-                pretty_field_xml = raw_field_xml
+            pretty_field_xml = prettyxml(raw_field_xml)
 
             net.add_node(n_id=out_id, label=label, title=pretty_field_xml,
                         color=color, size=size, origColor=color)
