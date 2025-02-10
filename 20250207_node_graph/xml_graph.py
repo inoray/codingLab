@@ -1,3 +1,4 @@
+import re
 from pyvis.network import Network
 import xml.etree.ElementTree as ET
 from xml.dom  import minidom
@@ -78,8 +79,26 @@ def add_edge_element(net, form_data, form_data_id):
         if region_info is None:
             continue
 
-        for bp in region_info.findall(".//BasePosition[@baseElementId]"):
-            base_id = bp.get('baseElementId')
+        for bp in region_info.iter():
+            type = bp.attrib.get('type')
+            if type is None:
+                type = bp.attrib.get('basePositionType')
+            if type is None:
+                continue
+
+            if not type in ['imageOrigin']:
+                continue
+
+            base_id = form_data_id
+            net.add_edge(net_elem_id, base_id)
+
+            edge_in = edge_inout.get(base_id, [0,0])
+            edge_inout[base_id] = [edge_in[0] + 1, edge_in[1]]
+            edge_out = edge_inout.get(net_elem_id, [0,0])
+            edge_inout[net_elem_id] = [edge_out[0], edge_out[1] + 1]
+
+        for bp in region_info.iter():
+            base_id = bp.attrib.get('baseElementId')
             if base_id is None:
                 continue
 
@@ -126,7 +145,7 @@ def set_node_attribute(net, edge_inout):
             size = node_size["dead"]
         else:
             color = node_color["elem_start"] if inout[1] == 0 else node_color["elem"]
-            size = node_size["elem"] + inout[0] * 5
+            size = node_size["elem"] + inout[0] * 3
 
         node = net.get_node(node_id)
         node["color"] = color
@@ -139,13 +158,17 @@ def set_node_attribute(net, edge_inout):
 def prettyxml(raw_xml):
     raw_xml = raw_xml.replace("\t", "").replace("\n", "").replace("\r", "")
 
+    # > 와 < 사이의 모든 공백을 모두제거. 정규식으로 처리
+    raw_xml = re.sub(r'>\s+<', '><', raw_xml)
+    pretty_xml = raw_xml
+
     try:
         pretty_xml = minidom.parseString(raw_xml).toprettyxml(indent="  ", newl="\r", encoding="utf-8").decode('utf-8')
     except Exception:
         pretty_xml = raw_xml
 
     pretty_xml = pretty_xml.replace('<?xml version="1.0" encoding="utf-8"?>\r', "")
-    pretty_xml = pretty_xml.replace("\r", "\r\r")
+    # pretty_xml = pretty_xml.replace("\r", "\r\r")
 
     return pretty_xml
 
@@ -173,11 +196,6 @@ def add_node_as_element(net, form_data, form_data_id):
 
         net_elem_id = f"{form_data_id}_elem_{elem_id}"  # FormData id와 Element id를 합침
 
-        form_unit = elem.find("FormUnit")
-        if form_unit is not None:
-            edge_inout_form_unit = gen_form_data_graph(net, form_unit, net_elem_id)
-            edge_inout.update(edge_inout_form_unit)
-
         # 각 노드의 label에 id와 Name을 함께 표시
         # 만약 <Name> 태그가 존재하면 그 텍스트를 가져오고, 없으면 id만 사용합니다.
         node_label = f"elem {elem_id}"
@@ -190,6 +208,11 @@ def add_node_as_element(net, form_data, form_data_id):
         pretty_xml = prettyxml(raw_xml)
 
         net.add_node(n_id=net_elem_id, label=node_label, title=name_elem.text.strip(), xml_code=pretty_xml)
+
+        form_unit = elem.find("FormUnit")
+        if form_unit is not None:
+            edge_inout_form_unit = gen_form_data_graph(net, form_unit, net_elem_id)
+            edge_inout.update(edge_inout_form_unit)
 
     edge_inout_cur = add_edge_element(net, form_data, form_data_id)
     edge_inout.update(edge_inout_cur)
@@ -292,7 +315,11 @@ def gen_graph_from_xml(xml_file):
             for form_data in form_Page:
                 if form_data.tag != "FormData":
                     continue
-                form_data_id = f"{form.get('id')}_page_{form_Page.get('id')}_data_{form_data.get('id')}"
+                form_data_id = f"{form.get('id')}-{form_Page.get('id')}-{form_data.get('id')}"
+
+                # 이미지 노드 추가
+                net.add_node(n_id=form_data_id, label="image", title=form_data_id, xml_code=f"image, {form_data_id}")
+
                 edge_inout_cur = gen_form_data_graph(net, form_data, form_data_id)
                 edge_inout.update(edge_inout_cur)
 
