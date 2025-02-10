@@ -1,6 +1,7 @@
 from xml_graph import *
 
 pyside = True
+__version__ = "0.1.0"
 
 # ===============================================
 # GUI 생성
@@ -11,23 +12,34 @@ import os
 
 if pyside:
     from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
-                               QHBoxLayout, QPushButton, QLabel, QFileDialog, QFrame)
+                               QHBoxLayout, QPushButton, QLabel, QFileDialog, QFrame, QMessageBox)
     from PySide6.QtWebEngineWidgets import QWebEngineView
     from PySide6.QtCore import QUrl
-    from PySide6.QtGui import QIcon, QColor
+    from PySide6.QtGui import QIcon, QColor, QAction
 else:
     from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
-                            QHBoxLayout, QPushButton, QLabel, QFileDialog, QFrame)
+                            QHBoxLayout, QPushButton, QLabel, QFileDialog, QFrame, QMessageBox)
     from PyQt5.QtWebEngineWidgets import QWebEngineView
     from PyQt5.QtCore import QUrl
-    from PyQt5.QtGui import QIcon, QColor
+    from PyQt5.QtGui import QIcon, QColor, QAction
 
 class HTMLViewerApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Form Xml Relation Viewer")
+        self.setWindowTitle(f"Form Xml Relation Viewer v{QApplication.applicationVersion()}")
         self.setWindowIcon(QIcon('./icon/title_icon.svg'))
         self.setGeometry(100, 100, 1200, 800)
+
+        # 상태바에 버전 정보 표시
+        self.statusBar().showMessage(f"Version: {__version__}")
+
+        # 메뉴바에 Help 메뉴 및 About 액션 추가
+        menubar = self.menuBar()
+        help_menu = menubar.addMenu("&Help")
+
+        about_action = QAction("About", self)
+        about_action.triggered.connect(self.show_about_dialog)
+        help_menu.addAction(about_action)
 
         # 메인 위젯 설정
         main_widget = QWidget()
@@ -44,6 +56,16 @@ class HTMLViewerApp(QMainWindow):
 
         # 스타일 설정
         self.apply_styles()
+
+    def show_about_dialog(self):
+        # About 다이얼로그에 버전 정보와 추가 설명을 포함
+        about_text = (
+            f"<h3>Form Xml Relation Viewer</h3>"
+            f"<p>Version: {__version__}</p>"
+            "<p>서식xml의 연결 관계정보를 보여주는 프로그램입니다.</p>"
+            "<p>개발자: shkim</p>"
+        )
+        QMessageBox.about(self, "About Form Xml Relation Viewer", about_text)
 
     def create_sidebar(self):
         # 사이드바 프레임
@@ -138,6 +160,7 @@ class HTMLViewerApp(QMainWindow):
 def main():
     # Qt 애플리케이션 생성
     app = QApplication(sys.argv)
+    app.setApplicationVersion(__version__)
 
     # 메인 윈도우 생성 및 표시
     viewer = HTMLViewerApp()

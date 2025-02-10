@@ -14,12 +14,14 @@ node_color = {
     "elem_start": "#d2cb7f",
     "elem": "cornflowerblue",
     "field_enabled": "#e76a83",
-    "field_disabled": "#6e3741"
+    "field_disabled": "#6e3741",
+    "dead": "#52fff8"
 }
 
 node_size = {
     "elem": 10,
-    "field": 15
+    "field": 15,
+    "dead": 40
 }
 
 
@@ -63,7 +65,7 @@ def add_edge_element(net, form_data, form_data_id):
         if form_unit is not None:
             out_field_id = get_out_field_id(form_unit, net_elem_id)
             for field_id in out_field_id:
-                net.add_edge(net_elem_id, field_id, arrows="to")
+                net.add_edge(net_elem_id, field_id)
 
         if edge_inout.get(net_elem_id) is None:
             edge_inout[net_elem_id] = [0, 0]
@@ -82,7 +84,13 @@ def add_edge_element(net, form_data, form_data_id):
                 continue
 
             base_id = f"{form_data_id}_elem_{base_id}"
-            net.add_edge(net_elem_id, base_id, arrows="to")
+            try:
+                net.add_edge(net_elem_id, base_id)
+            except Exception as e:
+                base_id = f"_dead_{base_id}"
+                label = f"dead, elem {bp.get('baseElementId')}"
+                net.add_node(n_id=base_id, label=label, title=label, xml_code=label)
+                net.add_edge(net_elem_id, base_id)
 
             edge_in = edge_inout.get(base_id, [0,0])
             edge_inout[base_id] = [edge_in[0] + 1, edge_in[1]]
@@ -97,6 +105,13 @@ def add_edge_element(net, form_data, form_data_id):
 
 
 def set_node_attribute(net, edge_inout):
+    """
+    PyVis Network 객체의 노드 속성 설정
+
+    Args:
+        net (Network): Network 객체
+        edge_inout (Dictionary): 각노드의 edge in/out 정보를 담은 딕셔너리
+    """
 
     # print("set_node_attribute")
     # edge 정보를 바탕으로 out_edge와 in_edge 개수를 파악하여 색상과 크기 설정
@@ -105,8 +120,13 @@ def set_node_attribute(net, edge_inout):
         if "_out_" in node_id:
             continue
 
-        color = node_color["elem_start"] if inout[1] == 0 else node_color["elem"]
-        size = node_size["elem"] + inout[0] * 5
+        if "_dead_" in node_id:
+            # dead node는 눈에 띄게 표시해 줘야 한다.
+            color = node_color["dead"]
+            size = node_size["dead"]
+        else:
+            color = node_color["elem_start"] if inout[1] == 0 else node_color["elem"]
+            size = node_size["elem"] + inout[0] * 5
 
         node = net.get_node(node_id)
         node["color"] = color
@@ -176,7 +196,7 @@ def add_node_as_element(net, form_data, form_data_id):
     return edge_inout
 
 
-def add_node_as_outfield(net, form_data, form_data_id):
+def add_node_as_outfield(net, edge_inout, form_data, form_data_id):
 
     for block in form_data:
         if block.tag != "OutBlock":
@@ -207,7 +227,17 @@ def add_node_as_outfield(net, form_data, form_data_id):
                 target_id = elem_id_tag.text.strip()
                 target_id = f"{form_data_id}_elem_{target_id}"
                 # 엣지를 추가 (화살표는 Element 노드 방향)
-                net.add_edge(out_id, target_id, arrows="to")
+                try:
+                    net.add_edge(out_id, target_id)
+                except Exception as e:
+                    target_id = f"_dead_{target_id}"
+                    label = f"dead, elem {elem_id_tag.text.strip()}"
+                    net.add_node(n_id=target_id, label=label, title=label, xml_code=label)
+                    net.add_edge(out_id, target_id)
+
+                    # node의 색상, 크기를 적용하기 위해서 edge_inout에 추가
+                    # dead node는 눈에 띄게 표시해 줘야 한다.
+                    edge_inout[target_id] = [0,0]
 
 
 def gen_form_data_graph(net, form_data, form_data_id):
@@ -225,7 +255,7 @@ def gen_form_data_graph(net, form_data, form_data_id):
     edge_inout = add_node_as_element(net, form_data, form_data_id)
 
     # OutField 노드 추가
-    add_node_as_outfield(net, form_data, form_data_id)
+    add_node_as_outfield(net, edge_inout, form_data, form_data_id)
 
     return edge_inout
 
@@ -253,10 +283,18 @@ def gen_graph_from_xml(xml_file):
 
     # 모든 <Element> 태그를 id 기준으로 저장 (key: id, value: Element 객체)
     edge_inout = {}
-    for form_data in root.iter('FormData'):
-        form_data_id = form_data.get('id')
-        edge_inout_cur = gen_form_data_graph(net, form_data, form_data_id)
-        edge_inout.update(edge_inout_cur)
+    for form in root.iter('Form'):
+        if form.tag != "Form":
+            continue
+        for form_Page in form:
+            if form_Page.tag != "FormPage":
+                continue
+            for form_data in form_Page:
+                if form_data.tag != "FormData":
+                    continue
+                form_data_id = f"{form.get('id')}_page_{form_Page.get('id')}_data_{form_data.get('id')}"
+                edge_inout_cur = gen_form_data_graph(net, form_data, form_data_id)
+                edge_inout.update(edge_inout_cur)
 
     set_node_attribute(net, edge_inout)
     return net

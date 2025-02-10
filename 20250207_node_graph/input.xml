@@ -67,6 +67,22 @@
 							</SearchRegionComplex>
 						</SearchRegionInfo>
 					</Element>
+					<Element id="4" type="CharacterString">
+						<Name>주민등록표키워드</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="dead_elem" x="200" y="110"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">2800</Right>
+										<Bottom unit="elementRegionHeightRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+					</Element>
 
 					<OutBlock id="11">
 						<Field idNumber="11" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
@@ -79,8 +95,14 @@
 						</Field>
 					</OutBlock>
 					<OutBlock id="12">
-						<Field idNumber="13" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+						<Field idNumber="13" name="세대주와의 관계" disabled="true" security="false" category="NormalText.Hangul" isMain="true" mapId="">
 							<ElementId>4</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="12">
+						<Field idNumber="14" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+							<ElementId>dead1</ElementId>
+							<ElementId>dead2</ElementId>
 						</Field>
 					</OutBlock>
 				</FormData>
