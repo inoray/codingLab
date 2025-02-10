@@ -67,7 +67,7 @@
 							</SearchRegionComplex>
 						</SearchRegionInfo>
 					</Element>
-					<Element id="4" type="CharacterString">
+					<Element id="5" type="CharacterString">
 						<Name>주민등록표키워드</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
