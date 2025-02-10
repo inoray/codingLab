@@ -1,0 +1,2614 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<IzFormOcrXml version="0.5.0">
+	<FormConfiguration>
+		<ExtractTextRegion disabled="false" documentType="document" textEngine="craft_c" craftModel="" subOption="table|closed_line"/>
+		<RecogString disabled="false" ocrEngine="trba_word" trbaWordModel = ""/>
+		<!-- <MlTask>false</MlTask> -->
+	</FormConfiguration>
+
+	<FormSet>
+		<Form id="F0100921302" revision="1" disabled="false">
+			<FormName>금융거래정보제공동의서</FormName>
+
+			<FormPage id="page1" header="true" footer="true">
+
+				<!--================================================================================== 서식처리정보 ===================================================================================-->
+				<FormData id="1">
+
+					<!--==================================================================================
+						outBlock 리스트 ===================================================================================-->
+					<OutBlock id="1">
+						<Field idNumber="1" name="금융거래정보의 제공 요구서" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="3">
+						<Field idNumber="3" name="문서번호" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="5">
+						<Field idNumber="5" name="요구기관명" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="8">
+						<Field idNumber="8" name="성명_담당자" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="11">
+						<Field idNumber="11" name="성명_책임자" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+
+					<OutBlock id="2">
+						<Field idNumber="2" name="수신처" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="4">
+						<Field idNumber="4" name="요구일자" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="6">
+						<Field idNumber="6" name="근무부서_담당자" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="7">
+						<Field idNumber="7" name="직책_담당자" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="9">
+						<Field idNumber="9" name="근무부서_책임자" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="10">
+						<Field idNumber="10" name="직책_책임자" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="12">
+						<Field idNumber="12" name="요구내용_명의인의 인적사항" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+						<Field idNumber="13" name="요구내용_요구대상 거래기간" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+						<Field idNumber="14" name="요구내용_요구의 법적근거" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+						<Field idNumber="15" name="요구내용_사용목적" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+						<Field idNumber="16" name="요구내용_요구하는 거래정보 동의 내용" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="13">
+						<Field idNumber="17" name="통보유예_유예기간" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+						<Field idNumber="18" name="통보유예_유예사유" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="14">
+						<Field idNumber="19" name="특이사항" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="15">
+						<Field idNumber="20" name="회신처_email" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+						<Field idNumber="21" name="회신처_팩스" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+						<Field idNumber="22" name="회신처_전화번호" disabled="false">
+							<ElementId>deep_boxing</ElementId>
+						</Field>
+					</OutBlock>
+
+					<OutBlock id="50">
+						<Field idNumber="50" name="직인" disabled="false" category="sign">
+							<ElementId>deep_boxing_2</ElementId>
+						</Field>
+					</OutBlock>
+
+					<OutBlock id="101">
+						<Field idNumber="101" name="문서번호" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="102">
+						<Field idNumber="102" name="주민번호" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="103">
+						<Field idNumber="103" name="요구기관" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+							<ElementId>reqagency</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="104">
+						<Field idNumber="104" name="시작일" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+							<ElementId>startdate</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="105">
+						<Field idNumber="105" name="종료일" disabled="true">
+							<ElementId>deep_nlp</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="106">
+						<Field idNumber="106" name="담당자" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+							<ElementId>manager</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="107">
+						<Field idNumber="107" name="책임자" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+							<ElementId>responsible_person</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="108">
+						<Field idNumber="108" name="요구일자" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+							<ElementId>reqdate</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="109">
+						<Field idNumber="109" name="유예기간" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+							<ElementId>notification_period</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="110">
+						<Field idNumber="110" name="이메일" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="111">
+						<Field idNumber="111" name="계좌번호" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="112">
+						<Field idNumber="112" name="사업자번호" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="113">
+						<Field idNumber="113" name="기타번호" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="198">
+						<Field idNumber="198" name="한국투자증권" disabled="false">
+							<ElementId>deep_nlp</ElementId>
+						</Field>
+					</OutBlock>
+
+
+					<OutBlock id="200">
+						<Field idNumber="200" name="other" disabled="true">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="201">
+						<Field idNumber="201" name="문서번호" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="202">
+						<Field idNumber="202" name="주민번호" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="203">
+						<Field idNumber="203" name="요구기관" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="204">
+						<Field idNumber="204" name="시작일" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="205">
+						<Field idNumber="205" name="종료일" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="206">
+						<Field idNumber="206" name="담당자" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="207">
+						<Field idNumber="207" name="책임자" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="208">
+						<Field idNumber="208" name="요구일자" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="209">
+						<Field idNumber="209" name="유예기간" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="210">
+						<Field idNumber="210" name="이메일" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="211">
+						<Field idNumber="211" name="계좌번호" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="212">
+						<Field idNumber="212" name="사업자번호" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="213">
+						<Field idNumber="213" name="기타번호" disabled="false">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="298">
+						<Field idNumber="298" name="한국투자증권" disabled="true">
+							<ElementId>deep_nlp2</ElementId>
+						</Field>
+					</OutBlock>
+
+					<Element id="deep_boxing" type="MachineLearning">
+						<Name>딥러닝 모델기반 필드</Name>
+
+						<SearchRegionInfo maxFieldCount="-1">
+							<SearchRegionComplex maxFieldCount="-1">
+								<SearchRegionSet>
+									<SearchRegion>
+										<!-- 이미지에서 인식대상영역 설정
+											이미지 크기대비 비율로 값을 지정 (0 ~ 100)
+										-->
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+
+						<!-- 외부 실행 방식
+							engine: external
+							execFilePath: 실행파일 경로
+							argument: 인자
+								- 매크로
+									- $(SrcImagePath): 범용인식에 입력된 이미지 경로
+									- $(ResultJsonPath): 필드정보가 저장된 json파일 경로.
+										파일의 data 구조는 엔진에 정의된 형태로 구성되어야 함
+						-->
+						<!--
+						<Inference engine="external" execFilePath="../bin/deepField" argument="./form/form_01.pd $(SrcImagePath) $(ResultJsonPath)" />-->
+						<Inference engine="restApi" url="$(ServerUrl)/boxing?document_id=df0005"/>
+
+						<CommonPostprocess>
+							<PostprocessInfo>
+								<ImageProcessInfo>
+									<ImageProcessDefine>
+										<ImageProcess id="deep" type="machineLearning">
+											<Parameters engine="restApi" url="$(ServerUrl)/denoise?mode=denoise_text"/>
+										</ImageProcess>
+									</ImageProcessDefine>
+									<ImageProcessExec id="deep1" disabled="true" order="deep"/>
+								</ImageProcessInfo>
+							</PostprocessInfo>
+						</CommonPostprocess>
+
+						<FieldPostprocess idOfForm="1" disabled="false">
+							<PostprocessInfo>
+								<RemoveSpace>true</RemoveSpace>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">\(.*\)?</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">_.*</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[금굼쿰큼믐吾]</SearchText>
+											<NewText type="regex">금</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[융유우육윰뮴뮹귱]</SearchText>
+											<NewText type="regex">융</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[거겨기개게걔머서시기]</SearchText>
+											<NewText type="regex">거</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[래럐례]</SearchText>
+											<NewText type="regex">래</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[래럐례]</SearchText>
+											<NewText type="regex">래</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[정전점섬성]</SearchText>
+											<NewText type="regex">정</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[보모고]</SearchText>
+											<NewText type="regex">보</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[_:.'\"·]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">금융.*</SearchText>
+											<NewText type="text">금융거래정보의제공요구서</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="3" disabled="false">
+							<PostprocessInfo>
+								<RemoveSpace>true</RemoveSpace>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[_:.'\"/]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">-+</SearchText>
+											<NewText type="regex">-</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[괴솨콰좌]</SearchText>
+											<NewText type="regex">과</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[Ili工\[\]\(\)\{\}]</SearchText>
+											<NewText type="regex">1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[gq]</SearchText>
+											<NewText type="regex">9</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[oO이C]</SearchText>
+											<NewText type="regex">0</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[Ss]</SearchText>
+											<NewText type="text">5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[zZ]</SearchText>
+											<NewText type="text">2</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[B]</SearchText>
+											<NewText type="text">8</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{3,4})(.*)</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([가-힣0-9]{2,7}과)([0-9]{1,4})</SearchText>
+											<NewText type="regex">$1-$2</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="4" disabled="false">
+							<PostprocessInfo>
+								<RemoveSpace>true</RemoveSpace>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="5" disabled="false">
+							<PostprocessInfo>
+								<RemoveSpace>true</RemoveSpace>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[국극쿡큭][세새섀셰제재쟤졔][청칭정징성싱]</SearchText>
+											<NewText type="regex">국세청</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[세새섀제재쟤졔][무우으부브므][서시저지처치]</SearchText>
+											<NewText type="regex">세무서</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[국극쿡큭][세새섀셰제재쟤졔][청칭정징성싱][장징창상]</SearchText>
+											<NewText type="regex">국세청장</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">국세$</SearchText>
+											<NewText type="regex">국세청</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[서저시지][울을]</SearchText>
+											<NewText type="regex">서울</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[중증숭승충][부브]</SearchText>
+											<NewText type="regex">중부</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[인이민미][천친전진]</SearchText>
+											<NewText type="regex">인천</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[대내나다][전진]</SearchText>
+											<NewText type="regex">대전</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[대내나다][구그]</SearchText>
+											<NewText type="regex">대구</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[부무브므][산신잔진]</SearchText>
+											<NewText type="regex">부산</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[광굉솽쇵][주즈수스]</SearchText>
+											<NewText type="regex">광주</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^울지방국세청$</SearchText>
+											<NewText type="regex">서울지방국세청</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^부지방국세청$</SearchText>
+											<NewText type="regex">중부지방국세청</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^산지방국세청$</SearchText>
+											<NewText type="regex">부산지방국세청</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^천지방국세청$</SearchText>
+											<NewText type="regex">인천지방국세청</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^전지방국세청$</SearchText>
+											<NewText type="regex">대전지방국세청</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^구지방국세청$</SearchText>
+											<NewText type="regex">대구지방국세청</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^주지방국세청$</SearchText>
+											<NewText type="regex">광주지방국세청</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="8" disabled="false">
+							<PostprocessInfo>
+								<RemoveSpace>true</RemoveSpace>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[._]</SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">, </SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex"> ,</SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[O0]</SearchText>
+											<NewText type="regex">이</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣,]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">징세송무국</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">체납추적과</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">국세조사관</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[ ]</SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">,,</SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([가-힣]{1})(,)([가-힣]{2,3})$</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([가-힣]{3,4}),$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^,([가-힣]{3,4})$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^,([가-힣]{3,4}),$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">(.+)([가-힣]{3,4}),$</SearchText>
+											<NewText type="regex">$1$2</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="11" disabled="false">
+							<PostprocessInfo>
+								<RemoveSpace>true</RemoveSpace>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[._]</SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">, </SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex"> ,</SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[O0]</SearchText>
+											<NewText type="regex">이</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣,]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">국세조사관</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">7급,9급</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">7급</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">9급</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">징세송무국</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">국장</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[ ]</SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">,,</SearchText>
+											<NewText type="regex">,</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([가-힣]{1})(,)([가-힣]{2,3})$</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([가-힣]{3,4}),$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^,([가-힣]{3,4})$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^,([가-힣]{3,4}),$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">.+([가-힣]{3,4}),$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="13" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="text" similarity="60">조회일</SearchText>
+											<NewText type="text">조회일</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="21" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[oO]</SearchText>
+											<NewText type="text">0</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[sS]</SearchText>
+											<NewText type="text">5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[e]</SearchText>
+											<NewText type="text">8</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="22" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[oO]</SearchText>
+											<NewText type="text">0</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[sS]</SearchText>
+											<NewText type="text">5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[e]</SearchText>
+											<NewText type="text">8</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+					</Element>
+
+					<Element id="deep_boxing_2" type="MachineLearning">
+						<Name>주민등록(등본)</Name>
+						<SearchRegionInfo maxFieldCount="-1">
+							<SearchRegionComplex maxFieldCount="-1">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">60</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">25</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex maxFieldCount="-1">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">50</Left>
+										<Top unit="ImageSizeRatio">60</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex maxFieldCount="-1">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+
+						<Inference engine="restApi" url="$(ServerUrl)/boxing?document_id=DOC99999_4021100005_1_p001_v0002"/>
+
+						<IdMapping>
+							<Mapping type="field" idOfModel="20"  idOfForm="50"/>
+						</IdMapping>
+
+						<FieldPostprocess idOfForm="50" disabled="false">
+							<PostprocessInfo>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="charSet" similarity="60">AllChar</SearchText>
+										<NewText type="text">직인</NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+					</Element>
+
+					<Element id="deep_nlp" type="MachineLearning">
+						<Name>세무서양식</Name>
+						<SearchRegionInfo maxFieldCount="-1">
+							<SearchRegionComplex maxFieldCount="-1">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<!--nlp로 인식한 필드 텍스트 유지-->
+						<ExcludeFoundNextStep>false</ExcludeFoundNextStep>
+
+						<Inference engine="restApi" url="$(ServerUrl)/nlp?nlp_model=tax_firstpage_v1&amp;merge_bio=true&amp;ocr_after_nlp=true&amp;multiline_tags=문서번호"/>
+
+						<IdMapping>
+							<Mapping type="field" idOfModel="1" idOfForm="101"/>
+							<Mapping type="field" idOfModel="2" idOfForm="101"/>
+							<Mapping type="field" idOfModel="3" idOfForm="102"/>
+							<Mapping type="field" idOfModel="4" idOfForm="102"/>
+							<Mapping type="field" idOfModel="5" idOfForm="103"/>
+							<Mapping type="field" idOfModel="6" idOfForm="103"/>
+							<Mapping type="field" idOfModel="7" idOfForm="104"/>
+							<Mapping type="field" idOfModel="8" idOfForm="104"/>
+							<Mapping type="field" idOfModel="9" idOfForm="105"/>
+							<Mapping type="field" idOfModel="10" idOfForm="105"/>
+							<Mapping type="field" idOfModel="11" idOfForm="106"/>
+							<Mapping type="field" idOfModel="12" idOfForm="106"/>
+							<Mapping type="field" idOfModel="13" idOfForm="107"/>
+							<Mapping type="field" idOfModel="14" idOfForm="108"/>
+							<Mapping type="field" idOfModel="15" idOfForm="108"/>
+							<Mapping type="field" idOfModel="16" idOfForm="108"/>
+							<Mapping type="field" idOfModel="17" idOfForm="109"/>
+							<Mapping type="field" idOfModel="18" idOfForm="109"/>
+							<Mapping type="field" idOfModel="19" idOfForm="110"/>
+							<Mapping type="field" idOfModel="20" idOfForm="110"/>
+							<Mapping type="field" idOfModel="21" idOfForm="111"/>
+							<Mapping type="field" idOfModel="22" idOfForm="111"/>
+							<Mapping type="field" idOfModel="23" idOfForm="112"/>
+							<Mapping type="field" idOfModel="24" idOfForm="112"/>
+							<Mapping type="field" idOfModel="25" idOfForm="113"/>
+							<Mapping type="field" idOfModel="26" idOfForm="113"/>
+							<Mapping type="field" idOfModel="27" idOfForm="198"/>
+							<Mapping type="field" idOfModel="28" idOfForm="198"/>
+						</IdMapping>
+
+
+						<FieldPostprocess idOfForm="101" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+				  					<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[^0-9가-힣\-]</SearchText>
+											<SearchText type="regex">&#32;</SearchText>
+											<SearchText type="regex">[가-힣]{1,}국세청</SearchText>
+											<SearchText type="regex">[가-힣]{1,}세무서</SearchText>
+											<SearchText type="regex">[A-Za-z가-힣]{1,}은행</SearchText>
+											<SearchText type="text" similarity="80">요구기관명</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="102" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+				  					<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{2})([.])([~])([0-9]{1,4})</SearchText>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{1})([.])([~])([0-9]{1,4})</SearchText>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{2})([.])([~])([0-9]{1,4})</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">&#32;</SearchText>
+											<SearchText type="regex">[\(\).,]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{1,})([가-힣]{2,4})([0-9]{1,})</SearchText>
+											<NewText type="regex">$1&#38;$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[가-힣]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{2})(00)([0-9]{1})([0-9]{2})(-)</SearchText>
+											<NewText type="regex">$10$3$4-</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{2})([0-9]{2})(00)([0-9]{1})(-)</SearchText>
+											<NewText type="regex">$1$2[0]$4-</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[\[\]]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[\-][0-9]{9,}</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{6})([0-9]{7})(&#38;)</SearchText>
+											<NewText type="regex">$1-$2$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">(&#38;)([0-9]{6})([0-9]{7})$</SearchText>
+											<NewText type="regex">$1$2-$3</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="103" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+				  					<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[^A-Za-z가-힣0-9]</SearchText>
+											<SearchText type="regex">[가-힣]{1,}과장</SearchText>
+											<SearchText type="regex">[가-힣]{1,}조사관</SearchText>
+											<SearchText type="regex">[가-힣]{1,}팀장</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="104" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+				  					<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣0-9.,~\-]</SearchText>
+											<SearchText type="regex">&#32;</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[\-_=]</SearchText>
+											<NewText type="text">~</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[,.]</SearchText>
+											<NewText type="text">.</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([0-9]{2})([.])([0-9]{2})([.])</SearchText>
+											<SearchText type="regex">([0-9]{4})([0-9]{2})([.])([0-9]{2})</SearchText>
+											<NewText type="regex">$1.$2.$4</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([0-9]{2})([.])</SearchText>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([0-9]{2})</SearchText>
+											<NewText type="regex">$1.$3.$4</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{1})([.])</SearchText>
+											<NewText type="regex">$1.0$3.0$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{1})([.])</SearchText>
+											<NewText type="regex">$1.$3.0$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{2})([.])</SearchText>
+											<NewText type="regex">$1.0$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{1})([~])</SearchText>
+											<NewText type="regex">$1.0$3.0$5~</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{1})([~])</SearchText>
+											<NewText type="regex">$1.$3.0$5~</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{2})([~])</SearchText>
+											<NewText type="regex">$1.$3.$5~</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[.][.]</SearchText>
+											<NewText type="text">.</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{2})([.])</SearchText>
+											<NewText type="regex">$1.$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="text" similarity="80">계좌개설일</SearchText>
+											<NewText type="text">계좌개설일</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="text" similarity="80">회신일현재까지</SearchText>
+											<NewText type="text">회신일현재까지</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="text" similarity="70">계좌개설일부터~회신일현재까지</SearchText>
+											<SearchText type="text" similarity="80">계좌개설일~회신일현재까지</SearchText>
+											<NewText type="text">계좌개설일~회신일현재</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([.])([0-9]{2})([.])([0-9]{2})([~])([0-9]{4})([.])$</SearchText>
+											<SearchText type="regex">^([0-9]{4})([.])([0-9]{2})([.])([0-9]{2})([.])([~])([0-9]{4})([.])$</SearchText>
+											<SearchText type="regex">^([0-9]{4})([.])([0-9]{2})([.])([0-9]{2})([.])([~])([0-9]{4})$</SearchText>
+											<SearchText type="regex">^([0-9]{1,3})([.])([0-9]{2})([.])([0-9]{2})([.])$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="106" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+				  					<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">([이김최고장유안정지박윤조])([가-힣]{1,3})([ ])([이김최고장유안정지박윤조])([가-힣]{1,3})</SearchText>
+											<NewText type="regex">$1$2</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣.,]</SearchText>
+											<SearchText type="regex">^[가-힣]$</SearchText>
+											<SearchText type="text" similarity="90">성명</SearchText>
+											<SearchText type="regex">&#32;</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([가-힣]{2,})([.,])([가-힣]{2,4})$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([가-힣]{2})([.,])([가-힣]{2,4})([.,])([가-힣.,]{1,})</SearchText>
+											<SearchText type="regex">^([가-힣]{3})([.,])([가-힣]{2,4})([.,])([가-힣.,]{1,})</SearchText>
+											<NewText type="regex">$3</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="107" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+				  					<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">([이김최고장유안정지박윤조])([가-힣]{1,3})([ ])([이김최고장유안정지박윤조])([가-힣]{1,3})</SearchText>
+											<NewText type="regex">$1$2</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣.,]</SearchText>
+											<SearchText type="regex">^[가-힣]$</SearchText>
+											<SearchText type="regex">&#32;</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([가-힣]{2,})([.,])([가-힣]{2,4})$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([가-힣]{2})([.,])([가-힣]{2,4})([.,])([가-힣.,]{1,})</SearchText>
+											<NewText type="regex">$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="text" similarity="80">요구명세서참조</SearchText>
+											<SearchText type="text" similarity="80">붙임참조</SearchText>
+											<SearchText type="text" similarity="80">금융거래정보요구명세서</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="108" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+				  					<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[^0-9.,]</SearchText>
+											<SearchText type="regex">&#32;</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([0-9]{2})([.,])([0-9]{2})</SearchText>
+											<NewText type="regex">$1.$2.$4</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([0-9]{2})([.])([0-9]{2})([.])</SearchText>
+											<SearchText type="regex">([0-9]{4})([0-9]{2})([.])([0-9]{2})</SearchText>
+											<NewText type="regex">$1.$2.$4</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([0-9]{2})([.])</SearchText>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([0-9]{2})</SearchText>
+											<NewText type="regex">$1.$3.$4</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{1})([.])</SearchText>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{1})$</SearchText>
+											<NewText type="regex">$1.0$3.0$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{1})([.])</SearchText>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{1})$</SearchText>
+											<NewText type="regex">$1.$3.0$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{2})</SearchText>
+											<NewText type="regex">$1.0$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{2})</SearchText>
+											<NewText type="regex">$1.0$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[.][.]</SearchText>
+											<NewText type="text">.</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{2})([.])</SearchText>
+											<NewText type="regex">$1.$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([0-9]{2})([0-9]{2})$</SearchText>
+											<NewText type="regex">$1.$2.$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{2})([.])([0-9]{2})$</SearchText>
+											<SearchText type="regex">^([.])([0-9]{2})([.])([0-9]{2})$</SearchText>
+											<SearchText type="regex">^([.])([0-9]{2})([.])([0-9]{2})([.])$</SearchText>
+											<SearchText type="regex">^([0-9]{2})([.])([0-9]{2})([.])$</SearchText>
+											<SearchText type="regex">^([0-9]{1,4})([.])$</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="109" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+				  					<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[^가-힣0-9]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{1,})(월)</SearchText>
+											<NewText type="regex">$1개월</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{1,})(개)(월)(간)$</SearchText>
+											<NewText type="regex">$1개월</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<FieldPostprocess idOfForm="110" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+				  					<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="text" similarity="80">excel로</SearchText>
+											<SearchText type="text" similarity="80">e메일</SearchText>
+											<SearchText type="text" similarity="80">e-메일</SearchText>
+											<SearchText type="regex">^[lI][L][\(]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">&#32;</SearchText>
+											<SearchText type="regex">-</SearchText>
+											<SearchText type="regex">전산파일[가-힣A-Za-z0-9\(\)]{1,}이메일</SearchText>
+											<SearchText type="regex">email</SearchText>
+											<SearchText type="regex">Email</SearchText>
+											<SearchText type="regex">EMail</SearchText>
+											<SearchText type="regex">EMAIL</SearchText>
+											<!-- <SearchText type="text" similarity="70">email</SearchText>
+											<SearchText type="text" similarity="70">e-메일</SearchText>
+											<SearchText type="text" similarity="70">e-mail</SearchText>
+											<SearchText type="text" similarity="70">e-Mail</SearchText>
+											<SearchText type="text" similarity="70">E-mail</SearchText>
+											<SearchText type="text" similarity="70">E-MAIL</SearchText>
+											<SearchText type="text" similarity="70">E-Mail</SearchText> -->
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<!-- <CorrectionData>
+											<SearchText type="regex">([/(/)])([0-9a-zA-Z]{1,})([/(/)])([0-9a-zA-Z]{1,})([@])([/(/)])</SearchText>
+											<NewText type="regex">$20$4@</NewText>
+										</CorrectionData> -->
+										<CorrectionData>
+											<SearchText type="regex">[^A-Za-z0-9@,.]</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([a-zA-Z0-9]{1,})([.,])([0-9]{1,})</SearchText>
+											<NewText type="regex">$1$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">@ntsgokr</SearchText>
+											<SearchText type="regex">@ts.go.kr</SearchText>
+											<SearchText type="regex">@ntsgo[,.]kr</SearchText>
+											<SearchText type="regex">@nts[,.]gokr</SearchText>
+											<SearchText type="regex">@nts[,.]go[,.]kr[0-9]{1,}</SearchText>
+											<NewText type="text">@nts.go.kr</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">mail</SearchText>
+											<SearchText type="regex">MAIL</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[.][.]</SearchText>
+											<NewText type="text">.</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[1]</SearchText>
+											<NewText type="text">l</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([a-zA-Z0-9]{1,})(@nts.go.kr)([a-zA-Z0-9]{1,})(@nts.go.kr)</SearchText>
+											<NewText type="regex">$1$2</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([a-zA-Z0-9]{1,})$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([a-zA-Z0-9]{1,2})(@nts.go.kr)$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">go.go.kr$</SearchText>
+											<NewText type="regex">go.kr</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([a-zA-Z0-9]{1,})(@)(eoul.go.kr)</SearchText>
+											<SearchText type="regex">([a-zA-Z0-9]{1,})(@)(seoul.go.kr)</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^/</SearchText>
+											<NewText type="text"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+					</Element>
+
+
+					<!-- MachineLearning element 는 머신러닝 방식으로 필드를 탐색
+						수행방식은 두가지가 가능
+						- 범용인식기 내부 머신러닝 수행
+						- 외부 머신러닝 프로그램 실행
+						탐색결과에는 반드시 블록과 필드영역이 있어야 함.
+						필드 인식결과는 옵셔널...
+					 -->
+					<Element id="deep_nlp2" type="MachineLearning">
+						<Name>invoice</Name>
+						<SearchRegionInfo maxFieldCount="-1">
+							<SearchRegionComplex maxFieldCount="-1">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+
+						<!--nlp로 인식한 필드 텍스트 유지-->
+						<ExcludeFoundNextStep>false</ExcludeFoundNextStep>
+
+						<!-- <Inference engine="restApi" url="$(ServerUrl)/boxing?document_id=DOC99999_00001_1_p001_v0001&no_craft_fields=4,15,16,17,18,19,20,22,24"/> -->
+						<!-- basic model
+							invoice_layoutlmv3
+							invoice_layoutlmv3_basic_240125
+							invoice_layoutlmv3_basic_sorted_10000
+						-->
+						<Inference engine="restApi" url="$(ServerUrl)/nlp?nlp_model=tax_secondPage_layoutlmv3_v4&amp;merge_bio=true&amp;ocr_after_nlp=true"/>
+
+						<IdMapping>
+							<Mapping type="field" idOfModel="0"  idOfForm="200"/>
+							<Mapping type="field" idOfModel="1"  idOfForm="201"/>
+							<Mapping type="field" idOfModel="2"  idOfForm="201"/>
+							<Mapping type="field" idOfModel="3"  idOfForm="202"/>
+							<Mapping type="field" idOfModel="4"  idOfForm="202"/>
+							<Mapping type="field" idOfModel="5"  idOfForm="203"/>
+							<Mapping type="field" idOfModel="6"  idOfForm="203"/>
+							<Mapping type="field" idOfModel="7"  idOfForm="204"/>
+							<Mapping type="field" idOfModel="8"  idOfForm="204"/>
+							<Mapping type="field" idOfModel="9"  idOfForm="205"/>
+							<Mapping type="field" idOfModel="10" idOfForm="205"/>
+							<Mapping type="field" idOfModel="11" idOfForm="206"/>
+							<Mapping type="field" idOfModel="12" idOfForm="206"/>
+							<Mapping type="field" idOfModel="13" idOfForm="207"/>
+							<Mapping type="field" idOfModel="14" idOfForm="208"/>
+							<Mapping type="field" idOfModel="15" idOfForm="208"/>
+							<Mapping type="field" idOfModel="16" idOfForm="208"/>
+							<Mapping type="field" idOfModel="17" idOfForm="209"/>
+							<Mapping type="field" idOfModel="18" idOfForm="209"/>
+							<Mapping type="field" idOfModel="19" idOfForm="210"/>
+							<Mapping type="field" idOfModel="20" idOfForm="210"/>
+							<Mapping type="field" idOfModel="21" idOfForm="211"/>
+							<Mapping type="field" idOfModel="22" idOfForm="211"/>
+							<Mapping type="field" idOfModel="23" idOfForm="212"/>
+							<Mapping type="field" idOfModel="24" idOfForm="212"/>
+							<Mapping type="field" idOfModel="25" idOfForm="213"/>
+							<Mapping type="field" idOfModel="26" idOfForm="213"/>
+							<Mapping type="field" idOfModel="27" idOfForm="298"/>
+							<Mapping type="field" idOfModel="28" idOfForm="298"/>
+						</IdMapping>
+
+						<!--주민번호-->
+						<FieldPostprocess idOfForm="2" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[&#32;]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[0-9]$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[\(]</SearchText>
+											<SearchText type="regex">[\)]</SearchText>
+											<SearchText type="regex">[:]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[0-9]{2,3}[\-][0-9]{3,4}[\-][0-9]{4}[\~\-][0-9]</SearchText>
+											<SearchText type="regex">[0-9]{2,3}[\-][0-9]{3,4}[\-][0-9]{4}</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[0-9]{8}$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{6}[\-][0-9]{7})(팩스)([0-9\-]{0,})</SearchText>
+											<SearchText type="regex">([0-9]{6}[\-][0-9]{7})(한국투자증권)</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[0-9]{6}[\-]{0,1}$</SearchText>
+											<SearchText type="regex">^[0-9]{7}$</SearchText>
+											<SearchText type="regex">^[\-][0-9]{7}$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([가-힣,:]{2,})([0-9]{6}[\-][0-9]{7})[,:]{0,1}</SearchText>
+											<NewText type="regex">$2&#38;</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[&#38;]$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{6}[\-][0-9]{7})([0-9]{1,})</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+
+						<!--시작일-->
+						<FieldPostprocess idOfForm="4" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[0-9]{2,3}[\-][0-9]{3,4}[\-][0-9]{4}[\~][0-9]</SearchText>
+											<SearchText type="regex">[0-9]{2,3}[\-][0-9]{3,4}[\-][0-9]{4}</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4})([&#32;.]{1})([0-9]{2})([&#32;.]{1})([0-9]{2})([.]{0,1})$</SearchText>
+											<SearchText type="regex">([0-9]{4})([&#32;.]{1})([0-9]{1})([&#32;.]{1})([0-9]{2})([.]{0,1})$</SearchText>
+											<SearchText type="regex">([0-9]{4})([&#32;.]{1})([0-9]{2})([&#32;.]{1})([0-9]{1})([.]{0,1})$</SearchText>
+											<NewText type="regex">$1.$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([&#32;.]{1})([0-9]{2})([&#32;.]{1})([0-9]{2})([&#32;.]{0,1})</SearchText>
+											<SearchText type="regex">^([0-9]{4})([&#32;.]{1})([0-9]{1})([&#32;.]{1})([0-9]{2})([&#32;.]{0,1})</SearchText>
+											<SearchText type="regex">^([0-9]{4})([&#32;.]{1})([0-9]{2})([&#32;.]{1})([0-9]{1})([&#32;.]{0,1})([^0-9])</SearchText>
+											<NewText type="regex">$1.$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([\.&#32;]{0,1})([0-9]{2})([\-&#32;]{0,1})([0-9]{2})</SearchText>
+											<SearchText type="regex">([0-9]{4})([\-&#32;]{0,1})([0-9]{2})([\-&#32;]{0,1})([0-9]{2})$</SearchText>
+											<NewText type="regex">$1.$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[&#32;]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="text">..</SearchText>
+											<NewText type="text">.</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[가-힣\(\)']</SearchText>
+											<SearchText type="regex">^[:]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([\-.]{0,1})([0-9]{2})([\-.]{0,1})([0-9]{2})([\-.]{0,1})</SearchText>
+											<SearchText type="regex">([0-9]{4})([\-.]{0,1})([0-9]{2})([\-.]{0,1})([0-9]{2})([\-]{0,1})$</SearchText>
+											<NewText type="regex">$1.$3.$5</NewText>
+										</CorrectionData>
+										<!-- <CorrectionData>
+											<SearchText type="regex">^([0-9]{4}[.]{1}[0-9]{2}[.]{1}[0-9]{2})([0-9]{4}[.]{1}[0-9]{2}[.]{1}[0-9]{2})([\~])$</SearchText>
+											<NewText type="regex">$2~$1</NewText>
+										</CorrectionData> -->
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([.]{1})([0-9]{1})([.]{1})([0-9]{1})([^0-9])</SearchText>
+											<SearchText type="regex">([0-9]{4})([.]{1})([0-9]{1})([.]{1})([0-9]{1})$</SearchText>
+											<NewText type="regex">$1.0$3.0$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([.]{1})([0-9]{1})([.]{1})([0-9]{2})</SearchText>
+											<SearchText type="regex">([0-9]{4})([.]{1})([0-9]{1})([.]{1})([0-9]{2})$</SearchText>
+											<NewText type="regex">$1.0$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([.]{1})([0-9]{2})([.]{1})([0-9]{1})([^0-9])</SearchText>
+											<SearchText type="regex">([0-9]{4})([.]{1})([0-9]{2})([.]{1})([0-9]{1})$</SearchText>
+											<NewText type="regex">$1.$3.0$5</NewText>
+										</CorrectionData>
+										<!-- <CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([.]{0,1})([0-9]{1})([.]{0,1})([0-9]{2})([.]{0,1})([\~])([0-9]{4})([.]{0,1})([0-9]{1})([.]{0,1})([0-9]{2})([.]{0,1})$</SearchText>
+											<NewText type="regex">$1.0$3.$5.~$8.0$10.$12.</NewText>
+										</CorrectionData> -->
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{2})([.]{0,1})([0-9]{2})([.]{0,1})([0-9]{2})([.]{0,1})([\~]{0,1})([0-9]{2})([.]{0,1})([0-9]{2})([.]{0,1})([0-9]{2})([.]{0,1})$</SearchText>
+											<NewText type="regex">20$1.$3.$5~20$8.$10.$12</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{2})([.]{0,1})([0-9]{2})([.]{0,1})([0-9]{2})([.]{0,1})([\~]{0,1})([0-9]{4})([.]{0,1})([0-9]{2})([.]{0,1})([0-9]{2})([.]{0,1})$</SearchText>
+											<NewText type="regex">20$1.$3.$5~$8.$10.$12</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([.]{0,1})([0-9]{2})([.]{0,1})([0-9]{2})([.]{0,1})</SearchText>
+											<SearchText type="regex">([0-9]{4})([.]{0,1})([0-9]{2})([.]{0,1})([0-9]{2})([.]{0,1})$</SearchText>
+											<NewText type="regex">$1.$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0][0-9]{2})</SearchText>
+											<NewText type="regex">2$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([9][0-9]{2})</SearchText>
+											<NewText type="regex">1$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[0-9]{1,2}[.]{0,1}$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4}[.][0-9]{2}[.][0-9]{2})([\~\-]{0,1})([0-9]{4}[.][0-9]{2}[.][0-9]{2})</SearchText>
+											<NewText type="regex">$1~$3</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([\~]{1}[0-9]{4}[.][0-9]{2}[.][0-9]{2})([0-9.]{1,})$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[0-9]{4}[.\-][0-9]{2}[.\-][0-9]{2}[.]{0,1}[\~][0-9]{4}[.\-][0-9]{2}[.\-]$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[\~\-]{1}$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<!--종료일-->
+						<FieldPostprocess idOfForm="5" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[&#32;]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[가-힣]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[~]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([.]{1})([0-9]{1})([.]{1})([0-9]{1})$</SearchText>
+											<NewText type="regex">$1.0$3.0$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([.]{1})([0-9]{1})([.]{1})([0-9]{2})$</SearchText>
+											<NewText type="regex">$1.0$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([.]{1})([0-9]{2})([.]{1})([0-9]{1})([^0-9])$</SearchText>
+											<NewText type="regex">$1.$3.0$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([0-9]{4})([\.&#32;]{0,1})([0-9]{2})([\-&#32;]{0,1})([0-9]{2})$</SearchText>
+											<NewText type="regex">$1.$3.$5</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">([0-9]{4}[.][0-9]{2}[.][0-9]{2})([.])$</SearchText>
+											<NewText type="regex">$1</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+
+						<!--유예기간-->
+						<FieldPostprocess idOfForm="9" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[&#32;]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[없][음]$</SearchText>
+											<NewText type="regex">유예기간없음</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+						<!--이메일-->
+						<FieldPostprocess idOfForm="10" fieldType="string" disabled="false">
+							<PostprocessInfo>
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">[&#32;]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[가-힣]</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="text">qo</SearchText>
+											<NewText type="text">go</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^[.:;\(]</SearchText>
+											<SearchText type="regex">[:;\)]$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">nts[.]{1,2}go[.]{1,2}kr</SearchText>
+											<NewText type="regex">nts.go.kr</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">[n]{1}[t]{0,1}[s]{0,1}[.\-]{0,1}[g]{1}[o]{0,1}[.\-]{0,1}[k]{0,1}[r]</SearchText>
+											<NewText type="regex">nts.go.kr</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">(.)(@nts.go.kr)(.)</SearchText>
+											<NewText type="regex">$1$2</NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([a-zA-Z0-9]{0,2})(@nts.go.kr)</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+										<CorrectionData>
+											<SearchText type="regex">^([a-zA-Z0-9]{1,})(@nts)$</SearchText>
+											<NewText type="regex"></NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+							</PostprocessInfo>
+						</FieldPostprocess>
+
+					</Element>
+
+					<Element id="bizTitle" type="StaticText">
+						<Name>bizTitle</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+									<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">20</Left>
+										<Top unit="ImageSizeRatio">5</Top>
+										<Right unit="ImageSizeRatio">70</Right>
+										<Bottom unit="ImageSizeRatio">40</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="single_column" subOption="" reduceRatio16="0" inverseType="1"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<SearchText type="regex">&#32;</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">금융거래정보의제공요구서</SearchText>
+								<SearchText type="text" similarity="70">금융거래정보의</SearchText>
+								<SearchText type="text" similarity="70">제공 요구서</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataInclude>
+									<Include xmlpath="" correctionSetId=""/>
+								</CorrectionDataInclude>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[\-.,;_'·\)]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+
+						<!-- <ContentMapInfo>
+							<ContentValueList>
+								<ContentValue>금융거래정보의제공요구서</ContentValue>
+							</ContentValueList>
+						</ContentMapInfo> -->
+					</Element>
+
+					<Element id="reqdate_keyword" type="StaticText">
+						<Name>reqdate_keyword</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="bizTitle" x="50" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-300</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">1500</Right>
+										<Bottom unit="elementRegionHeightRatio">700</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">30</Left>
+										<Top unit="ImageSizeRatio">10</Top>
+										<Right unit="ImageSizeRatio">80</Right>
+										<Bottom unit="ImageSizeRatio">60</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<!-- <MergeTextRegionOnALine>false</MergeTextRegionOnALine> -->
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<SearchText type="regex">&#32;</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">요구일자</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="reqdate" type="CharacterString">
+						<Name>요구일자</Name>
+						<!-- <Content type="Normal"/> -->
+						<Content type="Date" similarity="60">
+							<SubContent>YYYY.MM.DD</SubContent>
+						</Content>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="reqdate_keyword" x="100" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">-200</Top>
+										<Right unit="elementAvgCharHeightRatio">2000</Right>
+										<Bottom unit="elementRegionHeightRatio">50</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^0-9.,]</SearchText>
+										<SearchText type="regex">&#32;</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([0-9]{2})([.,])([0-9]{2})</SearchText>
+										<NewText type="regex">$1.$2.$4</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[.,]]</SearchText>
+										<NewText type="regex">.</NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="regex">[0-9]{4}.[0-9]{2}.[0-9]{2}</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex">^1.$</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="job_keyword" type="StaticText">
+						<Name>job_keyword</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="bizTitle" x="50" y="100"/>
+											<Left unit="elementAvgCharHeightRatio">-500</Left>
+											<Top unit="elementRegionHeightRatio">300</Top>
+											<Right unit="elementAvgCharHeightRatio">1500</Right>
+											<Bottom unit="elementRegionHeightRatio">1500</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">65</Left>
+										<Top unit="ImageSizeRatio">15</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">60</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<!-- <MergeTextRegionOnALine>false</MergeTextRegionOnALine> -->
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<SearchText type="regex">&#32;</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">직책</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="department_keyword" type="StaticText">
+						<Name>department_keyword</Name>
+						<SearchControl type="required">
+							<FindIf type="DoNotFindIf">
+								<ElementData id="job_keyword" found="true"/>
+							</FindIf>
+						</SearchControl>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="bizTitle" x="50" y="100"/>
+											<Left unit="elementAvgCharHeightRatio">-500</Left>
+											<Top unit="elementRegionHeightRatio">300</Top>
+											<Right unit="elementAvgCharHeightRatio">1000</Right>
+											<Bottom unit="elementRegionHeightRatio">1500</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">65</Left>
+										<Top unit="ImageSizeRatio">15</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">60</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<!-- <MergeTextRegionOnALine>false</MergeTextRegionOnALine> -->
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<SearchText type="regex">&#32;</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">근무부서</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="manager_keyword" type="StaticText">
+						<Name>manager_keyword</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="bizTitle" x="0" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-700</Left>
+										<Top unit="elementRegionHeightRatio">300</Top>
+										<Right unit="elementAvgCharHeightRatio">0</Right>
+										<Bottom unit="elementRegionHeightRatio">1500</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">15</Top>
+										<Right unit="ImageSizeRatio">30</Right>
+										<Bottom unit="ImageSizeRatio">45</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<!-- <MergeTextRegionOnALine>false</MergeTextRegionOnALine> -->
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">담당자</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="manager" type="CharacterString">
+						<Name>담당자</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+								<SearchRegionSet>
+									<SearchRegion>
+										<Left basePositionType="inElement" baseElementId="job_keyword" x="100" y="50" unit="elementRegionWidthRatio">50</Left>
+										<Top basePositionType="inElement" baseElementId="manager_keyword" x="100" y="0" unit="elementRegionHeightRatio">-50</Top>
+										<Right basePositionType="inElement" baseElementId="job_keyword" x="100" y="50" unit="elementRegionWidthRatio">1500</Right>
+										<Bottom basePositionType="inElement" baseElementId="manager_keyword" x="100" y="100" unit="elementRegionHeightRatio">50</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex maxFieldCount="1" priority="nearestTop">
+								<SearchRegionSet>
+									<SearchRegion>
+										<Left basePositionType="inElement" baseElementId="department_keyword" x="100" y="50" unit="elementRegionWidthRatio">50</Left>
+										<Top basePositionType="inElement" baseElementId="manager_keyword" x="100" y="0" unit="elementRegionHeightRatio">-50</Top>
+										<Right basePositionType="inElement" baseElementId="department_keyword" x="100" y="50" unit="elementRegionWidthRatio">1500</Right>
+										<Bottom basePositionType="inElement" baseElementId="manager_keyword" x="100" y="100" unit="elementRegionHeightRatio">50</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣.,]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="regex">[가-힣]{2,}</SearchText>
+							</SearchTextSet>
+							<ExceptTextSet>
+								<SearchText type="text" similarity="90">성명</SearchText>
+							</ExceptTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="responsible_person_keyword" type="StaticText">
+						<Name>responsible_person_keyword</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="bizTitle" x="0" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-700</Left>
+										<Top unit="elementRegionHeightRatio">300</Top>
+										<Right unit="elementAvgCharHeightRatio">0</Right>
+										<Bottom unit="elementRegionHeightRatio">1500</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">15</Top>
+										<Right unit="ImageSizeRatio">30</Right>
+										<Bottom unit="ImageSizeRatio">45</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<!-- <MergeTextRegionOnALine>false</MergeTextRegionOnALine> -->
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">책임자</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="responsible_person" type="CharacterString">
+						<Name>책임자</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="nearestBottom">
+								<SearchRegionSet>
+									<SearchRegion>
+										<Left basePositionType="inElement" baseElementId="job_keyword" x="100" y="0" unit="elementRegionWidthRatio">50</Left>
+										<Top basePositionType="inElement" baseElementId="responsible_person_keyword" x="100" y="0" unit="elementRegionHeightRatio">-50</Top>
+										<Right basePositionType="inElement" baseElementId="job_keyword" x="100" y="0" unit="elementRegionWidthRatio">1500</Right>
+										<Bottom basePositionType="inElement" baseElementId="responsible_person_keyword" x="100" y="100" unit="elementRegionHeightRatio">50</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex maxFieldCount="1" priority="nearestBottom">
+								<SearchRegionSet>
+									<SearchRegion>
+										<Left basePositionType="inElement" baseElementId="department_keyword" x="100" y="50" unit="elementRegionWidthRatio">50</Left>
+										<Top basePositionType="inElement" baseElementId="responsible_person_keyword" x="100" y="0" unit="elementRegionHeightRatio">-50</Top>
+										<Right basePositionType="inElement" baseElementId="department_keyword" x="100" y="50" unit="elementRegionWidthRatio">1500</Right>
+										<Bottom basePositionType="inElement" baseElementId="responsible_person_keyword" x="100" y="100" unit="elementRegionHeightRatio">50</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="regex">[가-힣]{2,5}</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="notification_period_keyword" type="StaticText">
+						<Name>notification_period_keyword</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="bizTitle" x="50" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-1000</Left>
+										<Top unit="elementRegionHeightRatio">500</Top>
+										<Right unit="elementAvgCharHeightRatio">0</Right>
+										<Bottom unit="elementRegionHeightRatio">4000</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">15</Left>
+										<Top unit="ImageSizeRatio">30</Top>
+										<Right unit="ImageSizeRatio">50</Right>
+										<Bottom unit="ImageSizeRatio">80</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<!-- <MergeTextRegionOnALine>false</MergeTextRegionOnALine> -->
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">유예기간</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="notification_period" type="CharacterString">
+						<Name>통보유예기간</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="notification_period_keyword" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">100</Left>
+										<Top unit="elementRegionHeightRatio">-50</Top>
+										<Right unit="elementAvgCharHeightRatio">3000</Right>
+										<Bottom unit="elementRegionHeightRatio">150</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣0-9.,]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[,.]</SearchText>
+										<NewText type="text">.</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{1,})(월)</SearchText>
+										<NewText type="regex">$1개월</NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="regex">[0-9]{1,}개월</SearchText>
+								<SearchText type="text" similarity="90">즉시</SearchText>
+								<SearchText type="text" similarity="90">없음</SearchText>
+								<SearchText type="regex">[0-9]{4}.[0-9]{2}.[0-9]{2}</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">없음</SearchText>
+										<NewText type="text">유예기간없음</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">유예기간유예기간없음</SearchText>
+										<NewText type="text">유예기간없음</NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="reqagency_keyword" type="StaticText">
+						<Name>reqagency_keyword</Name>
+						<SearchRegionInfo>
+							<!-- <SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="bizTitle" x="0" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-700</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">-300</Right>
+										<Bottom unit="elementRegionHeightRatio">700</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex> -->
+
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">15</Top>
+										<Right unit="ImageSizeRatio">50</Right>
+										<Bottom unit="ImageSizeRatio">60</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<!-- <MergeTextRegionOnALine>false</MergeTextRegionOnALine> -->
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<!-- <ExcludeFoundNextStep>false</ExcludeFoundNextStep> -->
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">요구기관명</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="reqagency" type="CharacterString">
+						<Name>요구기관명</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="reqagency_keyword" x="100" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-500</Left>
+										<Top unit="elementRegionHeightRatio">-200</Top>
+										<Right unit="elementAvgCharHeightRatio">5000</Right>
+										<Bottom unit="elementRegionHeightRatio">50</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<!-- <SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">15</Left>
+										<Top unit="ImageSizeRatio">10</Top>
+										<Right unit="ImageSizeRatio">90</Right>
+										<Bottom unit="ImageSizeRatio">20</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex> -->
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^A-Za-z가-힣]</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="regex">[가-힣]{1,}</SearchText>
+								<SearchText type="regex">[가-힣]{1,}국세청</SearchText>
+								<SearchText type="regex">[가-힣]{1,}세무서</SearchText>
+								<SearchText type="regex">[A-Za-z가-힣]{1,}은행</SearchText>
+								<SearchText type="regex">[A-Za-z가-힣]{1,}과</SearchText>
+							</SearchTextSet>
+							<ExceptTextSet>
+								<SearchText type="text" similarity="90">문서번호</SearchText>
+								<SearchText type="text" similarity="90">요구일자</SearchText>
+								<SearchText type="text" similarity="90">직책</SearchText>
+								<SearchText type="regex">[가-힣]{1,}조사관</SearchText>
+								<SearchText type="regex">[가-힣]{1,}과장</SearchText>
+								<SearchText type="regex">[가-힣]{1,}차장</SearchText>
+								<SearchText type="regex">[가-힣]{1,}팀장</SearchText>
+							</ExceptTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="startdate_keyword" type="StaticText">
+						<Name>startdate_keyword</Name>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="bizTitle" x="100" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-50</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">1000</Right>
+										<Bottom unit="elementRegionHeightRatio">500</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">15</Left>
+										<Top unit="ImageSizeRatio">10</Top>
+										<Right unit="ImageSizeRatio">80</Right>
+										<Bottom unit="ImageSizeRatio">70</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<!-- <MergeTextRegionOnALine>false</MergeTextRegionOnALine> -->
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣]</SearchText>
+										<SearchText type="regex">&#32;</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="text" similarity="70">요구대상거래기간</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<!-- <CorrectionData>
+										<SearchText type="regex"></SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData> -->
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<Element id="startdate" type="CharacterString">
+						<Name>거래기간</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="startdate_keyword" x="100" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">0</Left>
+										<Top unit="elementRegionHeightRatio">-200</Top>
+										<Right unit="elementAvgCharHeightRatio">3000</Right>
+										<Bottom unit="elementRegionHeightRatio">50</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">[^가-힣0-9.,~-]</SearchText>
+										<SearchText type="regex">&#32;</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[-_=]</SearchText>
+										<NewText type="text">~</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[,.]</SearchText>
+										<NewText type="text">.</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([0-9]{2})([.])([0-9]{2})([.])</SearchText>
+										<SearchText type="regex">([0-9]{4})([0-9]{2})([.])([0-9]{2})</SearchText>
+										<NewText type="regex">$1.$2.$4</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([0-9]{2})([.])</SearchText>
+										<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([0-9]{2})</SearchText>
+										<NewText type="regex">$1.$3.$4</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{2})([.])</SearchText>
+										<NewText type="regex">$1.$3.$5</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{1})([.])</SearchText>
+										<NewText type="regex">$1.0$3.0$5</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{1})([.])</SearchText>
+										<NewText type="regex">$1.$3.0$5</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{2})([.])</SearchText>
+										<NewText type="regex">$1.0$3.$5</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{1})([~])</SearchText>
+										<NewText type="regex">$1.0$3.0$5~</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([.])([0-9]{2})([.])([0-9]{1})([~])</SearchText>
+										<NewText type="regex">$1.$3.0$5~</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">([0-9]{4})([.])([0-9]{1})([.])([0-9]{2})([~])</SearchText>
+										<NewText type="regex">$1.$3.$5~</NewText>
+									</CorrectionData>
+									<CorrectionData>
+										<SearchText type="regex">[.][.]</SearchText>
+										<NewText type="text">.</NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="regex">[0-9]{4}.[0-9]{2}.[0-9]{2}~[0-9]{4}.[0-9]{2}.[0-9]{2}</SearchText>
+								<SearchText type="text" similarity="70">계좌개설일부터~회신일현재까지</SearchText>
+								<SearchText type="text" similarity="80">계좌개설일~회신일현재까지</SearchText>
+								<SearchText type="text" similarity="85">조회일현재</SearchText>
+							</SearchTextSet>
+							<StringLengthRange/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="text" similarity="70">계좌개설일부터~회신일현재까지</SearchText>
+										<SearchText type="text" similarity="80">계좌개설일~회신일현재까지</SearchText>
+										<NewText type="text">계좌개설일~회신일현재</NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+				</FormData>
+			</FormPage>
+		</Form>
+	</FormSet>
+
+</IzFormOcrXml>

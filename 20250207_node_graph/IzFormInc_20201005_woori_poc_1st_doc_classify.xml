@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<!-- 사용할 서식 파일을 지정. 상대경로를 사용할 것. -->
+<IzFormInclude version="0.5.0">
+	<!-- 20201005, shkim, 우리은행 POC, 서식분류 -->
+	<!--<FormPath>../form/F0100023103_bizReg_romin.xml</FormPath>-->	<!-- 사업자등록증 -->
+	<!--<FormPath>../form/F0100023102_bizReg_clovaocr.xml</FormPath>-->	<!-- 사업자등록증 -->
+	<FormPath>../form/F0100023101_bizReg.xml</FormPath>	<!-- 사업자등록증 -->
+	<FormPath>../form/F0100090201_등기부등본(법인).xml</FormPath>	<!-- 등기부등본(법인) -->
+	<FormPath>../form/F0100342201_소득금액증명원.xml</FormPath>	<!-- 소득금액증명원 -->
+</IzFormInclude>

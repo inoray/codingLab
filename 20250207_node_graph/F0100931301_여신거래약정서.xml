@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<IzFormOcrXml version="0.5.0">
+	<FormConfiguration>
+		<ExtractTextRegion disabled="false" documentType="document"/>
+
+		<!-- ocrEngine
+			- inzi
+			- tess
+			- clova_ocr
+		-->
+		<RecogString disabled="true" ocrEngine="inzi" language="korean" charSet=""
+					fullTextRecognition="false"
+					clovaocrUrl="https://73bf69487f9242b8b41aae603c63bdbc.apigw.ntruss.com/custom/v1/4423/07c93817ba0b8978e4e16eaefc3591910e41fa8cab83a9a0b873f5e6e2bd5a10/general"
+					clovaocrSecretKey="QkVmZ3Nkd2hhWFpNd1didGZwaWhTSm5sTFVJZVlYY1g="/>
+	</FormConfiguration>
+
+	<FormSet>
+		<Form id="F0100931301" revision="1" disabled="false">
+			<FormName>여신거래약정서</FormName>
+			<FormPage id="page1" header="true" footer="true">
+
+				<!--==================================================================================
+						서식처리정보
+				===================================================================================-->
+				<FormData id="1">
+					<!--
+						모든 IMR (체크 박스) 영역
+						작성일
+						본인 성명
+						여신과목
+						여신(한도)금액
+					-->
+					<!--==================================================================================
+						outBlock 리스트
+					===================================================================================-->
+					<OutBlock id="1">
+						<Field idNumber="1" name="작성일" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="2">
+						<Field idNumber="2" name="본인 성명" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="3">
+						<Field idNumber="3" name="여신과목" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="4">
+						<Field idNumber="4" name="거래구분_한도거래" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="5" name="거래구분_개별거래" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="5">
+						<Field idNumber="6" name="여신(한도)금액" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="6">
+						<Field idNumber="7" name="여신기간 만료일_20 년" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="8" name="여신기간 만료일_여신개시일부터" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="7">
+						<Field idNumber="9" name="이자율 등_고정" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="8">
+						<Field idNumber="10" name="이자율 등_연" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="11" name="이자율 등_여신개시일 현재" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="9">
+						<Field idNumber="12" name="이자율 등_변동" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="10">
+						<Field idNumber="13" name="이자율 등_금리" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="11">
+						<Field idNumber="14" name="이자율 등_기준금리" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="15" name="이자율 등_3개월KORIBOR" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="16" name="이자율 등_기타" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="12">
+						<Field idNumber="17" name="한도약정수수료" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="13">
+						<Field idNumber="18" name="약정한도_한도미사용분" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="19" name="약정한도_미사용수수료를" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="14">
+						<Field idNumber="20" name="여신실행방법_여신개시일에" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="21" name="여신실행방법_증빙서류나" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="22" name="여신실행방법_일정한 요건을" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="15">
+						<Field idNumber="23" name="상환방법_여신기간 만료일에" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="24" name="상환방법_여신개시일로부터" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="25" name="상환방법_자유로이" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="26" name="여신(상환방법_기타)금액" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+					</OutBlock>
+					<OutBlock id="16">
+						<Field idNumber="27" name="이자 지급 시기 및 방법_최초이자는 여신개시일에" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="28" name="이자 지급 시기 및 방법_어음기일 전일까지" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="29" name="이자 지급 시기 및 방법_최초이자는 여신개시일로부터" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="30" name="이자 지급 시기 및 방법_분할상환원금 상환일" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="31" name="이자 지급 시기 및 방법_여신기간 만료일에" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="32" name="이자 지급 시기 및 방법_기타" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="33" name="이자 지급 시기 및 방법_이자는 매월" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="34" name="이자 지급 시기 및 방법_매월 셋째주 토요일" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="35" name="이자 지급 시기 및 방법_매월 마지막주 토요일" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<!--
+						<Field idNumber="36" name="참조_여신거래약정서(기업용)" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="37" name="참조_본인" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="38" name="참조_여신과목" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="39" name="참조_거래구분" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="40" name="참조_거래구분_한도거래" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="41" name="참조_거래구분_개별거래" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="42" name="참조_여신(한도)금액" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="43" name="참조_여신기간 만료일" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="44" name="참조_여신기간 만료일_20 년" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="45" name="참조_여신기간 만료일_여신개시일부터" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="46" name="참조_이자율 등" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="47" name="참조_이자율 등_고정" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="48" name="참조_이자율 등_연" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="49" name="참조_이자율 등_여신개시일 현재" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="50" name="참조_이자율 등_변동" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="51" name="참조_이자율 등_금리" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="52" name="참조_이자율 등_기준금리" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="53" name="참조_이자율 등_3개월KORIBOR" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="54" name="참조_이자율 등_기타" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="55" name="참조_한도약정수수료" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="56" name="참조_한도약정수수료_여신약정한도의" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="57" name="참조_약정한도" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="58" name="참조_약정한도_한도미사용분" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="59" name="참조_약정한도_미사용수수료를" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="60" name="참조_여신실행방법" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="61" name="참조_여신실행방법_여신개시일에" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="62" name="참조_여신실행방법_증빙서류나" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="63" name="참조_여신실행방법_일정한 요건을" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="64" name="참조_상환방법" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="65" name="참조_상환방법_여신기간 만료일에" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="66" name="참조_상환방법_여신개시일로부터" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="67" name="참조_상환방법_자유로이" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="68" name="참조_상환방법_기타" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="69" name="참조_이자 지급 시기 및 방법" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="70" name="참조_이자 지급 시기 및 방법_최초이자는 여신개시일에" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="71" name="참조_이자 지급 시기 및 방법_어음기일 전일까지" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="72" name="참조_이자 지급 시기 및 방법_최초이자는 여신개시일로부터" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="73" name="참조_이자 지급 시기 및 방법_분할상환원금 상환일" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="74" name="참조_이자 지급 시기 및 방법_여신기간 만료일에" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="75" name="참조_이자 지급 시기 및 방법_기타" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="76" name="참조_이자 지급 시기 및 방법_이자는 매월" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="77" name="참조_이자 지급 시기 및 방법_매월 셋째주 토요일" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						<Field idNumber="78" name="참조_이자 지급 시기 및 방법_매월 마지막주 토요일" disabled="false">
+							<ElementId>deep</ElementId>
+						</Field>
+						-->
+					</OutBlock>
+
+					<!-- MachineLearning element 는 머신러닝 방식으로 필드를 탐색
+						수행방식은 두가지가 가능
+						- 범용인식기 내부 머신러닝 수행
+						- 외부 머신러닝 프로그램 실행
+						탐색결과에는 반드시 블록과 필드영역이 있어야 함.
+						필드 인식결과는 옵셔널...
+					 -->
+					<Element id="deep" type="MachineLearning">
+						<Name>딥러닝 모델기반 필드</Name>
+
+						<SearchRegionInfo maxFieldCount="-1">
+							<SearchRegionComplex maxFieldCount="-1">
+								<SearchRegionSet>
+									<SearchRegion>
+										<!-- 이미지에서 인식대상영역 설정
+											이미지 크기대비 비율로 값을 지정 (0 ~ 100)
+										-->
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+
+						<!-- 외부 실행 방식
+							engine: external
+							execFilePath: 실행파일 경로
+							argument: 인자
+								- 매크로
+									- $(SrcImagePath): 범용인식에 입력된 이미지 경로
+									- $(ResultJsonPath): 필드정보가 저장된 json파일 경로.
+										파일의 data 구조는 엔진에 정의된 형태로 구성되어야 함
+						-->
+						<!-- <Inference engine="external"
+							execFilePath="../bin/deepField"
+							argument="./form/form_01.pd $(SrcImagePath) $(ResultJsonPath)"
+						 />-->
+						<Inference engine="restApi" url="$(ServerUrl)/boxing6"/>
+
+						<CommonPostprocess>
+							<PostprocessInfo>
+								<ImageProcessInfo>
+									<ImageProcessDefine>
+										<ImageProcess id="deep" type="machineLearning">
+											<Parameters engine="external"
+												execFilePath="../bin/deepImgProcess"
+												argument="../model/denosing.pb $(SrcImagePath) $(ResultImagePath)"/>
+										</ImageProcess>
+									</ImageProcessDefine>
+									<ImageProcessExec id="deep1" disabled="true" order="deep"/>
+								</ImageProcessInfo>
+								<!--
+								<CorrectionInfo>
+									<CorrectionDataSet>
+										<CorrectionData>
+											<SearchText type="regex">사댑장</SearchText>
+											<NewText type="text">사업장</NewText>
+										</CorrectionData>
+									</CorrectionDataSet>
+								</CorrectionInfo>
+								-->
+							</PostprocessInfo>
+							<ICR engine="external"
+								execFilePath="../bin/IMRDetecter"
+								argument="1 $(SrcImagePath) $(SrcRoiListJsonPath) $(ResultJsonPath)"/>
+							<IMR engine="external"
+								execFilePath="../bin/IMRDetecter"
+								argument="2 $(SrcImagePath) $(SrcRoiListJsonPath) $(ResultJsonPath)"/>
+						</CommonPostprocess>
+
+						<FieldPostprocess idOfForm="1" fieldType="icr" disabled="false"/>
+						<FieldPostprocess idOfForm="2" fieldType="icr" disabled="false"/>
+						<FieldPostprocess idOfForm="3" fieldType="icr" disabled="false"/>
+						<FieldPostprocess idOfForm="4" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="5" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="7" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="8" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="9" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="10" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="11" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="12" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="13" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="14" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="15" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="16" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="17" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="18" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="19" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="20" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="21" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="22" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="23" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="24" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="25" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="26" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="27" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="28" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="29" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="30" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="31" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="32" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="33" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="34" fieldType="imr" disabled="false"/>
+						<FieldPostprocess idOfForm="35" fieldType="imr" disabled="false"/>
+
+					</Element>
+
+				</FormData>
+			</FormPage>
+		</Form>
+	</FormSet>
+
+</IzFormOcrXml>

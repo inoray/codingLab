@@ -1,0 +1,442 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<IzFormOcrXml version="0.5.0">
+    <FormConfiguration>
+        <ExtractTextRegion disabled="false" documentType="document" subOption="table|closed_line"/>
+
+        <!-- ocrEngine
+            - inzi
+            - tess
+            - clova_ocr
+        -->
+        <RecogString disabled="false" ocrEngine="inzi" language="korean" charSet=""
+                    fullTextRecognition="false"
+                    clovaocrUrl="https://73bf69487f9242b8b41aae603c63bdbc.apigw.ntruss.com/custom/v1/4423/07c93817ba0b8978e4e16eaefc3591910e41fa8cab83a9a0b873f5e6e2bd5a10/general"
+                    clovaocrSecretKey="QkVmZ3Nkd2hhWFpNd1didGZwaWhTSm5sTFVJZVlYY1g="/>
+    </FormConfiguration>
+
+	<FormSet>
+		<Form id="F0100000000" revision="1" disabled="false">
+			<FormName>개인회사이름</FormName>
+
+			<FormConfig>
+				<Disabled>
+					<FormPage id="page1" disabled="false">
+						<FormIdentification disabled="true"/>
+						<FormData id="1" disabled="false"/>
+					</FormPage>
+				</Disabled>
+			</FormConfig>
+
+			<FormPage id="page1" header="true" footer="false">
+				<FormIdentification>
+				</FormIdentification>
+				
+				<!--==================================================================================
+						서식처리정보
+				===================================================================================-->
+				<FormData id="1">					
+					
+					<!--==================================================================================
+                    @author     kimmw
+                    @date       2021-11-19
+                    @revision   1.0.0.0
+                    @comment    F0010001501_person_company_name_correction.xml도 포함 필요.
+								순수한글이름 법원문서에서 사용됨.
+                    @usage      다음 형태 한글 이름 검출
+                                (case1) 김민욱(123456-7890123) 	    -> 김민욱
+                                (case2) 망 홍길동(123456-7890123)   -> 홍길동
+                                (case3) 하단인(변경전:하면인)(123456 -> 하단인
+                	===================================================================================-->
+
+					<Element id="ceo" type="CharacterString">
+						<Name>대표자</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="ceoKeyword" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">100</Left>
+										<Top unit="elementRegionHeightRatio">-50</Top>
+										<Right unit="elementAvgCharHeightRatio">1500</Right>
+										<Bottom unit="elementRegionHeightRatio">150</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="openDate" x="0" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">-10</Left>
+										<Top unit="elementRegionHeightRatio">-400</Top>
+										<Right unit="elementAvgCharHeightRatio">1500</Right>
+										<Bottom unit="elementRegionHeightRatio">0</Bottom>
+									</SearchRegion>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="regNo" x="0" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-1150</Left>
+										<Top unit="elementRegionHeightRatio">200</Top>
+										<Right unit="elementAvgCharHeightRatio">0</Right>
+										<Bottom unit="elementAvgCharHeightRatio">1000</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<LanguageInfo>
+							<Language>Korean</Language>
+							<CharacterSet>Alphabet;Hangul;,</CharacterSet>
+						</LanguageInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataInclude>
+                                    <Include xmlpath="F0010001501_person_company_name_correction.xml" correctionSetId="name_common_pre"/>
+									<Include xmlpath="F0010001501_person_company_name_correction.xml" correctionSetId="set1_common_hangul"/>
+                                </CorrectionDataInclude>
+								<CorrectionDataSet>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="regex">[가-힣]+</SearchText>
+								<SearchText type="regex">^망[가-힣]+</SearchText>
+							</SearchTextSet>
+							<ExceptTextSet>
+							</ExceptTextSet>
+							<StringLengthRange from="1" to=""/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RecogString disabled="true" language="korean" charSet="Alphabet;Hangul;Symbol"/>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+									<CorrectionData>
+										<SearchText type="regex">^망</SearchText>
+										<NewText type="text"></NewText>
+									</CorrectionData>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+
+					<!--==================================================================================
+                    @author     kimmw
+                    @date       2021-11-19
+                    @revision   1.0.0.0
+                    @comment    F0010001501_person_company_name_correction.xml도 포함 필요.
+								사업자등록증에서 사용됨.
+                    @usage      다음 형태 알파벳, 한글, 한자 포함 된 이름 검출
+                                (case1) 김민욱			-> 김민욱
+                                (case2) 김휘(KIM HUI) 	-> 김휘
+                                (case3) KIM HUI			-> KIM HUI
+								(case4) 洪吉東			-> 洪吉東 (<LanguageInfo> 한자옵션을 추가했을 경우)
+                	===================================================================================-->
+
+					<Element id="ceo" type="CharacterString">
+						<Name>대표자</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="ceoKeyword" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">100</Left>
+										<Top unit="elementRegionHeightRatio">-50</Top>
+										<Right unit="elementAvgCharHeightRatio">1500</Right>
+										<Bottom unit="elementRegionHeightRatio">150</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="openDate" x="0" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">-10</Left>
+										<Top unit="elementRegionHeightRatio">-400</Top>
+										<Right unit="elementAvgCharHeightRatio">1500</Right>
+										<Bottom unit="elementRegionHeightRatio">0</Bottom>
+									</SearchRegion>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="regNo" x="0" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-1150</Left>
+										<Top unit="elementRegionHeightRatio">200</Top>
+										<Right unit="elementAvgCharHeightRatio">0</Right>
+										<Bottom unit="elementAvgCharHeightRatio">1000</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<LanguageInfo>
+							<Language>Korean</Language>
+							<CharacterSet>Alphabet;Hangul;,</CharacterSet>
+							<!-- 영문, 한글만 검출 
+							<CharacterSet>Alphabet;Hangul;,</CharacterSet>
+							-->
+							<!-- 영문, 한글, 한자 검출가능 
+							<CharacterSet>Alphabet;Hangul;Hanja;,</CharacterSet> 
+							--> 
+						</LanguageInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataInclude>
+                                    <Include xmlpath="F0010001501_person_company_name_correction.xml" correctionSetId="name_common_pre"/>
+									<Include xmlpath="F0010001501_person_company_name_correction.xml" correctionSetId="set1_common_hangul"/>
+                                </CorrectionDataInclude>
+								<CorrectionDataSet>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="charSet" similarity="60">Alphabet;Hangul;Hanja</SearchText>
+							</SearchTextSet>
+							<ExceptTextSet>
+							</ExceptTextSet>
+							<StringLengthRange from="2" to=""/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RecogString disabled="true" language="korean" charSet="Alphabet;Hangul;Symbol"/>
+							<RemoveSpace>true</RemoveSpace>
+							<CorrectionInfo>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<!--==================================================================================
+                    @author     kimmw
+                    @date       2021-11-19
+                    @revision   1.0.0.0
+                    @comment    이렇게 사용할 수도 있으나, 인식률이 떨어지는 것 같다.
+                    @usage      다음 형태 한글 이름 검출
+                                (case1) 김민욱
+                                (case2) 박영현
+                                (case3) 서동현
+                	===================================================================================-->
+
+					<Element id="hangulName" type="CharacterString">
+						<Name>한글성명</Name>
+						<Content type="Korean.Name" similarity="50">
+							<SubContent>Hangul</SubContent>
+						</Content>
+						<SearchRegionInfo>
+							<SearchRegionComplex>
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="nameKeyword" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">300</Left>
+										<Top unit="elementAvgCharHeightRatio">-50</Top>
+										<Right unit="elementAvgCharHeightRatio">1500</Right>
+										<Bottom unit="elementAvgCharHeightRatio">150</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+					</Element>
+
+					<!--==================================================================================
+                    @author     kimmw
+                    @date       2021-11-19
+                    @revision   1.0.0.0
+					@comment    F0010001501_person_company_name_correction.xml도 포함 필요.
+                        		완벽하지는 않다...
+								SearchByLexicon -> 주소 DB를 사용하는 것이 아니라 구조만 사용한다. 예) **시 **구 **길 **로..
+								SearchByCharSet, SearchByWordInfo -> 둘 중 하나가 DB를 이용하여 검출한다고 한다. 자세한 부분은 확인해야함.
+                    @usage      다음 형태 주소 검출
+                                (case1) 순천시
+                                (case2) 광주광역시 동구
+                                (case3) 전남 화순군 화순읍 알메로
+								(case4) 광주 광산구 풍영로329번길
+								(case5) 순천시 비봉2길 22,
+								(case6) 광주 남구 봉선1로 87, 109동 1404호(방림동, 모아아파트)
+                	===================================================================================-->
+
+					<Element id="address" type="CharacterString">
+						<Name>사업장소재지</Name>
+						<Content type="Korean.Address" similarity="70">
+							<SubContent>SearchByCharSet</SubContent>
+							<!--<SubContent>SearchByCharSet</SubContent>-->
+							<!--<SubContent>SearchByLexicon</SubContent>-->
+							<!--<SubContent>SearchByWordInfo</SubContent>-->
+						</Content>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="addressKeyword" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">50</Left>
+										<Top unit="elementRegionHeightRatio">-100</Top>
+										<Right unit="elementAvgCharHeightRatio">5000</Right>
+										<Bottom unit="elementRegionHeightRatio">250</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex maxFieldCount="1" priority="similarity">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="openDate" x="0" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-50</Left>
+										<Top unit="elementRegionHeightRatio">0</Top>
+										<Right unit="elementAvgCharHeightRatio">5000</Right>
+										<Bottom unit="elementRegionHeightRatio">300</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine maxDistanceRatioToFieldHeight="200">true</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataInclude>
+									<Include xmlpath="F0010001501_person_company_name_correction.xml" correctionSetId="address_common_pre"/>
+								</CorrectionDataInclude>
+								<CorrectionDataSet>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<StringLengthRange from="1"/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<CorrectionInfo>
+								<CorrectionDataSet>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+
+					<!--==================================================================================
+                    @author     kimmw
+                    @date       2021-11-23
+                    @revision   1.0.0.0
+                    @comment    F0010001501_person_company_name_correction.xml도 포함 필요.
+                    @usage      다음 형태 법인명, 상호명 검출
+                                (case1) 세광테크
+                                (case2) (주) 이안전자
+								(case3) 동성건설 (주)
+                                (case4) 트랜드주식회사(TRAND)
+								(case5) 농업회사법인 하이팜 주식회사
+								(case6) 정다운사람들 주식회사
+								(case7) 주식회사 한국만선
+                	===================================================================================-->
+
+					<Element id="comName" type="CharacterString">
+						<Name>상호</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo>
+							<SearchRegionComplex maxFieldCount="1" priority="nearestTopAlignCenter">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="comNameKeyword_01" x="100" y="0"/>
+										<Left unit="elementAvgCharHeightRatio">100</Left>
+										<Top unit="elementRegionHeightRatio">-50</Top>
+										<Right unit="elementAvgCharHeightRatio">3000</Right>
+										<Bottom unit="elementRegionHeightRatio">150</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+							<SearchRegionComplex maxFieldCount="1" priority="nearestTopAlignCenter">
+								<SearchRegionSet>
+									<SearchRegion>
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">75</Right>
+										<Bottom unit="ImageSizeRatio">60</Bottom>
+									</SearchRegion>
+									<SearchRegion>
+										<BasePosition type="inElement" baseElementId="regNo" x="0" y="100"/>
+										<Left unit="elementAvgCharHeightRatio">-1150</Left>
+										<Top unit="elementRegionHeightRatio">50</Top>
+										<Right unit="elementAvgCharHeightRatio">1100</Right>
+										<Bottom unit="elementAvgCharHeightRatio">450</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<LanguageInfo>
+							<Language>Korean</Language>
+							<CharacterSet>Digit;Alphabet;Hangul;()</CharacterSet>
+						</LanguageInfo>
+						<PreprocessInfo>
+							<ImagePreprocessInfo/>
+							<ExtractTextRegion disabled="true" documentType="document" subOption="table" reduceRatio16="16" inverseType="0"/>
+							<RecogString disabled="true" language="korean" charSet=""/>
+							<MergeTextRegionOnALine>false</MergeTextRegionOnALine>
+							<CorrectionInfo>
+								<CorrectionDataInclude>
+									<Include xmlpath="F0010001501_person_company_name_correction.xml" correctionSetId="set1_common_hangul"/>
+									<Include xmlpath="F0010001501_person_company_name_correction.xml" correctionSetId="company_common_pre"/>
+								</CorrectionDataInclude>
+								<CorrectionDataSet>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="charSet" similarity="60">Digit;Alphabet;Hangul;Hanja;()</SearchText>
+							</SearchTextSet>
+							<StringLengthRange from="2" to=""/>
+							<RowCountRange/>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<RecogString disabled="true" language="korean" charSet="Alphabet;Hangul;Symbol"/>
+							<CorrectionInfo>
+								<CorrectionDataInclude>
+								</CorrectionDataInclude>
+								<CorrectionDataSet>
+								</CorrectionDataSet>
+							</CorrectionInfo>
+						</PostprocessInfo>
+					</Element>
+					
+					<!--==================================================================================
+						outBlock 리스트
+					===================================================================================-->			
+					<OutBlock id="1">				
+						<Field idNumber="1" name="신청인이름" disabled="false">
+							<ElementId>applicant</ElementId>
+						</Field>
+					</OutBlock>
+
+					<OutBlock id="2">				
+						<Field idNumber="2" name="채무자이름" disabled="false">
+							<ElementId>debtor</ElementId>
+						</Field>
+					</OutBlock>
+
+					<OutBlock id="3">				
+						<Field idNumber="3" name="채무자키워드" disabled="false">
+							<ElementId>debtor_keyword</ElementId>
+						</Field>
+					</OutBlock>
+
+					<OutBlock id="4">				
+						<Field idNumber="4" name="주소" disabled="false">
+							<ElementId>address</ElementId>
+						</Field>
+					</OutBlock>
+
+					<OutBlock id="5">				
+						<Field idNumber="5" name="상호명" disabled="false">
+							<ElementId>comName</ElementId>
+						</Field>
+					</OutBlock>
+
+				</FormData>
+			</FormPage>
+		</Form>
+	</FormSet>
+
+</IzFormOcrXml>

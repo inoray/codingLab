@@ -19,7 +19,11 @@ __version__ = "0.1.0"
 class FormXmlViewerApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle(f"Form Xml Relation Viewer v{QApplication.applicationVersion()}")
+
+        self.win_title = f"Form Xml Relation Viewer v{QApplication.applicationVersion()}"
+        self.current_dir = QDir.currentPath()
+
+        self.setWindowTitle(self.win_title)
         self.setWindowIcon(QIcon('./icon/title_icon.svg'))
         self.setGeometry(100, 100, 1200, 800)
 
@@ -55,9 +59,11 @@ class FormXmlViewerApp(QMainWindow):
 
     def load_folder(self):
         # QFileDialog를 사용하여 폴더 선택
-        folder_path = QFileDialog.getExistingDirectory(self, "폴더 선택", QDir.currentPath())
+        folder_path = QFileDialog.getExistingDirectory(self, "폴더 선택", self.current_dir)
         if folder_path:
             self.tree_view.setRootIndex(self.model.index(folder_path))
+            self.dir_label.setText(folder_path)
+            self.current_dir = folder_path
 
     def on_item_clicked(self, index):
         # 선택된 항목의 파일 경로 가져오기
@@ -90,11 +96,11 @@ class FormXmlViewerApp(QMainWindow):
         file_menu = menubar.addMenu("&File")
         help_menu = menubar.addMenu("&Help")
 
-        open_xml_action = QAction("Open xml", self)
+        open_xml_action = QAction("Open Xml", self)
         open_xml_action.triggered.connect(self.select_xml_file)
         file_menu.addAction(open_xml_action)
 
-        load_folder_action = file_menu.addAction("폴더 불러오기")
+        load_folder_action = file_menu.addAction("Open Folder")
         load_folder_action.triggered.connect(self.load_folder)
 
         about_action = QAction("About", self)
@@ -118,11 +124,11 @@ class FormXmlViewerApp(QMainWindow):
         # self.select_button.clicked.connect(self.select_xml_file)
         # sidebar_layout.addWidget(self.select_button)
 
-        # # 파일 정보 레이블
-        # self.file_label = QLabel("선택된 파일 없음")
-        # self.file_label.setWordWrap(True)
+        # 파일 정보 레이블
+        self.dir_label = QLabel(self.current_dir)
+        self.dir_label.setWordWrap(True)
         # self.file_label.setStyleSheet("color: white;")
-        # sidebar_layout.addWidget(self.file_label)
+        sidebar_layout.addWidget(self.dir_label)
 
         # self.refresh_button = QPushButton("Refresh")
         # self.refresh_button.clicked.connect(self.refresh_xml_file)
@@ -135,14 +141,13 @@ class FormXmlViewerApp(QMainWindow):
 
         # QFileSystemModel 설정
         self.model = QFileSystemModel()
-        current_dir = QDir.currentPath()
-        self.model.setRootPath(current_dir)
+        self.model.setRootPath(self.current_dir)
         self.model.setNameFilters(["*.xml"])
         self.model.setNameFilterDisables(False)
         self.model.setFilter(QDir.AllDirs | QDir.Files | QDir.NoDotAndDotDot)
 
         self.tree_view.setModel(self.model)
-        self.tree_view.setRootIndex(self.model.index(current_dir))
+        self.tree_view.setRootIndex(self.model.index(self.current_dir))
 
         # QTreeView에서 이름 열만 표시하고 나머지 열 숨기기
         self.tree_view.setHeaderHidden(True)
@@ -158,6 +163,11 @@ class FormXmlViewerApp(QMainWindow):
 
         # QTreeView의 시그널에 슬롯 연결
         self.tree_view.clicked.connect(self.on_item_clicked)
+
+        self.form_info = QLabel()
+        self.form_info.setWordWrap(True)
+        # self.file_label.setStyleSheet("color: white;")
+        sidebar_layout.addWidget(self.form_info)
 
         # 여백을 위한 스트레치
         sidebar_layout.addStretch()
@@ -178,7 +188,16 @@ class FormXmlViewerApp(QMainWindow):
             # 파일 레이블 업데이트
             # self.file_label.setText(f"선택된 파일:\n{os.path.basename(file_path)}")
 
-            html, _ = gen_pyvis_html(self.file_path)
+            self.setWindowTitle(f'{self.win_title} - {os.path.basename(self.file_path)}')
+
+            try:
+                html, _, info = gen_pyvis_html(self.file_path)
+                self.form_info.setText(f"{info}")
+            except Exception as e:
+                # 에러 메시지 표시
+                QMessageBox.critical(self, "Error", str(e))
+                return
+
             self.web_view.setHtml (html)
 
             # with open("./pyvis_graph.html", mode='w', encoding='utf-8') as fp:

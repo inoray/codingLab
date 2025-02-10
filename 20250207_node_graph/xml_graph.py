@@ -283,6 +283,77 @@ def gen_form_data_graph(net, form_data, form_data_id):
     return edge_inout
 
 
+def gen_info_form_ocr_xml(root):
+    info = f"Form OCR XML\n\n"
+    for form in root.iter('Form'):
+        if form.tag != "Form":
+            continue
+        info = info + f"- form id: {form.get('id')}\n"
+        for form_Page in form:
+            if form_Page.tag != "FormPage":
+                continue
+            info = info + f"  - form page id: {form_Page.get('id')}\n"
+
+            # 식별정보
+            info_ident = ""
+            for ident in form_Page:
+                if ident.tag != "FormIdentification":
+                    continue
+
+                id_complex = ident.findall("TextIdentificationComplex")
+                if len(id_complex) <= 0:
+                    continue
+
+                info = info + f"      - FormIdentification\n"
+                for ident_complx in ident:
+                    if ident_complx.tag != "TextIdentificationComplex":
+                        continue
+                    ident_elems = ident_complx.findall("Element")
+                    info_ident = info_ident + f"        - number of element in id-complex: {len(ident_elems)}\n"
+
+            if info_ident != "":
+                info = info + info_ident + "\n"
+
+            for form_data in form_Page:
+                if form_data.tag != "FormData":
+                    continue
+                info = info + f"    - form data id: {form_data.get('id')}\n"
+
+                elems = form_data.findall("Element")
+                info = info + f"      - number of element: {len(elems)}\n"
+
+                cnt_field = 0
+                for block in form_data:
+                    if block.tag != "OutBlock":
+                        continue
+                    for field in block:
+                        if field.tag != "Field":
+                            continue
+                        field_idnumber = field.get("idNumber")
+                        field_name = field.get("name")
+                        disabled = field.get("disabled", "false").lower()
+                        cnt_field += 1
+
+                info = info + f"      - number of field: {cnt_field}\n\n"
+
+    return info
+
+
+def gen_xml_info (root):
+    info = ""
+    tag = root.tag
+    if tag == "IzFormOcrXml":
+        info = gen_info_form_ocr_xml(root)
+    elif tag == "CorrectionInfo":
+        info = f"Correction Info XML\n"
+    elif tag == "IzFormWorkDefine":
+        info = f"Form Work Define XML\n"
+    elif tag == "IzFormInclude":
+        info = f"Form Include XML\n"
+
+    return info
+
+
 def gen_graph_from_xml(xml_file):
     """
     XML 파일을 읽어 PyVis Network 객체를 생성하고 반환
@@ -293,10 +364,18 @@ def gen_graph_from_xml(xml_file):
     Returns:
        PyVis Network 객체
     """
+    info = ""
 
     # XML 파일 읽기
-    tree = ET.parse(xml_file)
+    try:
+        tree = ET.parse(xml_file)
+    except Exception as e:
+        # 예외 던지기
+        raise Exception(f"XML 파일을 읽을 수 없습니다: {xml_file} : {e}")
+
     root = tree.getroot()
+
+    info = gen_xml_info(root)
 
     # PyVis Network 객체 생성 (directed=True로 화살표 표시)
     net = Network(height="800px", width="100%", directed=True, bgcolor="#222222", font_color="white")
@@ -324,7 +403,7 @@ def gen_graph_from_xml(xml_file):
                 edge_inout.update(edge_inout_cur)
 
     set_node_attribute(net, edge_inout)
-    return net
+    return net, info
 
 
 def gen_pyvis_html(xml_file):
@@ -338,12 +417,13 @@ def gen_pyvis_html(xml_file):
     Returns:
         str: HTML 코드
     """
-    net = gen_graph_from_xml(xml_file)
+
+    net, info = gen_graph_from_xml(xml_file)
     net.set_template(args.template_path)
     # net.show_buttons(filter_=['physics'])  # 물리 시뮬레이션 버튼만 표시
     html = net.generate_html()
 
-    return html, net
+    return html, net, info
 
 
 def show_in_browser(html, net):
