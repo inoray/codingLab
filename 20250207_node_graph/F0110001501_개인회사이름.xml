@@ -10,9 +10,7 @@
             - clova_ocr
         -->
         <RecogString disabled="false" ocrEngine="inzi" language="korean" charSet=""
-                    fullTextRecognition="false"
-                    clovaocrUrl="https://73bf69487f9242b8b41aae603c63bdbc.apigw.ntruss.com/custom/v1/4423/07c93817ba0b8978e4e16eaefc3591910e41fa8cab83a9a0b873f5e6e2bd5a10/general"
-                    clovaocrSecretKey="QkVmZ3Nkd2hhWFpNd1didGZwaWhTSm5sTFVJZVlYY1g="/>
+                    fullTextRecognition="false"/>
     </FormConfiguration>
 
 	<FormSet>
@@ -31,12 +29,12 @@
 			<FormPage id="page1" header="true" footer="false">
 				<FormIdentification>
 				</FormIdentification>
-				
+
 				<!--==================================================================================
 						서식처리정보
 				===================================================================================-->
-				<FormData id="1">					
-					
+				<FormData id="1">
+
 					<!--==================================================================================
                     @author     kimmw
                     @date       2021-11-19
@@ -175,12 +173,12 @@
 						<LanguageInfo>
 							<Language>Korean</Language>
 							<CharacterSet>Alphabet;Hangul;,</CharacterSet>
-							<!-- 영문, 한글만 검출 
+							<!-- 영문, 한글만 검출
 							<CharacterSet>Alphabet;Hangul;,</CharacterSet>
 							-->
-							<!-- 영문, 한글, 한자 검출가능 
-							<CharacterSet>Alphabet;Hangul;Hanja;,</CharacterSet> 
-							--> 
+							<!-- 영문, 한글, 한자 검출가능
+							<CharacterSet>Alphabet;Hangul;Hanja;,</CharacterSet>
+							-->
 						</LanguageInfo>
 						<PreprocessInfo>
 							<ImagePreprocessInfo/>
@@ -400,35 +398,35 @@
 							</CorrectionInfo>
 						</PostprocessInfo>
 					</Element>
-					
+
 					<!--==================================================================================
 						outBlock 리스트
-					===================================================================================-->			
-					<OutBlock id="1">				
+					===================================================================================-->
+					<OutBlock id="1">
 						<Field idNumber="1" name="신청인이름" disabled="false">
 							<ElementId>applicant</ElementId>
 						</Field>
 					</OutBlock>
 
-					<OutBlock id="2">				
+					<OutBlock id="2">
 						<Field idNumber="2" name="채무자이름" disabled="false">
 							<ElementId>debtor</ElementId>
 						</Field>
 					</OutBlock>
 
-					<OutBlock id="3">				
+					<OutBlock id="3">
 						<Field idNumber="3" name="채무자키워드" disabled="false">
 							<ElementId>debtor_keyword</ElementId>
 						</Field>
 					</OutBlock>
 
-					<OutBlock id="4">				
+					<OutBlock id="4">
 						<Field idNumber="4" name="주소" disabled="false">
 							<ElementId>address</ElementId>
 						</Field>
 					</OutBlock>
 
-					<OutBlock id="5">				
+					<OutBlock id="5">
 						<Field idNumber="5" name="상호명" disabled="false">
 							<ElementId>comName</ElementId>
 						</Field>

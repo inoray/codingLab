@@ -10,9 +10,7 @@
 			- clova_ocr
 		-->
 		<RecogString disabled="true" ocrEngine="inzi" language="korean" charSet=""
-					fullTextRecognition="false"
-					clovaocrUrl="https://73bf69487f9242b8b41aae603c63bdbc.apigw.ntruss.com/custom/v1/4423/07c93817ba0b8978e4e16eaefc3591910e41fa8cab83a9a0b873f5e6e2bd5a10/general"
-					clovaocrSecretKey="QkVmZ3Nkd2hhWFpNd1didGZwaWhTSm5sTFVJZVlYY1g="/>
+					fullTextRecognition="false"/>
 	</FormConfiguration>
 
 	<FormSet>
