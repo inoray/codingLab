@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PyVis Network with Modern Physics Controls</title>
+    <style type="text/css">
+      /* 기본 스타일 */
+      body { margin: 0; padding: 0; overflow: hidden; }
+
+      /* 메인 컨테이너: 좌측 그래프 / 우측 상세 영역 */
+      #container {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+      }
+
+      /* 좌측 그래프 영역 */
+      #graphContainer {
+        width: 100%;
+        min-width: 100px;
+        height: 100%;
+        background: #222222;
+      }
+
+      /* 좌우 divider */
+      #dragbar {
+        width: 5px;
+        background-color: #aaa;
+        cursor: ew-resize;
+      }
+
+      /* 우측 상세 영역 (내부 요소 배치를 위해 position: relative) */
+      #details {
+        width: 30%;
+        min-width: 100px;
+        height: 100%;
+        position: relative;
+        background: #f0f0f0;
+      }
+
+      /* XML 코드 영역: 물리 제어 패널이 가리지 않도록 높이 및 스크롤 활성 */
+      #xmlContainer {
+        overflow-y: auto;
+        padding: 10px;
+        color: #000;
+        box-sizing: border-box;
+        height: calc(100% - 525px); /* 물리 컨트롤 영역(550px) + 수평 드래그바(5px) */
+      }
+      #xmlContainer h3 { margin-top: 0; }
+      pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      /* 수평 드래그바: XML 영역과 물리 컨트롤 영역 경계 조절 */
+      #horizontalDragbar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background-color: #aaa;
+        cursor: ns-resize;
+        bottom: 520px; /* 물리 컨트롤 영역 높이 */
+      }
+
+      /* 물리 컨트롤 영역: 하단에 고정, 높이 550px */
+      #physicsContainer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 520px;
+        overflow-y: auto;
+        background: #ffffff;
+        padding: 20px;
+        box-sizing: border-box;
+        border-top: 1px solid #ccc;
+        background-color: #282c34;
+        color: #abb2bf; /* 텍스트 색상도 테마에 맞게 조정 */
+      }
+      #physicsContainer h3 { margin-top: 0; }
+
+      #physicsControlPanel {
+        background-color: #282c34;
+        color: #abb2bf; /* 텍스트 색상도 테마에 맞게 조정 */
+      }
+
+      /* 슬라이더 그룹: 모던한 디자인 적용 */
+      .sliderGroup {
+        margin: 15px 0;
+        padding: 10px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .sliderGroup label {
+        display: block;
+        margin-bottom: 5px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        color: #333;
+      }
+      .sliderGroup input[type="range"] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 5px;
+        background: #ddd;
+        border-radius: 5px;
+        outline: none;
+      }
+      .sliderGroup input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: #007BFF;
+        cursor: pointer;
+        border: none;
+      }
+      .sliderGroup input[type="range"]::-moz-range-thumb {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: #007BFF;
+        cursor: pointer;
+        border: none;
+      }
+
+      /* 선택 스위치 스타일 (크기를 작게 조정) */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 28px;
+        vertical-align: middle;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: #007BFF;
+      }
+      input:checked + .slider:before {
+        transform: translateX(25px);
+      }
+
+      /* Reset 버튼: 토글 스위치의 푸른색(#007BFF) 적용 */
+      #resetPhysicsButton {
+        display: inline-block;
+        padding: 8px 16px;
+        font-size: 14px;
+        color: #fff;
+        background: #007BFF;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        background-color: #3e4451;
+        color: #abb2bf;
+        border: none;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 5px;
+      }
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+    <link href="https://unpkg.com/vis-network@9.1.2/dist/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- highlight.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <style type="text/css">
+      body { margin: 0; padding: 0; }
+      pre { white-space: pre-wrap; word-wrap: break-word; }
+      /* 코드 내 줄바꿈 보존 */
+      pre code {
+        white-space: pre-wrap;
+      }
+    </style>
+    <!-- highlight.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+  </head>
+  <body>
+    <div id="container">
+      <div id="graphContainer"></div>
+    </div>
+
+    <script type="text/javascript">
+      // pyvis에서 전달받은 노드, 엣지, 옵션 데이터를 이용하여 vis.Network 객체 생성
+      var nodes = new vis.DataSet({{ nodes | safe }});
+      var edges = new vis.DataSet({{ edges | safe }});
+      var container = document.getElementById("graphContainer");
+      var data = { nodes: nodes, edges: edges };
+      var options = {{ options | safe }};
+      var network = new vis.Network(container, data, options);
+
+      // XML 코드 출력 및 노드 선택 처리
+      var brightMapping = {
+        "cornflowerblue": "#b9c8f7",
+        "#d2cb7f": "#eae5be",
+        "#e76a83": "#f9b6bf",
+        "#6e3741": "#f9b6bf"
+      };
+      var lastSelectedNodeId = null;
+      function selectNode(nodeId) {
+        if (lastSelectedNodeId !== null && lastSelectedNodeId !== nodeId) {
+          var prevNode = nodes.get(lastSelectedNodeId);
+          if (prevNode && prevNode.origColor) {
+            nodes.update({ id: lastSelectedNodeId, color: prevNode.origColor });
+          }
+        }
+        var node = nodes.get(nodeId);
+        if (node && node.origColor && brightMapping[node.origColor]) {
+          nodes.update({ id: nodeId, color: brightMapping[node.origColor] });
+        }
+        lastSelectedNodeId = nodeId;
+        //document.getElementById("xmlCode").textContent  = node.xml_code;
+
+        // highlight.js를 이용해 XML 하이라이트 적용
+        //hljs.highlightElement(document.getElementById("xmlCode"));
+      }
+
+      network.on("dragStart", function(params) {
+        if (params.nodes.length > 0) {
+          selectNode(params.nodes[0]);
+        }
+      });
+
+      // 물리 시뮬레이션 제어 및 초기값 설정
+      var physicsEnabled = (options.physics && options.physics.enabled !== undefined) ? options.physics.enabled : true;
+      // 엔진의 초기 물리 파라미터 (forceAtlas2Based 사용 시)
+      var initialPhysics = {
+        gravity: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.gravitationalConstant) || -50,
+        centralGravity: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.centralGravity) || 0.005,
+        springLength: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.springLength) || 95,
+        springStrength: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.springConstant) || 0.04,
+        damping: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.damping) || 0.09
+      };
+
+    </script>
+  </body>
+</html>

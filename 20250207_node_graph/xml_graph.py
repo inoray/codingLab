@@ -406,7 +406,7 @@ def gen_graph_from_xml(xml_file):
     return net, info
 
 
-def gen_pyvis_html(xml_file):
+def gen_pyvis_html(xml_file, template_path = args.template_path):
     """
     PyVis Network 객체를 HTML로 변환
 
@@ -419,7 +419,8 @@ def gen_pyvis_html(xml_file):
     """
 
     net, info = gen_graph_from_xml(xml_file)
-    net.set_template(args.template_path)
+    if template_path is not None and template_path != "":
+        net.set_template(template_path)
     # net.show_buttons(filter_=['physics'])  # 물리 시뮬레이션 버튼만 표시
     html = net.generate_html()
 
@@ -454,7 +455,7 @@ def show_in_webview(html):
 
 def main():
 
-    html, net = gen_pyvis_html(args.xml_path)
+    html, net, _ = gen_pyvis_html(args.xml_path)
 
     if args.view_browser:
         show_in_browser(html, net)
