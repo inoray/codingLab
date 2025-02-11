@@ -218,17 +218,16 @@ class FormXmlViewerApp(QMainWindow):
     def view_graph(self):
 
         if self.file_path:
-
-            self.setWindowTitle(f'{self.win_title} - {os.path.basename(self.file_path)}')
-
             try:
                 html, _, info = gen_pyvis_html(self.file_path)
                 self.form_info.setText(f"{info}")
             except Exception as e:
+                self.web_view.setHtml ("")
                 # 에러 메시지 표시
                 QMessageBox.critical(self, "Error", str(e))
                 return
 
+            self.setWindowTitle(f'{self.win_title} - {os.path.basename(self.file_path)}')
             self.web_view.setHtml (html)
 
             # with open("./pyvis_graph.html", mode='w', encoding='utf-8') as fp:
@@ -239,12 +238,14 @@ class FormXmlViewerApp(QMainWindow):
             # HTML 파일을 웹뷰에 로드
             # self.web_view.setUrl(QUrl.fromLocalFile(abs_html))
 
+
     def view_only_graph(self):
 
         if self.work_dir:
             try:
                 html_only_graph, _, _ = file_graph.gen_pyvis_html(self.work_dir, "./template_only_graph.html")
             except Exception as e:
+                self.web_view_file_relation.setHtml("")
                 # 에러 메시지 표시
                 QMessageBox.critical(self, "Error", str(e))
                 return
