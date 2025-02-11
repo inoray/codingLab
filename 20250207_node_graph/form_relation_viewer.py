@@ -10,7 +10,7 @@ import file_graph
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                             QHBoxLayout, QPushButton, QLabel, QFileDialog, QFrame,
                             QMessageBox, QSplitter, QTreeView, QFileSystemModel, QSizePolicy,
-                            QTextEdit, QDockWidget)
+                            QTextEdit, QDockWidget, QStatusBar)
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtCore import QUrl, Qt, QDir
 from PySide6.QtGui import QIcon, QColor, QAction
@@ -26,13 +26,11 @@ class FormXmlViewerApp(QMainWindow):
         self.win_title = f"Form Xml Relation Viewer v{QApplication.applicationVersion()}"
         self.work_dir = QDir.currentPath()
         self.file_path = None
+        self.info_file_graph = ""
 
         self.setWindowTitle(self.win_title)
         self.setWindowIcon(QIcon('./icon/title_icon.svg'))
         self.setGeometry(100, 100, 1200, 800)
-
-        # 상태바에 버전 정보 표시
-        self.statusBar().showMessage(f"Version: {__version__}")
 
         # QSplitter 생성 (수평 방향)
         self.layout = QSplitter(Qt.Horizontal)
@@ -51,6 +49,9 @@ class FormXmlViewerApp(QMainWindow):
 
         # 메뉴 생성
         self.create_menu()
+
+        # 상태바 생성
+        self.create_status_bar()
 
         # 스타일 설정
         self.apply_styles()
@@ -85,11 +86,42 @@ class FormXmlViewerApp(QMainWindow):
         # About 다이얼로그에 버전 정보와 추가 설명을 포함
         about_text = (
             f"<h3>Form Xml Relation Viewer</h3>"
+            f"<p>Copyright © 2025 Inzisoft</p>"
+            f"<p>All rights reserved.</p>"
+            f"<p>서식xml의 연결 관계정보를 보여주는 프로그램입니다.</p>"
             f"<p>Version: {__version__}</p>"
-            "<p>서식xml의 연결 관계정보를 보여주는 프로그램입니다.</p>"
-            "<p>개발자: shkim</p>"
+            f"<p>개발자: shkim</p>"
         )
         QMessageBox.about(self, "About Form Xml Relation Viewer", about_text)
+
+
+    def create_status_bar(self):
+
+        # 상태바에 버전 정보 표시
+        self.status_bar = QStatusBar()
+        self.setStatusBar(self.status_bar)
+
+
+        # 컨테이너 위젯 생성 (progress_label과 margin을 담을 컨테이너)
+        container = QWidget()
+        container_layout = QHBoxLayout(container)
+        container_layout.setContentsMargins(0, 0, 0, 0)  # 컨테이너의 내부 여백 제거
+        container_layout.setSpacing(0)  # 위젯 간 간격 제거
+
+        # 상태바 우측에 진행률 표시를 위한 레이블 생성
+        self.progress_label = QLabel()
+        self.progress_label.setAlignment(Qt.AlignRight)
+
+        # 여백을 위한 빈 레이블 생성
+        self.margin_label = QLabel()
+        self.margin_label.setFixedWidth(20)  # 20픽셀 여백
+
+        # 컨테이너에 위젯 추가
+        container_layout.addWidget(self.progress_label)
+        container_layout.addWidget(self.margin_label)
+
+        # 상태바에 컨테이너 추가
+        self.statusBar().addPermanentWidget(container)
 
 
     def create_menu(self):
@@ -214,6 +246,26 @@ class FormXmlViewerApp(QMainWindow):
         self.addDockWidget(Qt.RightDockWidgetArea, self.dock)
         # self.dock.hide()
 
+        # 로딩 진행상황 시그널 연결
+        self.web_view_file_relation.loadStarted.connect(self.loading_started)
+        self.web_view_file_relation.loadProgress.connect(self.loading_progress)
+        self.web_view_file_relation.loadFinished.connect(self.loading_finished)
+
+
+    def loading_started(self):
+        self.progress_label.setText("XML 파일 분석 시작...")
+
+
+    def loading_progress(self, progress):
+        self.progress_label.setText(f"XML 파일 분석 중... {progress}%")
+
+
+    def loading_finished(self, success):
+        if success:
+            # self.progress_label.setText(f"XML 파일 분석 완료")
+            self.progress_label.setText(self.info_file_graph)
+        else:
+            self.progress_label.setText(f"XML 파일 분석 실패")
 
     def view_graph(self):
 
@@ -242,15 +294,16 @@ class FormXmlViewerApp(QMainWindow):
     def view_only_graph(self):
 
         if self.work_dir:
+            self.info_file_graph = ""
             try:
-                html_only_graph, _, _ = file_graph.gen_pyvis_html(self.work_dir, "./template_only_graph.html")
+                html_only_graph, _, info = file_graph.gen_pyvis_html(self.work_dir, "./template_only_graph.html")
             except Exception as e:
                 self.web_view_file_relation.setHtml("")
-                # 에러 메시지 표시
                 QMessageBox.critical(self, "Error", str(e))
                 return
 
             self.web_view_file_relation.setHtml (html_only_graph)
+            self.info_file_graph = info
 
 
     def select_xml_file(self):
