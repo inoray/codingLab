@@ -99,8 +99,11 @@ def get_xml_file_list(dir):
             if file.endswith(".xml"):
                 # 경로형태를 unix형태로 변경 "\\" -> "/"
                 file_path = os.path.join(root, file).replace("\\", "/")
-                if is_form_xml(file_path):
-                    xml_file_list.append(file_path)
+                try:
+                    if is_form_xml(file_path):
+                        xml_file_list.append(file_path)
+                except Exception as e:
+                    continue
 
     return xml_file_list
 
@@ -270,6 +273,7 @@ def gen_file_graph(dir):
 
     # 파일을 노드로 추가
     xml_file_list_avail = add_node_files(net, xml_file_list)
+    info = f"Total XML files: {len(xml_file_list)}, Available XML files: {len(xml_file_list_avail)}"
 
     # edge 추가. xml을 분석해서 edge를 추가한다.
     edge_inout = add_edge_files(net, xml_file_list_avail)
