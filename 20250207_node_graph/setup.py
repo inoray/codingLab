@@ -3,7 +3,6 @@ from cx_Freeze import setup, Executable
 # 포함할 파일 목록
 include_files = [
     ('assets/', 'assets'),  # 'templates' 폴더를 포함
-    ('icon/', 'icon'),        # 'icon' 폴더를 포함
 ]
 
 # 빌드 옵션 설정
@@ -18,5 +17,5 @@ setup(
     version='0.1',
     description='Your Application Description',
     options={'build_exe': build_exe_options},
-    executables=[Executable('form_relation_viewer.py', base='Win32GUI')], # Win32GUI: 콘솔 없이 실행
+    executables=[Executable('form_relation_viewer.py', base='Win32GUI', icon="./assets/icon/app_icon.png")], # Win32GUI: 콘솔 없이 실행
 )

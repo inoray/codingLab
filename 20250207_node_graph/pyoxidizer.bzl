@@ -193,10 +193,10 @@ def make_exe():
     # python_config.run_command = "<code>"
 
     # Run a Python module as __main__ when the interpreter starts.
-    # python_config.run_module = "<module>"
+    python_config.run_module = "form_relation_viewer.py"
 
     # Run a Python file when the interpreter starts.
-    # python_config.run_filename = "/path/to/file"
+    # python_config.run_filename = "form_relation_viewer.py"
 
     # Produce a PythonExecutable from a Python distribution, embedded
     # resources, and other options. The returned object represents the
@@ -231,7 +231,7 @@ def make_exe():
     # exe.windows_subsystem = "console"
 
     # Make the executable a non-console application on Windows.
-    # exe.windows_subsystem = "windows"
+    exe.windows_subsystem = "windows"
 
     # Invoke `pip download` to install a single package using wheel archives
     # obtained via `pip download`. `pip_download()` returns objects representing
@@ -292,11 +292,11 @@ def make_msi(exe):
         # Simple identifier of your app.
         "myapp",
         # The name of your application.
-        "My Application",
+        "form relation viewer",
         # The version of your application.
-        "1.0",
+        "0.1",
         # The author/manufacturer of your application.
-        "Alice Jones"
+        "shkim"
     )
 
 

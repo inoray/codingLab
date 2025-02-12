@@ -15,20 +15,23 @@ def create_build_command(main_script: str) -> str:
     cmd_parts = [
         f"python -m nuitka",
         f"--standalone",  # 독립 실행 파일 생성
-        f"--windows-disable-console",  # 콘솔창 비활성화
-        # f"--windows-icon-from-ico=icon/app.ico",  # 아이콘 설정
+        f"--onefile",  # 하나의 실행 파일로 묶기
+        f"--windows-console-mode=disable", # 콘솔창 비활성화
+        f"--windows-icon-from-ico=./assets/icon/app_icon.png",  # 아이콘 설정
+
+        # Qt 플러그인 관련 설정
+        f"--enable-plugin=pyside6",  # PySide6를 사용하는 경우
+
+        # Qt 플러그인 포함
+        f"--include-qt-plugins=platforms",
+        f"--include-qt-plugins=styles",
 
         # assets 디렉토리 포함
         f"--include-data-dir=assets=assets",
 
-        # icon 디렉토리 포함
-        f"--include-data-dir=icon=icon",
-
         # 최적화 옵션들
         f"--follow-imports",
         f"--assume-yes-for-downloads",
-        # f"--disable-console",
-        f"--windows-console-mode=disable", # 콘솔창 비활성화 --disable-console 대신에 써야함.
         f"--remove-output",
 
         # 필요한 모듈들 포함 (예시)
@@ -58,12 +61,12 @@ def build_application():
     os.system(build_cmd)
 
     # 빌드 완료 후 정리
-    output_dir = Path(current_dir) / "main.dist"
-    if output_dir.exists():
-        print(f"Build completed successfully!")
-        print(f"Output directory: {output_dir}")
-    else:
-        print("Build failed!")
+    # output_dir = Path(current_dir) / "form_relation_viewer.dist"
+    # if output_dir.exists():
+    #     print(f"Build completed successfully!")
+    #     print(f"Output directory: {output_dir}")
+    # else:
+    #     print("Build failed!")
 
 if __name__ == "__main__":
     build_application()

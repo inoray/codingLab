@@ -51,7 +51,7 @@ class FormXmlViewerApp(QMainWindow):
         self.file_path = self.settings.value("lastFile", None)
 
         self.setWindowTitle(self.win_title)
-        self.setWindowIcon(QIcon(resource_path('icon/title_icon.svg')))
+        self.setWindowIcon(QIcon(resource_path('assets/icon/app_icon.png')))
         self.setGeometry(100, 100, 1200, 800)
 
         # QSplitter 생성 (수평 방향)

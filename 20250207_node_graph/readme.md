@@ -26,10 +26,10 @@ pip install pyinstaller
 # add-data 옵션을 사용하여 실행파일에 필요한 파일을 포함시킬 수 있음
 # 실행파일이 있는 디렉토리에 assets, icon 디렉토리를 만들고 파일을 넣어두면 실행파일에 포함됨
 # 전체 디렉토리포함 사이즈 약 900Mb 정도 됨
-pyinstaller -w --add-data "assets/*;assets" --add-data "icon/*;icon" form_relation_viewer.py
+pyinstaller -w --add-data "assets/*;assets" form_relation_viewer.py
 
 # onefile로 만들기 (약 340Mb 정도 됨)
-pyinstaller --onefile -w --add-data "assets/*;assets" --add-data "icon/*;icon" form_relation_viewer.py
+pyinstaller --onefile -w --add-data "assets/*;assets" form_relation_viewer.py
 ```
 
 ### pyside6-deploy를 사용한 방법
@@ -54,7 +54,6 @@ python build_script.py
 * build_script.py 파일 작성 방법
 
 ```python
-# build_script.py
 import os
 import sys
 from pathlib import Path
@@ -72,24 +71,28 @@ def create_build_command(main_script: str) -> str:
     cmd_parts = [
         f"python -m nuitka",
         f"--standalone",  # 독립 실행 파일 생성
-        f"--windows-disable-console",  # 콘솔창 비활성화
-        # f"--windows-icon-from-ico=icon/app.ico",  # 아이콘 설정
+        f"--onefile",  # 하나의 실행 파일로 묶기
+        f"--windows-console-mode=disable", # 콘솔창 비활성화
+        f"--windows-icon-from-ico=./assets/icon/app_icon.png",  # 아이콘 설정
+
+        # Qt 플러그인 관련 설정
+        f"--enable-plugin=pyside6",  # PySide6를 사용하는 경우
+
+        # Qt 플러그인 포함
+        f"--include-qt-plugins=platforms",
+        f"--include-qt-plugins=styles",
 
         # assets 디렉토리 포함
         f"--include-data-dir=assets=assets",
 
-        # icon 디렉토리 포함
-        f"--include-data-dir=icon=icon",
-
         # 최적화 옵션들
         f"--follow-imports",
         f"--assume-yes-for-downloads",
-        f"--disable-console",
         f"--remove-output",
 
         # 필요한 모듈들 포함 (예시)
-        f"--include-package=numpy",
-        f"--include-package=pandas",
+        # f"--include-package=numpy",
+        # f"--include-package=pandas",
 
         # 메인 스크립트
         main_script
@@ -114,15 +117,16 @@ def build_application():
     os.system(build_cmd)
 
     # 빌드 완료 후 정리
-    output_dir = Path(current_dir) / "main.dist"
-    if output_dir.exists():
-        print(f"Build completed successfully!")
-        print(f"Output directory: {output_dir}")
-    else:
-        print("Build failed!")
+    # output_dir = Path(current_dir) / "form_relation_viewer.dist"
+    # if output_dir.exists():
+    #     print(f"Build completed successfully!")
+    #     print(f"Output directory: {output_dir}")
+    # else:
+    #     print("Build failed!")
 
 if __name__ == "__main__":
     build_application()
+
 ```
 
 ### cx_Freeze를 사용한 방법
@@ -131,8 +135,34 @@ if __name__ == "__main__":
 # cx_Freeze 설치(설치가 안되어 있으면 설치)
 pip install cx_Freeze
 
-# 빌드 (약 370Mb 정도 배포본이 생성됨)
+# 빌드 (약 370Mb 정도 배포본이 생성됨) setup.py에 설정된 정보로 빌드됨
 python setup.py build
+```
+
+* setup.py 파일 작성 방법
+
+```python
+from cx_Freeze import setup, Executable
+
+# 포함할 파일 목록
+include_files = [
+    ('assets/', 'assets'),  # 'templates' 폴더를 포함
+]
+
+# 빌드 옵션 설정
+build_exe_options = {
+    'include_files': include_files,
+    # 필요에 따라 추가 옵션 설정 가능
+}
+
+# setup 함수 설정
+setup(
+    name='form relation viewer',  # 프로젝트 이름
+    version='0.1',
+    description='Your Application Description',
+    options={'build_exe': build_exe_options},
+    executables=[Executable('form_relation_viewer.py', base='Win32GUI', icon="./assets/icon/app_icon.ico")], # Win32GUI: 콘솔 없이 실행
+)
 ```
 
 ### PyOxidizer를 사용한 방법 (현재 잘 안됨)
@@ -176,7 +206,6 @@ def make_install(exe):
     files = FileManifest()
 
     files.add_path("assets/", strip_prefix="assets")
-    files.add_path("icon/", strip_prefix="icon")
 
     # Add the generated executable to our install layout in the root directory.
     files.add_python_resource(".", exe)
