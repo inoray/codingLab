@@ -27,6 +27,8 @@ class FormXmlViewerApp(QMainWindow):
         self.work_dir = QDir.currentPath()
         self.file_path = None
         self.info_file_graph = ""
+        # 기본 webview html 파일 경로. 표시데이터가 없을 때 보여주는 화면
+        self.template_html = os.path.join(os.path.dirname(os.path.abspath(__file__)), "template_dummy.html")
 
         self.setWindowTitle(self.win_title)
         self.setWindowIcon(QIcon('./icon/title_icon.svg'))
@@ -58,6 +60,9 @@ class FormXmlViewerApp(QMainWindow):
 
         self.view_only_graph()
 
+        # dummy HTML 파일을 웹뷰에 로드
+        self.web_view.setUrl(QUrl.fromLocalFile(self.template_html))
+
 
     def load_folder(self):
         # QFileDialog를 사용하여 폴더 선택
@@ -66,6 +71,8 @@ class FormXmlViewerApp(QMainWindow):
             self.tree_view.setRootIndex(self.model.index(folder_path))
             self.dir_label.setText(folder_path)
             self.work_dir = folder_path
+            # self.web_view.setHtml ("")
+            self.web_view.setUrl(QUrl.fromLocalFile(self.template_html))
             self.view_only_graph()
 
 
@@ -244,7 +251,7 @@ class FormXmlViewerApp(QMainWindow):
 
         # 도킹 위젯을 메인 윈도우의 왼쪽에 추가
         self.addDockWidget(Qt.RightDockWidgetArea, self.dock)
-        # self.dock.hide()
+        self.dock.hide()
 
         # 로딩 진행상황 시그널 연결
         self.web_view_file_relation.loadStarted.connect(self.loading_started)
@@ -274,7 +281,8 @@ class FormXmlViewerApp(QMainWindow):
                 html, _, info = gen_pyvis_html(self.file_path)
                 self.form_info.setText(f"{info}")
             except Exception as e:
-                self.web_view.setHtml ("")
+                # self.web_view.setHtml ("")
+                self.web_view.setUrl(QUrl.fromLocalFile(self.template_html))
                 # 에러 메시지 표시
                 QMessageBox.critical(self, "Error", str(e))
                 return

@@ -237,7 +237,6 @@
     <link href="https://unpkg.com/vis-network@9.1.2/dist/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
   </head>
   <body>
     <div id="container">
@@ -290,58 +289,6 @@
     </div>
 
     <script type="text/javascript">
-      // pyvis에서 전달받은 노드, 엣지, 옵션 데이터를 이용하여 vis.Network 객체 생성
-      var nodes = new vis.DataSet({{ nodes | safe }});
-      var edges = new vis.DataSet({{ edges | safe }});
-      var container = document.getElementById("graphContainer");
-      var data = { nodes: nodes, edges: edges };
-      var options = {{ options | safe }};
-      var network = new vis.Network(container, data, options);
-
-      // XML 코드 출력 및 노드 선택 처리
-      var brightMapping = {
-        "cornflowerblue": "#b9c8f7",
-        "#d2cb7f": "#eae5be",
-        "#e76a83": "#f9b6bf",
-        "#6e3741": "#f9b6bf"
-      };
-      var lastSelectedNodeId = null;
-      function selectNode(nodeId) {
-        if (lastSelectedNodeId !== null && lastSelectedNodeId !== nodeId) {
-          var prevNode = nodes.get(lastSelectedNodeId);
-          if (prevNode && prevNode.origColor) {
-            nodes.update({ id: lastSelectedNodeId, color: prevNode.origColor });
-          }
-        }
-        var node = nodes.get(nodeId);
-        if (node && node.origColor && brightMapping[node.origColor]) {
-          nodes.update({ id: nodeId, color: brightMapping[node.origColor] });
-        }
-        lastSelectedNodeId = nodeId;
-        document.getElementById("xmlCode").textContent = node.xml_code;
-        hljs.highlightElement(document.getElementById("xmlCode"));
-      }
-
-      network.on("click", function(params) {
-        if (params.nodes.length > 0) {
-          selectNode(params.nodes[0]);
-        } else {
-          if (lastSelectedNodeId !== null) {
-            var prevNode = nodes.get(lastSelectedNodeId);
-            if (prevNode && prevNode.origColor) {
-              nodes.update({ id: lastSelectedNodeId, color: prevNode.origColor });
-            }
-          }
-          lastSelectedNodeId = null;
-          document.getElementById("xmlCode").innerText = "노드를 클릭하면 XML 코드가 이곳에 표시됩니다.";
-        }
-      });
-
-      network.on("dragStart", function(params) {
-        if (params.nodes.length > 0) {
-          selectNode(params.nodes[0]);
-        }
-      });
 
       // 좌/우 드래그: 그래프와 상세 영역 너비 조절
       var dragbar = document.getElementById("dragbar");
@@ -390,14 +337,14 @@
       });
 
       // 물리 시뮬레이션 제어 및 초기값 설정
-      var physicsEnabled = (options.physics && options.physics.enabled !== undefined) ? options.physics.enabled : true;
+      var physicsEnabled = true;
 // 엔진의 초기 물리 파라미터 (forceAtlas2Based 사용 시)
       var initialPhysics = {
-        gravity: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.gravitationalConstant) || -50,
-        centralGravity: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.centralGravity) || 0.005,
-        springLength: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.springLength) || 95,
-        springStrength: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.springConstant) || 0.04,
-        damping: (options.physics && options.physics.forceAtlas2Based && options.physics.forceAtlas2Based.damping) || 0.09
+        gravity:  -50,
+        centralGravity: 0.005,
+        springLength:  95,
+        springStrength: 0.04,
+        damping: 0.09
       };
 
       // 슬라이더 초기값을 엔진의 값으로 설정
@@ -418,19 +365,6 @@
         var newSpringLength = parseFloat(document.getElementById("spring_length").value);
         var newSpringStrength = parseFloat(document.getElementById("spring_strength").value);
         var newDamping = parseFloat(document.getElementById("damping").value);
-        network.setOptions({
-          physics: {
-            enabled: physicsEnabled,
-            solver: 'forceAtlas2Based',
-            forceAtlas2Based: {
-              gravitationalConstant: newGravity,
-              centralGravity: newCentralGravity,
-              springLength: newSpringLength,
-              springConstant: newSpringStrength,
-              damping: newDamping
-            }
-          }
-        });
       }
 
       // 토글 스위치 변경 시 물리 활성화 상태 업데이트
