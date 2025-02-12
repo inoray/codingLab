@@ -166,6 +166,8 @@ class FormXmlViewerApp(QMainWindow):
         # 파일 정보 레이블
         self.dir_label = QLabel(self.work_dir)
         self.dir_label.setWordWrap(True)
+        self.dir_label.setFixedHeight(30)
+        self.dir_label.setToolTip(self.work_dir)
         self.sidebar_layout.addWidget(self.dir_label)
 
         # 사이드 바로 사용할 QTreeView 생성
@@ -176,7 +178,7 @@ class FormXmlViewerApp(QMainWindow):
 
         self.form_info = QTextEdit()
         self.form_info.setReadOnly(True)
-        self.sidebar_layout.addWidget(self.form_info)
+        self.sidebar_layout.addWidget(self.form_info, 3)
 
         self.layout.addWidget(sidebar)
 
@@ -186,7 +188,7 @@ class FormXmlViewerApp(QMainWindow):
         # 사이드 바로 사용할 QTreeView 생성
         self.tree_view = QTreeView()
         self.tree_view.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.sidebar_layout.addWidget(self.tree_view)
+        self.sidebar_layout.addWidget(self.tree_view, 7)
 
         # QFileSystemModel 설정
         self.model = QFileSystemModel()
