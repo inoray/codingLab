@@ -27,12 +27,13 @@ def create_build_command(main_script: str) -> str:
         # 최적화 옵션들
         f"--follow-imports",
         f"--assume-yes-for-downloads",
-        f"--disable-console",
+        # f"--disable-console",
+        f"--windows-console-mode=disable", # 콘솔창 비활성화 --disable-console 대신에 써야함.
         f"--remove-output",
 
         # 필요한 모듈들 포함 (예시)
-        f"--include-package=numpy",
-        f"--include-package=pandas",
+        # f"--include-package=numpy",
+        # f"--include-package=pandas",
 
         # 메인 스크립트
         main_script
