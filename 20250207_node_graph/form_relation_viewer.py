@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                             QMessageBox, QSplitter, QTreeView, QFileSystemModel, QSizePolicy,
                             QTextEdit, QDockWidget, QStatusBar)
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtCore import QUrl, Qt, QDir
+from PySide6.QtCore import QUrl, Qt, QDir, QSettings
 from PySide6.QtGui import QIcon, QColor, QAction
 
 from qt_material import apply_stylesheet
@@ -24,11 +24,15 @@ class FormXmlViewerApp(QMainWindow):
         super().__init__()
 
         self.win_title = f"Form Xml Relation Viewer v{QApplication.applicationVersion()}"
-        self.work_dir = QDir.currentPath()
-        self.file_path = None
-        self.info_file_graph = ""
         # 기본 webview html 파일 경로. 표시데이터가 없을 때 보여주는 화면
         self.template_html = os.path.join(os.path.dirname(os.path.abspath(__file__)), "template_dummy.html")
+        self.info_file_graph = ""
+
+        # QSettings 초기화: 첫번째 인자는 조직 이름, 두번째는 애플리케이션 이름입니다.
+        self.settings = QSettings("Inzisoft", "FormRelationViewer")
+        # 이전에 저장된 작업 디렉토리와 파일 경로 불러오기 (기본값 지정 가능)
+        self.work_dir = self.settings.value("workDir", QDir.currentPath())
+        self.file_path = self.settings.value("lastFile", None)
 
         self.setWindowTitle(self.win_title)
         self.setWindowIcon(QIcon('./icon/title_icon.svg'))
@@ -58,10 +62,8 @@ class FormXmlViewerApp(QMainWindow):
         # 스타일 설정
         self.apply_styles()
 
+        self.view_graph()
         self.view_only_graph()
-
-        # dummy HTML 파일을 웹뷰에 로드
-        self.web_view.setUrl(QUrl.fromLocalFile(self.template_html))
 
 
     def load_folder(self):
@@ -278,7 +280,7 @@ class FormXmlViewerApp(QMainWindow):
 
     def view_graph(self):
 
-        if self.file_path:
+        if self.file_path and os.path.exists(self.file_path):
             try:
                 html, _, info = gen_pyvis_html(self.file_path)
                 self.form_info.setText(f"{info}")
@@ -299,6 +301,9 @@ class FormXmlViewerApp(QMainWindow):
             # abs_html = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pyvis_graph.html")
             # HTML 파일을 웹뷰에 로드
             # self.web_view.setUrl(QUrl.fromLocalFile(abs_html))
+        else:
+            # dummy HTML 파일을 웹뷰에 로드
+            self.web_view.setUrl(QUrl.fromLocalFile(self.template_html))
 
 
     def view_only_graph(self):
@@ -358,6 +363,13 @@ class FormXmlViewerApp(QMainWindow):
         #     }
         # """)
         pass
+
+
+    def closeEvent(self, event):
+        # 프로그램 종료 전 현재 작업 디렉토리와 파일 경로 저장
+        self.settings.setValue("workDir", self.work_dir)
+        self.settings.setValue("lastFile", self.file_path)
+        event.accept()
 
 
 def main():
