@@ -285,11 +285,12 @@ class FormXmlViewerApp(QMainWindow):
                 html, _, info = gen_pyvis_html(self.file_path)
                 self.form_info.setText(f"{info}")
             except Exception as e:
+                html, _, _ = gen_pyvis_html("dummy.xml")
                 # self.web_view.setHtml ("")
-                self.web_view.setUrl(QUrl.fromLocalFile(self.template_html))
+                # self.web_view.setUrl(QUrl.fromLocalFile(self.template_html))
                 # 에러 메시지 표시
-                QMessageBox.critical(self, "Error", str(e))
-                return
+                # QMessageBox.critical(self, "Error", str(e))
+                self.form_info.setText(f"Error\n {str(e)}")
 
             self.setWindowTitle(f'{self.win_title} - {os.path.basename(self.file_path)}')
             self.web_view.setHtml (html)
