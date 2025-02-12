@@ -3,7 +3,8 @@ from pathlib import Path
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                                QHBoxLayout, QPushButton, QFileDialog, QTextEdit,
                                QMessageBox, QGraphicsView, QGraphicsScene,
-                               QSplitter, QToolBar, QGraphicsItem, QComboBox, QLineEdit, QFrame)
+                               QSplitter, QToolBar, QGraphicsItem, QComboBox, QLineEdit,
+                               QFrame, QTableWidget, QTableWidgetItem)
 from PySide6.QtGui import QPixmap, QPainter, QPen, QColor, QImage, QPolygonF, QAction, QIcon
 from PySide6.QtCore import Qt, QPointF, QThread, Signal, QSettings
 import cv2
@@ -137,23 +138,35 @@ class OCRWindow(QMainWindow):
         self.ocr_button.clicked.connect(self.perform_ocr)
         sidebar_layout.addWidget(self.ocr_button)
 
-        # OCR 옵션 프레임 (동적으로 옵션을 추가/삭제/수정할 수 있음)
+        # OCR 옵션 프레임 (테이블 형태로 옵션 구성)
         self.ocr_options_frame = QFrame()
         self.ocr_options_frame.setFrameShape(QFrame.StyledPanel)
         self.ocr_options_layout = QVBoxLayout(self.ocr_options_frame)
-        # 예시 옵션: 실행 옵션 (콤보박스)와 옵션 텍스트 (라인에디트)
-        from PySide6.QtWidgets import QFormLayout  # QFormLayout 사용
-        form_layout = QFormLayout()
+
+        # QTableWidget을 이용해 옵션 테이블 생성 (옵션 항목 / 설정)
+        self.ocr_options_table = QTableWidget()
+        self.ocr_options_table.setColumnCount(2)
+        self.ocr_options_table.setRowCount(2)
+        self.ocr_options_table.setHorizontalHeaderLabels(["옵션 항목", "설정"])
+        self.ocr_options_table.verticalHeader().setVisible(False)
+        self.ocr_options_table.horizontalHeader().setStretchLastSection(True)
+
+        # Row 0: 실행 옵션 - 콤보박스
         option_exec = QComboBox()
         option_exec.addItems(["인식", "텍스트영역"])
-        form_layout.addRow("실행 옵션:", option_exec)
+        item0 = QTableWidgetItem("실행 옵션")
+        self.ocr_options_table.setItem(0, 0, item0)
+        self.ocr_options_table.setCellWidget(0, 1, option_exec)
         self.ocr_options["실행 옵션"] = option_exec
 
-        # option_text = QLineEdit()
-        # form_layout.addRow("옵션 텍스트:", option_text)
-        # self.ocr_options["옵션 텍스트"] = option_text
+        # Row 1: 옵션 텍스트 - 라인에디트
+        option_text = QLineEdit()
+        item1 = QTableWidgetItem("옵션 텍스트")
+        self.ocr_options_table.setItem(1, 0, item1)
+        self.ocr_options_table.setCellWidget(1, 1, option_text)
+        self.ocr_options["옵션 텍스트"] = option_text
 
-        self.ocr_options_layout.addLayout(form_layout)
+        self.ocr_options_layout.addWidget(self.ocr_options_table)
         sidebar_layout.addWidget(self.ocr_options_frame)
 
         # 결과를 출력할 텍스트 위젯 (남은 공간을 모두 차지)
