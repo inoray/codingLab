@@ -3,12 +3,13 @@ from pathlib import Path
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                                QHBoxLayout, QPushButton, QFileDialog, QTextEdit,
                                QMessageBox, QGraphicsView, QGraphicsScene,
-                               QSplitter, QToolBar, QGraphicsItem  )
-from PySide6.QtGui import QPixmap, QPainter, QPen, QColor, QImage, QPolygonF, QAction
+                               QSplitter, QToolBar, QGraphicsItem, QComboBox, QLineEdit, QFrame)
+from PySide6.QtGui import QPixmap, QPainter, QPen, QColor, QImage, QPolygonF, QAction, QIcon
 from PySide6.QtCore import Qt, QPointF, QThread, Signal, QSettings
 import cv2
 import numpy as np
 from paddleocr import PaddleOCR
+from PySide6.QtWidgets import QGraphicsItem  # OCR 텍스트 플래그를 위해 추가
 from qt_material import apply_stylesheet
 
 # OCR 작업을 별도 스레드에서 수행하기 위한 워커 클래스
@@ -16,16 +17,18 @@ class OCRWorker(QThread):
     progress = Signal(int)  # 진행률 (%)
     finished = Signal(list)  # OCR 결과 리스트
 
-    def __init__(self, images, ocr):
+    def __init__(self, images, ocr, rec=True):
         super().__init__()
         self.images = images
         self.ocr = ocr
+        self.rec = rec
 
     def run(self):
         results = []
         total = len(self.images)
         for i, image in enumerate(self.images):
-            result = self.ocr.ocr(image)
+            # rec 옵션에 따라 OCR 실행
+            result = self.ocr.ocr(image, rec=self.rec)
             results.append(result[0])
             self.progress.emit(int((i + 1) / total * 100))
         self.finished.emit(results)
@@ -56,10 +59,7 @@ class ImageViewer(QGraphicsView):
             zoom_in_factor = 1.25
             zoom_out_factor = 1 / zoom_in_factor
             old_pos = self.mapToScene(event.position().toPoint())
-            if event.angleDelta().y() > 0:
-                factor = zoom_in_factor
-            else:
-                factor = zoom_out_factor
+            factor = zoom_in_factor if event.angleDelta().y() > 0 else zoom_out_factor
             self.scale(factor, factor)
             self.zoom_factor *= factor
             new_pos = self.mapToScene(event.position().toPoint())
@@ -90,6 +90,7 @@ class OCRWindow(QMainWindow):
         self.ocr_results = []
         self.ocr = PaddleOCR(use_angle_cls=True, lang='korean')
         self.ocr_worker = None
+        self.ocr_options = {}  # 옵션 위젯을 관리하기 위한 딕셔너리
 
         self.setup_ui()
 
@@ -127,26 +128,46 @@ class OCRWindow(QMainWindow):
         splitter = QSplitter(Qt.Horizontal)
         main_layout.addWidget(splitter)
 
-        # 좌측 사이드바: OCR 실행 버튼과 결과 텍스트 영역 배치
+        # 좌측 사이드바: 상단에 OCR 실행 버튼 및 OCR 옵션, 하단에 결과 텍스트 영역
         sidebar = QWidget()
         sidebar_layout = QVBoxLayout(sidebar)
 
+        # OCR 실행 버튼
         self.ocr_button = QPushButton("OCR 실행")
         self.ocr_button.clicked.connect(self.perform_ocr)
         sidebar_layout.addWidget(self.ocr_button)
 
+        # OCR 옵션 프레임 (동적으로 옵션을 추가/삭제/수정할 수 있음)
+        self.ocr_options_frame = QFrame()
+        self.ocr_options_frame.setFrameShape(QFrame.StyledPanel)
+        self.ocr_options_layout = QVBoxLayout(self.ocr_options_frame)
+        # 예시 옵션: 실행 옵션 (콤보박스)와 옵션 텍스트 (라인에디트)
+        from PySide6.QtWidgets import QFormLayout  # QFormLayout 사용
+        form_layout = QFormLayout()
+        option_exec = QComboBox()
+        option_exec.addItems(["인식", "텍스트영역"])
+        form_layout.addRow("실행 옵션:", option_exec)
+        self.ocr_options["실행 옵션"] = option_exec
+
+        # option_text = QLineEdit()
+        # form_layout.addRow("옵션 텍스트:", option_text)
+        # self.ocr_options["옵션 텍스트"] = option_text
+
+        self.ocr_options_layout.addLayout(form_layout)
+        sidebar_layout.addWidget(self.ocr_options_frame)
+
+        # 결과를 출력할 텍스트 위젯 (남은 공간을 모두 차지)
         self.text_edit = QTextEdit()
         self.text_edit.setReadOnly(True)
-        sidebar_layout.addWidget(self.text_edit)
-        sidebar_layout.addStretch()
-
-        # 이미지 뷰어 생성 및 확대/축소 변경 시 상태바 업데이트 연결
-        self.image_viewer = ImageViewer()
-        self.image_viewer.zoomChanged.connect(self.update_zoom_status)
+        sidebar_layout.addWidget(self.text_edit, 1)
 
         splitter.addWidget(sidebar)
+
+        # 이미지 뷰어
+        self.image_viewer = ImageViewer()
+        self.image_viewer.zoomChanged.connect(self.update_zoom_status)
         splitter.addWidget(self.image_viewer)
-        splitter.setSizes([200, 800])
+        splitter.setSizes([300, 900])
 
         self.update_button_states()
 
@@ -154,9 +175,7 @@ class OCRWindow(QMainWindow):
         self.statusBar().showMessage(f"Zoom: {zoom_factor * 100:.0f}%")
 
     def view_original_size(self):
-        self.image_viewer.resetTransform()
-        self.image_viewer.zoom_factor = 1.0
-        self.update_zoom_status(1.0)
+        self.image_viewer.reset_view()
 
     def load_images(self):
         # 마지막 작업 폴더를 기억하여 초기 디렉토리로 지정
@@ -174,8 +193,7 @@ class OCRWindow(QMainWindow):
             self.ocr_results = []
 
             for path in image_paths:
-                # img = cv2.imread(str(Path(path)))
-                # 한글파일명 처리를 위해서 fromfile와 imdecode 사용
+                # 한글 파일명 처리를 위해서 fromfile와 imdecode 사용
                 img_array = np.fromfile(path, np.uint8)
                 img = cv2.imdecode(img_array, cv2.IMREAD_UNCHANGED)
                 if img is None:
@@ -208,19 +226,29 @@ class OCRWindow(QMainWindow):
         if self.ocr_results and len(self.ocr_results) > self.current_image_index:
             result = self.ocr_results[self.current_image_index]
             for line in result:
-                points = line[0]
-                text = line[1][0]
+
+                if len(line) == 4:
+                    points = line
+                    text = ""
+                else:
+                    points = line[0]
+                    text = line[1][0]
+
+                # points 가 1차원 배열인지 2차원 배열인지 확인
+                if np.array(points).ndim == 1:
+                    points = np.array(points).reshape(-1, 2)
 
                 # 박스 그리기
                 self.image_viewer.scene.addPolygon(
                     QPolygonF([QPointF(p[0], p[1]) for p in points]),
                     QPen(QColor(0, 0, 139), 2)
                 )
-                # 텍스트 추가 및 확대/축소 무시 설정
-                text_item = self.image_viewer.scene.addText(text)
-                text_item.setDefaultTextColor(QColor(0, 0, 139))
-                text_item.setPos(points[0][0], points[0][1] - 20)
-                text_item.setFlag(QGraphicsItem.ItemIgnoresTransformations, True)  # 수정된 부분
+
+                if text is not None:
+                    text_item = self.image_viewer.scene.addText(text)
+                    text_item.setDefaultTextColor(QColor(0, 0, 139))
+                    text_item.setPos(points[0][0], points[0][1] - 20)
+                    text_item.setFlag(QGraphicsItem.ItemIgnoresTransformations, True)
 
         if len(self.images) == 1:
             self.image_viewer.fitInView(self.image_viewer.pixmap_item, Qt.KeepAspectRatio)
@@ -229,14 +257,12 @@ class OCRWindow(QMainWindow):
         if self.current_image_index > 0:
             self.current_image_index -= 1
             self.show_current_image()
-            self.update_button_states()
             self.update_text_display()
 
     def show_next_image(self):
         if self.current_image_index < len(self.images) - 1:
             self.current_image_index += 1
             self.show_current_image()
-            self.update_button_states()
             self.update_text_display()
 
     def update_button_states(self):
@@ -251,7 +277,11 @@ class OCRWindow(QMainWindow):
         self.text_edit.clear()
         self.statusBar().showMessage("OCR 수행중... 0%")
 
-        self.ocr_worker = OCRWorker(self.images, self.ocr)
+        # 콤보박스 값에 따라 OCR 옵션 rec 지정
+        option = self.ocr_options["실행 옵션"].currentText()
+        rec_option = True if option == "인식" else False
+
+        self.ocr_worker = OCRWorker(self.images, self.ocr, rec=rec_option)
         self.ocr_worker.progress.connect(self.update_ocr_progress)
         self.ocr_worker.finished.connect(self.ocr_finished)
         self.ocr_worker.start()
@@ -270,7 +300,7 @@ class OCRWindow(QMainWindow):
         if not self.ocr_results or self.current_image_index >= len(self.ocr_results):
             return
         result = self.ocr_results[self.current_image_index]
-        text = "\n".join([line[1][0] for line in result])
+        text = "\n".join([line[1][0] for line in result if len(line) == 2])
         self.text_edit.setText(text)
 
 if __name__ == "__main__":
