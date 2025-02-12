@@ -8,7 +8,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--dir', default="./", help=' : form xml directory')
-parser.add_argument('-t', '--template_path', default="./template_only_graph.html", help=' : template html file path')
+parser.add_argument('-t', '--template_path', default="./assets/template_only_graph.html", help=' : template html file path')
 parser.add_argument('--view_browser', action='store_true', help=' : view in browser')
 args = parser.parse_args()
 

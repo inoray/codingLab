@@ -7,7 +7,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-x', '--xml_path', default="F0100010101_householdRegister.xml", help=' : form xml file path')
-parser.add_argument('-t', '--template_path', default="./template.html", help=' : template html file path')
+parser.add_argument('-t', '--template_path', default="./assets/template.html", help=' : template html file path')
 parser.add_argument('--view_browser', action='store_true', help=' : view in browser')
 args = parser.parse_args()
 
@@ -25,6 +25,10 @@ node_size = {
     "dead": 40
 }
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 
 def get_out_field_id(form_data, form_data_id):
     out_field_id = []

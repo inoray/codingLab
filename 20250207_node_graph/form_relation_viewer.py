@@ -4,6 +4,7 @@
 
 import sys
 import os
+from pathlib import Path
 from xml_graph import *
 import file_graph
 
@@ -19,13 +20,28 @@ from qt_material import apply_stylesheet
 
 __version__ = "0.1.0"
 
+
+def resource_path(relative_path):
+    """ 보조 파일의 절대 경로를 반환 """
+    if hasattr(sys, '_MEIPASS'):
+        # PyInstaller와 유사한 방식으로 _MEIPASS 사용
+        # base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+        base_path = Path(sys._MEIPASS)
+    else:
+        # 개발 환경 경로
+        # base_path = Path(__file__).parent
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
 class FormXmlViewerApp(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.win_title = f"Form Xml Relation Viewer v{QApplication.applicationVersion()}"
         # 기본 webview html 파일 경로. 표시데이터가 없을 때 보여주는 화면
-        self.template_html = os.path.join(os.path.dirname(os.path.abspath(__file__)), "template_dummy.html")
+        self.template_html = resource_path("assets/template_dummy.html")
         self.info_file_graph = ""
 
         # QSettings 초기화: 첫번째 인자는 조직 이름, 두번째는 애플리케이션 이름입니다.
@@ -35,7 +51,7 @@ class FormXmlViewerApp(QMainWindow):
         self.file_path = self.settings.value("lastFile", None)
 
         self.setWindowTitle(self.win_title)
-        self.setWindowIcon(QIcon('./icon/title_icon.svg'))
+        self.setWindowIcon(QIcon(resource_path('icon/title_icon.svg')))
         self.setGeometry(100, 100, 1200, 800)
 
         # QSplitter 생성 (수평 방향)
@@ -282,10 +298,10 @@ class FormXmlViewerApp(QMainWindow):
 
         if self.file_path and os.path.exists(self.file_path):
             try:
-                html, _, info = gen_pyvis_html(self.file_path)
+                html, _, info = gen_pyvis_html(self.file_path, resource_path("assets/template.html"))
                 self.form_info.setText(f"{info}")
             except Exception as e:
-                html, _, _ = gen_pyvis_html("dummy.xml")
+                html, _, _ = gen_pyvis_html(resource_path("assets/dummy.xml"), resource_path("assets/template.html"))
                 # self.web_view.setHtml ("")
                 # self.web_view.setUrl(QUrl.fromLocalFile(self.template_html))
                 # 에러 메시지 표시
@@ -312,7 +328,7 @@ class FormXmlViewerApp(QMainWindow):
         if self.work_dir:
             self.info_file_graph = ""
             try:
-                html_only_graph, _, info = file_graph.gen_pyvis_html(self.work_dir, "./template_only_graph.html")
+                html_only_graph, _, info = file_graph.gen_pyvis_html(self.work_dir, resource_path("assets/template_only_graph.html"))
             except Exception as e:
                 self.web_view_file_relation.setHtml("")
                 QMessageBox.critical(self, "Error", str(e))
