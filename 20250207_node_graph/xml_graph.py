@@ -14,9 +14,9 @@ args = parser.parse_args()
 node_color = {
     "elem_start": "#d2cb7f",
     "elem": "cornflowerblue",
-    "field_enabled": "#e76a83",
-    "field_disabled": "#6e3741",
-    "dead": "#52fff8"
+    "field_enabled": "#008d62",
+    "field_disabled": "#164532",
+    "dead": "#e76a83"
 }
 
 node_size = {
