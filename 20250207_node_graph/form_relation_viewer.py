@@ -375,12 +375,12 @@ class FormXmlViewerApp(QMainWindow):
 def main():
     # Qt 애플리케이션 생성
     app = QApplication(sys.argv)
+    apply_stylesheet(app, theme='dark_teal.xml')
     app.setApplicationVersion(__version__)
 
     # 메인 윈도우 생성 및 표시
     viewer = FormXmlViewerApp()
     viewer.showMaximized()
-    apply_stylesheet(app, theme='dark_teal.xml')
 
     # 애플리케이션 실행
     sys.exit(app.exec())
