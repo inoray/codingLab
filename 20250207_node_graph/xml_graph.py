@@ -25,10 +25,6 @@ node_size = {
     "dead": 40
 }
 
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_path, relative_path)
 
 def get_out_field_id(form_data, form_data_id):
     out_field_id = []
@@ -289,18 +285,25 @@ def gen_form_data_graph(net, form_data, form_data_id):
 
 def gen_info_form_ocr_xml(root):
     info = f"Form OCR XML\n\n"
-    for form in root.iter('Form'):
+    for i_form, form in enumerate(root.iter('Form')):
         if form.tag != "Form":
             continue
+
+        info = info + f"[{i_form+ 1}] form\n"
         info = info + f"- form id: {form.get('id')}\n"
-        for form_Page in form:
-            if form_Page.tag != "FormPage":
-                continue
-            info = info + f"  - form page id: {form_Page.get('id')}\n"
+
+        # 서식 이름
+        form_name_elem = form.find("FormName")
+        if form_name_elem is not None:
+            info = info + f"- form name: {form_name_elem.text}\n"
+        info = info + "\n"
+
+        for i_page, form_page in enumerate(form.findall("FormPage")):
+            info = info + f"  [{i_form + 1}-{i_page + 1}] form page id: {form_page.get('id')}\n"
 
             # 식별정보
             info_ident = ""
-            for ident in form_Page:
+            for ident in form_page:
                 if ident.tag != "FormIdentification":
                     continue
 
@@ -318,10 +321,8 @@ def gen_info_form_ocr_xml(root):
             if info_ident != "":
                 info = info + info_ident + "\n"
 
-            for form_data in form_Page:
-                if form_data.tag != "FormData":
-                    continue
-                info = info + f"    - form data id: {form_data.get('id')}\n"
+            for i_data, form_data in enumerate(form_page.findall("FormData")):
+                info = info + f"    [{i_form + 1}-{i_page + 1}-{i_data + 1}] form data id: {form_data.get('id')}\n"
 
                 elems = form_data.findall("Element")
                 info = info + f"      - number of element: {len(elems)}\n"
@@ -392,13 +393,13 @@ def gen_graph_from_xml(xml_file):
     for form in root.iter('Form'):
         if form.tag != "Form":
             continue
-        for form_Page in form:
-            if form_Page.tag != "FormPage":
+        for form_page in form:
+            if form_page.tag != "FormPage":
                 continue
-            for form_data in form_Page:
+            for form_data in form_page:
                 if form_data.tag != "FormData":
                     continue
-                form_data_id = f"{form.get('id')}-{form_Page.get('id')}-{form_data.get('id')}"
+                form_data_id = f"{form.get('id')}-{form_page.get('id')}-{form_data.get('id')}"
 
                 # 이미지 노드 추가
                 net.add_node(n_id=form_data_id, label="image", title=form_data_id, xml_code=f"image, {form_data_id}")
