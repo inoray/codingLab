@@ -138,6 +138,9 @@ def get_link_list_from_form_ocr_xml(xml_dir, root):
     link_list += get_value_list_from_xml(root, ".//IdentificationRule", "ruleXmlPath")
 
     for link in link_list:
+        if len(link) == 0:
+            continue
+
         abs_path = get_abs_path(xml_dir, link)
         link_dict[abs_path] = 1
 
@@ -151,6 +154,9 @@ def get_link_list_from_work_define_xml(xml_dir, root):
     link_list += get_value_list_from_xml(root, ".//FormRecog//FormPath")
 
     for link in link_list:
+        if len(link) == 0:
+            continue
+
         abs_path = get_abs_path(xml_dir, link)
         link_dict[abs_path] = 1
 
@@ -163,6 +169,9 @@ def get_link_list_from_include_xml(xml_dir, root):
     link_list = get_value_list_from_xml(root, "FormPath")
 
     for link in link_list:
+        if len(link) == 0:
+            continue
+
         abs_path = get_abs_path(xml_dir, link)
         link_dict[abs_path] = 1
 
@@ -190,6 +199,9 @@ def add_edge_files(net, xml_file_list):
             link_list = get_link_list_from_include_xml(xml_dir, root)
 
         for path_to in link_list:
+            if len(path_to) == 0:
+                continue
+
             try:
                 net.add_edge(xml_file, path_to)
             except Exception as e:
