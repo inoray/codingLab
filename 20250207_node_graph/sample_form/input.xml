@@ -1,106 +1,87 @@
 <IzFormOcrXml version="0.5.0">
 	<FormSet>
-		<Form id="F0100010101" revision="1" disabled="false">
+		<Form id="form_relation_test" revision="1" disabled="false">
+			<FormName>서식관계뷰어 샘플 xml</FormName>
 			<FormPage id="page1" header="true" footer="true">
 				<FormData id="1">
 					<Element id="1" type="StaticText">
-						<Name>주민등록표키워드</Name>
+						<Name>엘리먼트 1 입니다.</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
 								<SearchRegionSet>
 									<SearchRegion>
 										<BasePosition type="imageOrigin"/>
-										<Left unit="ImageSizeRatio">0</Left>
-										<Top unit="ImageSizeRatio">0</Top>
-										<Right unit="ImageSizeRatio">20</Right>
-										<Bottom unit="ImageSizeRatio">40</Bottom>
 									</SearchRegion>
 								</SearchRegionSet>
 							</SearchRegionComplex>
 						</SearchRegionInfo>
 					</Element>
 					<Element id="2" type="CharacterString">
-						<Name>주민등록표키워드</Name>
+						<Name>엘리먼트 2 입니다.</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
 								<SearchRegionSet>
 									<SearchRegion>
 										<BasePosition type="inElement" baseElementId="1" x="100" y="0"/>
-										<Left unit="elementAvgCharHeightRatio">0</Left>
-										<Top unit="elementRegionHeightRatio">0</Top>
-										<Right unit="elementAvgCharHeightRatio">2800</Right>
-										<Bottom unit="elementRegionHeightRatio">100</Bottom>
 									</SearchRegion>
 								</SearchRegionSet>
 							</SearchRegionComplex>
 						</SearchRegionInfo>
 					</Element>
 					<Element id="3" type="CharacterString">
-						<Name>주민등록표키워드</Name>
+						<Name>엘리먼트 3 입니다.</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
 								<SearchRegionSet>
 									<SearchRegion>
 										<BasePosition type="inElement" baseElementId="1" x="200" y="110"/>
-										<Left unit="elementAvgCharHeightRatio">0</Left>
-										<Top unit="elementRegionHeightRatio">0</Top>
-										<Right unit="elementAvgCharHeightRatio">2800</Right>
-										<Bottom unit="elementRegionHeightRatio">100</Bottom>
 									</SearchRegion>
 								</SearchRegionSet>
 							</SearchRegionComplex>
 						</SearchRegionInfo>
 					</Element>
 					<Element id="4" type="CharacterString">
-						<Name>주민등록표키워드</Name>
+						<Name>엘리먼트 4 입니다.</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
 								<SearchRegionSet>
 									<SearchRegion>
 										<BasePosition type="inElement" baseElementId="3" x="200" y="110"/>
-										<Left unit="elementAvgCharHeightRatio">0</Left>
-										<Top unit="elementRegionHeightRatio">0</Top>
-										<Right unit="elementAvgCharHeightRatio">2800</Right>
-										<Bottom unit="elementRegionHeightRatio">100</Bottom>
 									</SearchRegion>
 								</SearchRegionSet>
 							</SearchRegionComplex>
 						</SearchRegionInfo>
 					</Element>
 					<Element id="5" type="CharacterString">
-						<Name>주민등록표키워드</Name>
+						<Name>엘리먼트 5 입니다.</Name>
 						<SearchRegionInfo>
 							<SearchRegionComplex>
 								<SearchRegionSet>
 									<SearchRegion>
 										<BasePosition type="inElement" baseElementId="dead_elem" x="200" y="110"/>
-										<Left unit="elementAvgCharHeightRatio">0</Left>
-										<Top unit="elementRegionHeightRatio">0</Top>
-										<Right unit="elementAvgCharHeightRatio">2800</Right>
-										<Bottom unit="elementRegionHeightRatio">100</Bottom>
 									</SearchRegion>
 								</SearchRegionSet>
 							</SearchRegionComplex>
 						</SearchRegionInfo>
 					</Element>
 
-					<OutBlock id="11">
-						<Field idNumber="11" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+					<OutBlock id="1">
+						<Field idNumber="1" name="필드 1 입니다." disabled="false">
 							<ElementId>2</ElementId>
 						</Field>
 					</OutBlock>
-					<OutBlock id="11">
-						<Field idNumber="12" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+					<OutBlock id="2">
+						<Field idNumber="2" name="필드 2 입니다." disabled="false">
 							<ElementId>3</ElementId>
 						</Field>
 					</OutBlock>
-					<OutBlock id="12">
-						<Field idNumber="13" name="세대주와의 관계" disabled="true" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+					<OutBlock id="3">
+						<Field idNumber="3" name="필드 3 입니다. 비활성화 필드입니다." disabled="true">
 							<ElementId>4</ElementId>
 						</Field>
 					</OutBlock>
-					<OutBlock id="12">
-						<Field idNumber="14" name="세대주와의 관계" disabled="false" security="false" category="NormalText.Hangul" isMain="true" mapId="">
+					<OutBlock id="4">
+						<Field idNumber="4" name="필드 4 입니다." disabled="false">
 							<ElementId>dead1</ElementId>
 							<ElementId>dead2</ElementId>
 						</Field>
