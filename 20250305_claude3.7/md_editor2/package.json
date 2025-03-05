@@ -1,0 +1,41 @@
+{
+    "name": "typora-clone",
+    "version": "1.0.0",
+    "description": "Typora 스타일 마크다운 편집기",
+    "main": "main.js",
+    "scripts": {
+      "start": "electron .",
+      "build": "electron-builder"
+    },
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+      "electron": "^23.0.0",
+      "electron-builder": "^24.0.0"
+    },
+    "dependencies": {
+      "electron-store": "^8.1.0",
+      "iconv-lite": "^0.6.3",
+      "marked": "^4.3.0"
+    },
+    "build": {
+      "appId": "com.example.typora-clone",
+      "productName": "Typora Clone",
+      "directories": {
+        "output": "dist"
+      },
+      "mac": {
+        "category": "public.app-category.productivity"
+      },
+      "win": {
+        "target": "nsis"
+      },
+      "linux": {
+        "target": "AppImage"
+      },
+      "nsis": {
+        "oneClick": false,
+        "allowToChangeInstallationDirectory": true
+      }
+    }
+  }
