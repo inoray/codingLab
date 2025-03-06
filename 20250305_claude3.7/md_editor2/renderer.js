@@ -249,20 +249,27 @@ ipcRenderer.on('restore-dark-mode', (event, darkModeState) => {
     saveAppState(); // 탭을 닫을 때 앱 상태 저장
   }
 
-  // 탭 활성화
-  function setActiveTab(tabId) {
+// 탭 활성화
+function setActiveTab(tabId) {
     activeTabId = tabId;
     const activeTab = tabsData.find(tab => tab.id === tabId);
 
     if (activeTab) {
-      mdEditor.innerHTML = activeTab.content;
-      renderPreview(activeTab.content);
+      // XML 태그가 있는 경우 이스케이프하여 표시
+      let displayContent = activeTab.content
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      mdEditor.innerHTML = displayContent;
+
+      console.log(activeTab.content)
+      renderPreview(displayContent);
       updateWordCount(activeTab.content);
     }
 
     renderTabs();
-    saveAppState(); // 활성 탭을 변경할 때 앱 상태 저장
-  }
+    saveAppState();
+}
 
 // 작업 디렉토리 초기화
 ipcRenderer.on('init-working-directory', async (event, dirPath) => {
@@ -581,20 +588,6 @@ function closeTab(tabId) {
   renderTabs();
 }
 
-// 탭 활성화
-function setActiveTab(tabId) {
-  activeTabId = tabId;
-  const activeTab = tabsData.find(tab => tab.id === tabId);
-
-  if (activeTab) {
-    mdEditor.innerHTML = activeTab.content;
-    renderPreview(activeTab.content);
-    updateWordCount(activeTab.content);
-  }
-
-  renderTabs();
-}
-
 // 미리보기 렌더링
 function renderPreview(markdown) {
   preview.innerHTML = marked.parse(markdown);
@@ -671,51 +664,17 @@ async function handleFileDoubleClick(filePath) {
     saveAppState();
   }
 
-  // 탭 렌더링 함수에 더블클릭 이벤트 추가
-  function renderTabs() {
-    tabs.innerHTML = '';
+  // 에디터 입력 처리 - 수정: XML 태그 보존 문제 해결
+  mdEditor.addEventListener('input', () => {
+    // 현재 에디터 내용 가져오기
+    let content = mdEditor.innerHTML;
 
-    tabsData.forEach(tab => {
-      const tabElement = document.createElement('div');
-      tabElement.className = `tab ${tab.id === activeTabId ? 'active' : ''}`;
-      tabElement.dataset.id = tab.id;
-
-      const tabTitle = document.createElement('div');
-      tabTitle.className = `tab-title ${tab.isTemporary ? 'temporary' : ''}`;
-      tabTitle.textContent = tab.isModified ? `${tab.title} *` : tab.title;
-
-      const closeButton = document.createElement('div');
-      closeButton.className = 'tab-close';
-      closeButton.innerHTML = '<i class="fas fa-times"></i>';
-      closeButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeTab(tab.id);
-      });
-
-      tabElement.appendChild(tabTitle);
-      tabElement.appendChild(closeButton);
-
-      // 단일 클릭 이벤트
-      tabElement.addEventListener('click', () => setActiveTab(tab.id));
-
-      // 더블클릭 이벤트 추가
-      tabElement.addEventListener('dblclick', () => {
-        // 임시 탭인 경우 작업 탭으로 변환
-        if (tab.isTemporary) {
-          tab.isTemporary = false;
-          hasTemporaryTab = false;
-          renderTabs();
-          saveAppState();
-        }
-      });
-
-      tabs.appendChild(tabElement);
-    });
-  }
-
-// 에디터 입력 처리 - 수정: 마크다운 실시간 반영 문제 해결
-mdEditor.addEventListener('input', () => {
-    const content = mdEditor.innerText || mdEditor.textContent;
+    // XML 태그를 보존하기 위해 특수 처리
+    // 입력 시 < 문자를 감지하여 특수 마커로 변환
+    if (content.includes('&lt;') && !content.includes('&amp;lt;')) {
+      // 이미 변환된 &lt;를 다시 <로 변환하지 않도록 처리
+      content = content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    }
 
     if (activeTabId) {
       const activeTabIndex = tabsData.findIndex(tab => tab.id === activeTabId);
@@ -724,7 +683,6 @@ mdEditor.addEventListener('input', () => {
 
         // 내용이 변경되었는지 확인
         if (tab.content !== content) {
-          // 임시 탭에서 수정이 이루어지면 작업 탭으로 변경
           if (tab.isTemporary) {
             tab.isTemporary = false;
             hasTemporaryTab = false;
@@ -734,16 +692,17 @@ mdEditor.addEventListener('input', () => {
           tab.content = content;
           renderTabs();
 
-          // 실시간 미리보기 업데이트
-          renderPreview(content);
-          updateWordCount(content);
+          // 미리보기용 내용 준비 (XML 태그 이스케이프)
+          const previewContent = content
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
 
-          // 변경 사항이 있을 때 앱 상태 저장
+          renderPreview(previewContent);
+          updateWordCount(content);
           saveAppState();
         }
       }
     }
-    saveAppState(); // 변경 사항이 있을 때 앱 상태 저장
   });
 
 // 새 파일 생성
