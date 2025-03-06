@@ -230,6 +230,63 @@
     white-space: pre-wrap;
     font-family: 'Courier New', Courier, monospace;
     line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  /* 마크다운 구문 하이라이트 */
+  .md-editor .header {
+    color: #e06c75;
+    font-weight: bold;
+  }
+
+  .md-editor .bold {
+    color: #d19a66;
+    font-weight: bold;
+  }
+
+  .md-editor .italic {
+    color: #56b6c2;
+    font-style: italic;
+  }
+
+  .md-editor .code {
+    color: #98c379;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .md-editor .link {
+    color: #61afef;
+    text-decoration: underline;
+  }
+
+  .md-editor .list-item {
+    color: #c678dd;
+  }
+
+  .md-editor .blockquote {
+    color: #7f848e;
+    border-left: 2px solid #3e4451;
+    padding-left: 5px;
+  }
+
+  .md-editor .codeblock {
+    color: #56b6c2;
+    background-color: #31363f;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  /* 다크모드일 때 편집기에서 XML 태그 컬러링 */
+  .dark-mode .md-editor .xml-tag {
+    color: #e06c75;
+  }
+
+  .dark-mode .md-editor .xml-attr {
+    color: #d19a66;
+  }
+
+  .dark-mode .md-editor .xml-content {
+    color: #98c379;
   }
 
   .preview {

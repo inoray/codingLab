@@ -263,8 +263,11 @@ function setActiveTab(tabId) {
       mdEditor.innerHTML = displayContent;
 
       console.log(activeTab.content)
-      renderPreview(displayContent);
+      renderPreview(activeTab.content);
       updateWordCount(activeTab.content);
+
+      // 로드 후 구문 하이라이트 적용
+      setTimeout(() => highlightMarkdown(mdEditor), 10);
     }
 
     renderTabs();
@@ -664,46 +667,89 @@ async function handleFileDoubleClick(filePath) {
     saveAppState();
   }
 
-  // 에디터 입력 처리 - 수정: XML 태그 보존 문제 해결
-  mdEditor.addEventListener('input', () => {
-    // 현재 에디터 내용 가져오기
-    let content = mdEditor.innerHTML;
+// 마크다운 구문 하이라이트 함수
+function highlightMarkdown(editor) {
+  const content = editor.innerHTML;
+  if (!content) return;
 
-    // XML 태그를 보존하기 위해 특수 처리
-    // 입력 시 < 문자를 감지하여 특수 마커로 변환
-    if (content.includes('&lt;') && !content.includes('&amp;lt;')) {
-      // 이미 변환된 &lt;를 다시 <로 변환하지 않도록 처리
-      content = content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-    }
+  // 현재 커서 위치 저장
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  const startOffset = range.startOffset;
+  const startContainer = range.startContainer;
 
-    if (activeTabId) {
-      const activeTabIndex = tabsData.findIndex(tab => tab.id === activeTabId);
-      if (activeTabIndex !== -1) {
-        const tab = tabsData[activeTabIndex];
+  // 구문 하이라이트 적용
+  let highlightedContent = content
+    // 헤더 (#, ##, ###)
+    .replace(/^(#{1,6}\s+)(.+)$/gm, '<span class="header">$1$2</span>')
+    // 굵은 텍스트 (**text**)
+    .replace(/\*\*(.+?)\*\*/g, '<span class="bold">**$1**</span>')
+    // 기울임 텍스트 (*text*)
+    .replace(/\*([^*]+)\*/g, '<span class="italic">*$1*</span>')
+    // 인라인 코드 (`code`)
+    .replace(/`([^`]+)`/g, '<span class="code">`$1`</span>')
+    // 링크 [text](url)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<span class="link">[$1]($2)</span>')
+    // 목록 항목 (- item)
+    .replace(/^(\s*[-*+]\s+)(.+)$/gm, '<span class="list-item">$1$2</span>')
+    // 인용구 (> text)
+    .replace(/^(\s*>\s+)(.+)$/gm, '<span class="blockquote">$1$2</span>')
+    // 코드 블록 (```)
+    .replace(/```[\s\S]*?```/g, (match) => `<span class="codeblock">${match}</span>`)
+    // XML 태그
+    .replace(/&lt;([^&]+)&gt;/g, '<span class="xml-tag">&lt;$1&gt;</span>');
 
-        // 내용이 변경되었는지 확인
-        if (tab.content !== content) {
-          if (tab.isTemporary) {
-            tab.isTemporary = false;
-            hasTemporaryTab = false;
-          }
+  // 하이라이트된 내용 적용
+  editor.innerHTML = highlightedContent;
 
-          tab.isModified = true;
-          tab.content = content;
-          renderTabs();
+  // 커서 위치 복원 시도
+  try {
+    const newRange = document.createRange();
+    newRange.setStart(editor.childNodes[0] || editor, startOffset);
+    newRange.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(newRange);
+  } catch (e) {
+    console.warn('커서 위치 복원 실패:', e);
+  }
+}
 
-          // 미리보기용 내용 준비 (XML 태그 이스케이프)
-          const previewContent = content
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+// 에디터 입력 처리 수정 - 하이라이트 추가
+mdEditor.addEventListener('input', () => {
+  // 현재 에디터 내용 가져오기
+  let content = mdEditor.innerHTML;
 
-          renderPreview(previewContent);
-          updateWordCount(content);
-          saveAppState();
+  // XML 태그를 보존하기 위해 특수 처리
+  if (content.includes('&lt;') && !content.includes('&amp;lt;')) {
+    content = content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  }
+
+  if (activeTabId) {
+    const activeTabIndex = tabsData.findIndex(tab => tab.id === activeTabId);
+    if (activeTabIndex !== -1) {
+      const tab = tabsData[activeTabIndex];
+
+      // 내용이 변경되었는지 확인
+      if (tab.content !== content) {
+        if (tab.isTemporary) {
+          tab.isTemporary = false;
+          hasTemporaryTab = false;
         }
+
+        tab.isModified = true;
+        tab.content = content;
+        renderTabs();
+
+        renderPreview(content);
+        updateWordCount(content);
+        saveAppState();
+
+        // 구문 하이라이트 적용
+        setTimeout(() => highlightMarkdown(mdEditor), 10);
       }
     }
-  });
+  }
+});
 
 // 새 파일 생성
 newTabBtn.addEventListener('click', () => {
@@ -840,4 +886,11 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('beforeunload', () => {
     saveAppState();
   });
+
+  // highlight.js 테마를 One Dark로 변경
+  const linkElement = document.querySelector('link[href*="highlight"]');
+  if (linkElement) {
+    // highlight.js One Dark 테마로 변경
+    linkElement.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css';
+  }
 });
