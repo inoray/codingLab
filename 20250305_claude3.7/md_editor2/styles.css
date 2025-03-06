@@ -17,20 +17,20 @@
   }
 
   .dark-mode {
-    --bg-color: #1e1e1e;
-    --text-color: #e0e0e0;
-    --sidebar-bg: #252526;
-    --sidebar-text: #cccccc;
-    --border-color: #404040;
-    --tab-bg: #2d2d2d;
-    --tab-active-bg: #1e1e1e;
-    --tab-hover-bg: #333333;
-    --editor-bg: #1e1e1e;
-    --preview-bg: #252526;
-    --status-bar-bg: #2d2d2d;
-    --highlight-color: #4d9fff;
-    --folder-icon-color: #ddb100;
-    --file-icon-color: #8eacbf;
+    --bg-color: #282c34;
+    --text-color: #abb2bf;
+    --sidebar-bg: #21252b;
+    --sidebar-text: #abb2bf;
+    --border-color: #3e4451;
+    --tab-bg: #21252b;
+    --tab-active-bg: #282c34;
+    --tab-hover-bg: #323842;
+    --editor-bg: #282c34;
+    --preview-bg: #282c34;
+    --status-bar-bg: #21252b;
+    --highlight-color: #61afef;
+    --folder-icon-color: #e5c07b;
+    --file-icon-color: #abb2bf;
   }
 
   * {
@@ -285,7 +285,17 @@
   }
 
   .dark-mode .preview pre {
-    background-color: #2d2d2d;
+    background-color: #31363f;
+    border: 1px solid #3e4451;
+  }
+
+  .dark-mode .preview code {
+    color: #98c379;
+  }
+
+  .dark-mode .preview blockquote {
+    border-left: 4px solid #3e4451;
+    color: #7f848e;
   }
 
   .status-bar {
@@ -399,14 +409,14 @@
 
   /* 다크 모드 스크롤바 */
   .dark-mode ::-webkit-scrollbar-track {
-    background: #2d2d2d;
+    background: #21252b;
   }
 
   .dark-mode ::-webkit-scrollbar-thumb {
-    background: #555555;
+    background: #3e4451;
     border-radius: 5px;
   }
 
   .dark-mode ::-webkit-scrollbar-thumb:hover {
-    background: #666666;
+    background: #4b5364;
   }
