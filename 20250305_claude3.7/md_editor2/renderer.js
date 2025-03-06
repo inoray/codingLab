@@ -262,7 +262,6 @@ function setActiveTab(tabId) {
 
       mdEditor.innerHTML = displayContent;
 
-      console.log(activeTab.content)
       renderPreview(activeTab.content);
       updateWordCount(activeTab.content);
 
@@ -593,11 +592,101 @@ function closeTab(tabId) {
 
 // 미리보기 렌더링
 function renderPreview(markdown) {
-  preview.innerHTML = marked.parse(markdown);
-  // 코드 블록 하이라이팅
-  document.querySelectorAll('pre code').forEach(block => {
-    hljs.highlightBlock(block);
-  });
+  try {
+    // 현재 활성 탭의 파일 경로 가져오기
+    const activeTab = tabsData.find(tab => tab.id === activeTabId);
+
+    // 마크다운 파일 경로를 기준으로 설정 (중요!)
+    let basePath = '';
+    if (activeTab && activeTab.filePath) {
+      basePath = path.dirname(activeTab.filePath);
+      console.log('마크다운 파일 기준 경로:', basePath);
+    } else {
+      console.log('경고: 활성 탭에 파일 경로가 없습니다.');
+    }
+
+    // marked.js 설정 - 이미지 처리 개선
+    const renderer = new marked.Renderer();
+
+    // 이미지 렌더링 커스텀 함수 - 마크다운 파일 기준 경로 사용
+    renderer.image = function(href, title, text) {
+      console.log('이미지 원본 경로:', href);
+
+      // 외부 URL인 경우 그대로 사용
+      if (href.startsWith('http://') || href.startsWith('https://') || href.startsWith('data:')) {
+        console.log('외부 URL 감지:', href);
+        return `<img src="${href}" alt="${text}"${title ? ` title="${title}"` : ''}>`;
+      }
+
+      try {
+        // 상대 경로일 경우 마크다운 파일 기준으로 절대 경로 변환
+        let absoluteImagePath = href;
+        if (!path.isAbsolute(href) && basePath) {
+          absoluteImagePath = path.resolve(basePath, href);
+          console.log('상대경로를 절대경로로 변환:', href, '->', absoluteImagePath);
+        }
+
+        // 경로 정규화 및 OS 호환성 처리
+        let normalizedPath = absoluteImagePath.replace(/\\/g, '/');
+
+        // 경로에 특수문자가 있을 경우 인코딩
+        const encodedPath = encodeURI(normalizedPath).replace(/#/g, '%23');
+
+        // file:/// 프로토콜 형식 사용 (슬래시 3개)
+        const finalPath = `file:///${encodedPath}`;
+        console.log('최종 이미지 경로:', finalPath);
+
+        return `<img src="${finalPath}" alt="${text}"${title ? ` title="${title}"` : ''}
+                onerror="this.onerror=null; this.src='data:image/svg+xml;charset=utf-8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="200" height="50"><rect width="200" height="50" fill="#f8f9fa"/><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="12" fill="#6c757d">이미지를 불러올 수 없습니다</text></svg>')}'; this.style.border='1px dashed #ccc'; console.error('이미지 로드 실패:', this.src);">`;
+      } catch (error) {
+        console.error('이미지 경로 처리 중 오류:', error);
+        return `<img src="${href}" alt="${text} (경로 오류)"${title ? ` title="${title}"` : ''} style="border: 1px dashed red;">`;
+      }
+    };
+
+    // 마크다운 -> HTML 변환
+    const html = marked.parse(markdown, {
+      renderer: renderer,
+      breaks: true,
+      gfm: true
+    });
+
+    // HTML 정화 시도
+    let cleanHtml = html;
+    if (typeof DOMPurify !== 'undefined' && typeof DOMPurify.sanitize === 'function') {
+      cleanHtml = DOMPurify.sanitize(html, {
+        ADD_TAGS: ['iframe', 'img'],
+        ADD_ATTR: ['allowfullscreen', 'frameborder', 'target', 'src', 'alt', 'title', 'style', 'onerror']
+      });
+    }
+
+    preview.innerHTML = cleanHtml;
+
+    // 코드 블록 하이라이팅
+    if (typeof hljs !== 'undefined') {
+      document.querySelectorAll('pre code').forEach(block => {
+        if (typeof hljs.highlightElement === 'function') {
+          hljs.highlightElement(block);
+        } else if (typeof hljs.highlightBlock === 'function') {
+          hljs.highlightBlock(block);
+        }
+      });
+    }
+
+    // 이미지 파일 존재 확인 (디버깅)
+    document.querySelectorAll('img').forEach((img, idx) => {
+      if (img.src.startsWith('file:')) {
+        const imgPath = decodeURI(img.src.replace(/^file:\/+/, ''));
+        console.log(`이미지 ${idx+1} 경로: ${imgPath}`);
+        window.checkImageExists && window.checkImageExists(imgPath, (exists) => {
+          console.log(`이미지 ${idx+1} 파일 ${exists ? '존재함' : '존재하지 않음'}`);
+        });
+      }
+    });
+  } catch (error) {
+    console.error('미리보기 렌더링 중 오류:', error);
+    preview.innerHTML = `<div class="error">렌더링 오류: ${error.message}</div>`;
+  }
 }
 
 // 단어 수 업데이트
