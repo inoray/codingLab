@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<CorrectionInfo revision="1">
+	<CorrectionDataSet id="KrAddress">
+		<!-- 노이즈 문자 제거 -->
+		<CorrectionData>
+			<SearchText type="regex">[_:.'\"·]</SearchText>
+			<NewText type="text"></NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[一]</SearchText>
+			<NewText type="text">-</NewText>
+		</CorrectionData>
+
+		<!-- 층 -> 충, 츙 방지 -->
+		<CorrectionData>
+			<SearchText type="regex">([\doOClIzZtfjbgsT])[충츙츰춈]</SearchText>
+			<NewText type="regex">$1층</NewText>
+		</CorrectionData>
+
+		<!-- 호 -> 오, 포 방지-->
+		<CorrectionData>
+			<SearchText type="regex">([\doOClIzZtfjbgsT])[오포]</SearchText>
+			<NewText type="regex">$1호</NewText>
+		</CorrectionData>
+
+		<CorrectionData>
+			<SearchText type="text" similarity="70">서울특별시</SearchText>
+			<SearchText type="regex">[서시][을울올옻一-龥][트특톡툭득욕][별벌빌멸멀밀덮]시</SearchText>
+			<SearchText type="regex">서울[\w]{1,3}별시</SearchText>
+			<NewText type="text">서울특별시</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">([겅깅])(기도)</SearchText>
+			<NewText type="regex">경$2</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[영엉엄염임잉][등듬동둥돔둠][포프푸][구그]</SearchText>
+			<NewText type="text">영등포구</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">(고)([앙잉])(시)</SearchText>
+			<NewText type="regex">$1양$3</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="text" similarity="100">덜산서구</SearchText>
+			<NewText type="text">일산서구</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[동등둥돔듬둠][작자][구그二]</SearchText>
+			<NewText type="text">동작구</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[삼삽][성싱][동등둥듬돔둠]</SearchText>
+			<NewText type="text">삼성동</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="text" similarity="100">산뮬길</SearchText>
+			<NewText type="text">산율길</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[타티][워뭐위뮈덖]</SearchText>
+			<NewText type="text">타워</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[1]T</SearchText>
+			<NewText type="text">IT</NewText>
+		</CorrectionData>
+	</CorrectionDataSet>
+	<CorrectionDataSet id="digit">
+		<CorrectionData>
+			<SearchText type="regex">[Oo]</SearchText>
+			<NewText type="text">0</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[Ili\[\]]</SearchText>
+			<NewText type="text">1</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[zZ]</SearchText>
+			<NewText type="text">2</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[Ss]</SearchText>
+			<NewText type="text">5</NewText>
+		</CorrectionData>
+		<CorrectionData>
+			<SearchText type="regex">[q]</SearchText>
+			<NewText type="text">9</NewText>
+		</CorrectionData>
+	</CorrectionDataSet>
+</CorrectionInfo>

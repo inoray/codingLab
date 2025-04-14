@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<IzFormOcrServer>
+	<!-- 속성
+	- connectTimeout: 서버접속 timeout (단위: sec), (기본값: 60)
+	- responseTimeout: 서버접속 후 응답받을 때까지의 timeout (단위: sec), (기본값: 120)
+	-->
+	<!-- <Server id="1" url="http://61.109.146.102:5001" connectTimeout="10" responseTimeout="60"/> -->
+	<Server url="http://61.109.146.125:5001" connectTimeout="10" responseTimeout="60"/>
+	<!-- <Server url="http://61.109.146.99:5001" connectTimeout="10" responseTimeout="60"/>
+	<Server url="http://61.109.146.102:5001" connectTimeout="10" responseTimeout="60"/>
+	<Server url="http://61.109.146.103:5001" connectTimeout="10" responseTimeout="60"/> -->
+</IzFormOcrServer>

@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<IzFormOcrXml version="0.5.0">
+	<FormConfiguration>
+
+		<ExtractTable disabled="false" tableModel="table_20250206"/>
+		<!--
+			disabled
+			- true: 설정된 옵션은 비활성화. 엔진 기본 설정값으로 텍스트라인 추출 수행.
+			- false: 설정된 옵션을 사용
+
+			documentType
+			- document: 입력이미지 형태 (문서 이미지)
+			- single_line: 입력이미지 형태 (텍스트라인 이미지)
+
+			textEngine
+			- inzi: 기존 inzi 텍스트추출 엔진
+			- craft: never craft 엔진
+			- craft_c: inzi 낱자 craft 엔진.
+			- craft_w: inzi 워드 craft 엔진.
+
+			craftModel
+			- 모델 파일명: textEngine이 craft 인 경우 craftModel로 지정한 모델을 사용하여 텍스트라인을 추출.
+			211108_e175
+			220810_e438
+			CRAFT_C_triton_http
+			CRAFT_C_triton_grpc
+			CRAFT_C_triton_backend_http
+			CRAFT_C_triton_backend_grpc
+
+			subOption
+			textEngine이 inzi인 경우만 적용됨.
+
+			withTable: 테이블 추출 후 텍스트라인 추출
+			- true: 테이블 추출 후 텍스트라인 추출
+			- false: 테이블 무시 (default)
+		-->
+		<ExtractTextRegion disabled="false" documentType="document" textEngine="craft"
+						craftModel="" subOption="table|closed_line"
+						ocrApi="true" ocrApiParams=""
+						genWordForNLP="false"/>
+
+		<!--
+			ocrEngine
+			- inzi
+			- tess
+			- clova_ocr
+			- easyocr
+			- clova_ocr_iz
+			- trba_char
+			- trba_char_post_iz
+			- trba_word
+
+			tessLang
+			- kor
+			- eng
+			- Hangul
+
+			trbaWordModel
+			- TRBA_rcnn
+			- TRBA_triton_grpc
+			TRBA_onnx
+
+			trbaCharCraftModel
+			- 211025_e178.pth.tar                                                  : 2021.10.25 (default)
+
+			trbaCharRecogModel
+			- 211008.pth : (default)
+
+			trbaUseMatching
+			- true
+			- false
+
+			trbaUseCorrection
+			- true
+			- false
+		-->
+		<RecogString disabled="false" ocrEngine="trba_word"
+					fullTextRecognition="false"
+
+ 					tessLang="chi_sim" language="chinese" charSet=""
+
+					trbaWordModel = ""
+
+					trbaCharCraftModel=""
+					trbaCharRecogModel="220128.pth"
+					trbaUseMatching="true"
+					trbaUseCorrection="true"
+
+					url = "$(ServerUrl)/clovaocr"
+					clovaocrUrl="https://73bf69487f9242b8b41aae603c63bdbc.apigw.ntruss.com/custom/v1/4423/07c93817ba0b8978e4e16eaefc3591910e41fa8cab83a9a0b873f5e6e2bd5a10/general"
+					clovaocrSecretKey="QkVmZ3Nkd2hhWFpNd1didGZwaWhTSm5sTFVJZVlYY1g="/>
+
+		<!-- <SkewCorrection angleRange="">true</SkewCorrection> -->
+		<FieldSortType>region</FieldSortType>
+		<!-- <MlTask>false</MlTask> -->
+	</FormConfiguration>
+
+	<FormSet>
+		<Form id="fullText" revision="1">
+			<FormName>전문인식</FormName>
+
+			<FormPage id="page1" header="true" footer="true">
+				<FormData id="1">
+
+					<Element id="full_text" type="CharacterString">
+						<Name>전문인식</Name>
+						<Content type="Normal"/>
+						<SearchRegionInfo maxFieldCount="-1">
+							<SearchRegionComplex maxFieldCount="-1">
+								<SearchRegionSet>
+									<SearchRegion>
+										<!-- 이미지에서 인식대상영역 설정
+											이미지 크기대비 비율로 값을 지정 (0 ~ 100)
+										-->
+										<BasePosition type="imageOrigin"/>
+										<Left unit="ImageSizeRatio">0</Left>
+										<Top unit="ImageSizeRatio">0</Top>
+										<Right unit="ImageSizeRatio">100</Right>
+										<Bottom unit="ImageSizeRatio">100</Bottom>
+									</SearchRegion>
+								</SearchRegionSet>
+							</SearchRegionComplex>
+						</SearchRegionInfo>
+						<PreprocessInfo>
+							<!-- <MergeTextRegionOnALine maxDistanceRatioToFieldHeight="100">true</MergeTextRegionOnALine> -->
+							<!-- <RecogString disabled="false" ocrEngine="trba_word" language="korean" charSet=""/> -->
+							<ImageProcessInfo></ImageProcessInfo>
+						</PreprocessInfo>
+						<SearchFieldInfo>
+							<SearchTextSet>
+								<SearchText type="charSet" similarity="70">AllChar</SearchText>
+							</SearchTextSet>
+						</SearchFieldInfo>
+						<PostprocessInfo>
+							<!-- 추출한 모든 필드를 하나의 필드로 결합할지 유무
+								  - true: 결합. 결합할 때 구분문자(delimiter)를 지정가능.
+								  - false: 결합안함.
+							-->
+							<!-- <MergeAllFields delimiter=" ">false</MergeAllFields> -->
+
+							<!-- 같은 라인에 존재하는 field는 모두 결합해서 하나의 field로 구성한다.
+							     문서 레이아웃에 맞게 결합을 시도한다.
+								 - true: 결합 수행
+								 - false: 결합 안함 (default)
+								 참고: NLP 연동위한 옵션
+							-->
+							<!-- <AdjustTextForNLP>true</AdjustTextForNLP> -->
+						</PostprocessInfo>
+					</Element>
+
+					<OutBlock id="99">
+						<Field idNumber="99" name="전문인식" disabled="false" incluedFormScore="false" security="false" category="NormalText" isMain="true" mapId="">
+							<ElementId>full_text</ElementId>
+						</Field>
+					</OutBlock>
+
+				</FormData>
+			</FormPage>
+		</Form>
+	</FormSet>
+</IzFormOcrXml>

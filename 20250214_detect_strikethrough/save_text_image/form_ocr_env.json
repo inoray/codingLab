@@ -1,0 +1,16 @@
+{
+  "windows": {
+    "dll_dir": "./bin/",
+    "model_dir": "./data/model",
+    "ocr_data_dir": "./data/ocrData",
+    "log_verbosity": 0,
+    "log_dir": "./logs"
+  },
+  "linux": {
+    "dll_dir": "../../bin/Release/GCC64-LINUX",
+    "model_dir": "../../data/model",
+    "ocr_data_dir": "../../data/ocrData",
+    "log_verbosity": 0,
+    "log_dir": "./logs"
+  }
+}

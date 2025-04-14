@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<IzFormOcrFieldCategory>
+
+	<!--
+		- Type: 타입정보. OCR필드가 아닌 분석해서 판단한 정보를 의미함.
+			- DocumentType: 문서타입
+			- Verified: 필드 유효성정보
+
+		- Region: 영역정보
+			- Picture: 사진 영역
+			- Masking: 마스킹 영역
+			- DocumentBoundary: 문서 영역 (인식 정보를 바탕으로 추정한 문서경계영역)
+
+		- NormalTest: 일반문자열
+			- Digit: 숫자만 존재하는 문자열
+			- Alpha: 영문알파벳만 존재하는 문자열
+			- Hangul: 한글만 존재하는 문자열
+			- Hanja: 한자만 존재하는 문자열
+
+		- Date: 날짜
+			- YYYY년 MM월 DD일
+			- YYYY-MM-DD
+			- YYYY/MM/DD
+			- YYYY.MM.DD
+			- YYYYMMDD
+
+		- Currency: 통화
+
+		- Korean
+			- Name: 한국 이름
+				- Hangul
+				- Hanja
+				- English
+			- Address: 한국 주소
+				- Hangul
+				- English
+			- ResidentRegistrationNumber: 한국 주민등록번호
+			- BusinessRegistrationNumber: 한국 법인등록번호
+
+		- Company: 회사명
+
+		- Tel: 전화번호
+
+		- Etc : 기타 (default)
+	-->
+
+	<!-- idNumber 구조
+		4자리: 라이브러리 코드 (범용인식: 0101)
+		3자리: 카테고리 구분 코드
+		3자리: 하위 카테고리 일련번호
+	-->
+
+	<FieldCategory idNumber="0101001001" name="Type"/>
+	<FieldCategory idNumber="0101001002" name="DocumentType"/>
+	<FieldCategory idNumber="0101001003" name="Verified"/>
+
+	<FieldCategory idNumber="0101002001" name="Region"/>
+	<FieldCategory idNumber="0101002002" name="Region.Picture"/>
+	<FieldCategory idNumber="0101002003" name="Region.Masking"/>
+	<FieldCategory idNumber="0101002003" name="Region.DocumentBoundary"/>
+
+	<FieldCategory idNumber="0101003001" name="NormalText"/>
+	<FieldCategory idNumber="0101003002" name="NormalText.Digit"/>
+	<FieldCategory idNumber="0101003003" name="NormalText.Alpha"/>
+	<FieldCategory idNumber="0101003004" name="NormalText.Hangul"/>
+	<FieldCategory idNumber="0101003005" name="NormalText.Hanja"/>
+
+	<FieldCategory idNumber="0101004001" name="Date"/>
+	<FieldCategory idNumber="0101004002" name="Date.YYYY년 MM월 DD일"/>
+	<FieldCategory idNumber="0101004003" name="Date.YYYY-MM-DD"/>
+	<FieldCategory idNumber="0101004004" name="Date.YYYY/MM/DD"/>
+	<FieldCategory idNumber="0101004005" name="Date.YYYY.MM.DD"/>
+	<FieldCategory idNumber="0101004006" name="Date.YYYYMMDD"/>
+
+	<FieldCategory idNumber="0101005001" name="Currency"/>
+
+	<FieldCategory idNumber="0101006001" name="Korean"/>
+	<FieldCategory idNumber="0101006002" name="Korean.Name"/>
+	<FieldCategory idNumber="0101006003" name="Korean.Name.Hangul"/>
+	<FieldCategory idNumber="0101006004" name="Korean.Name.Hanja"/>
+	<FieldCategory idNumber="0101006005" name="Korean.Name.English"/>
+	<FieldCategory idNumber="0101006006" name="Korean.Address"/>
+	<FieldCategory idNumber="0101006007" name="Korean.Address.Hangul"/>
+	<FieldCategory idNumber="0101006008" name="Korean.Address.English"/>
+	<FieldCategory idNumber="0101006009" name="Korean.ResidentRegistrationNumber"/>
+	<FieldCategory idNumber="0101006010" name="Korean.BusinessRegistrationNumber"/>
+
+	<FieldCategory idNumber="0101007001" name="Company"/>
+
+	<FieldCategory idNumber="0101008001" name="Tel"/>
+
+	<FieldCategory idNumber="0101999001" name="Etc"/>
+
+</IzFormOcrFieldCategory>
